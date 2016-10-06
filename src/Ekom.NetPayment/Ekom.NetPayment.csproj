@@ -234,6 +234,9 @@
       <HintPath>..\packages\UmbracoCms.Core.7.5.3\lib\umbraco.MacroEngines.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Umbraco.NetPayment.Borgun">
+      <HintPath>..\..\www.Raunverd.is\Umbraco.Site\Umbraco.Extensions\bin\Umbraco.NetPayment.Borgun.dll</HintPath>
+    </Reference>
     <Reference Include="umbraco.providers, Version=1.0.6092.24024, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.5.3\lib\umbraco.providers.dll</HintPath>
       <Private>True</Private>
