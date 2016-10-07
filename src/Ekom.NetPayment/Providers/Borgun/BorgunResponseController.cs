@@ -1,6 +1,7 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -41,6 +42,12 @@ namespace Umbraco.NetPayment.Borgun
                     order = db.Single<Order>(orderid);
                 }
 
+                // MSSQL adds a minimum of 4 decimal places to decimal sql values
+                // Some providers support a maximum of 2
+                NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
+
+                string orderAmount = order.amount.ToString("#.00", nfi);
+
                 // Retrieve payment provider
 
                 IPublishedContent paymentProvider;
@@ -60,9 +67,12 @@ namespace Umbraco.NetPayment.Borgun
                 string secretCode = paymentProvider.GetProperty("secretCode").Value.ToString();
 
                 string orderhashcheck = GetHMACSum(secretCode, 
-                    new CheckHashMessage(orderid.ToString(), order.amount.ToString(), "ISK"));
+                    new CheckHashMessage(orderid.ToString(), orderAmount, "ISK"));
 
-                Log.Info("Borgun Payment Response Hit - Checking Validation");
+                Log.Info("Borgun Payment Response Hit - Checking Validation with:\r\n" +
+                            "secretCode: " + secretCode + "\r\n" +
+                            "orderid: "    + orderid    + "\r\n" + 
+                            "amount: "     + orderAmount);
 
                 if (string.Compare(orderhash, orderhashcheck, true) == 0)
                 {

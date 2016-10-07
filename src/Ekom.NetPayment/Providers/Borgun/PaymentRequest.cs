@@ -1,6 +1,7 @@
 ﻿using log4net;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
@@ -14,7 +15,7 @@ namespace Umbraco.NetPayment.Borgun
 {
     public static partial class Payment
     {
-        public static void Request(int uPaymentProviderNodeId, int member, int total, IEnumerable<OrderItem> orders)
+        public static void Request(int uPaymentProviderNodeId, int member, string total, IEnumerable<OrderItem> orders)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace Umbraco.NetPayment.Borgun
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("Error retrieving Umbraco properties", ex);
+                     Log.Error("Error retrieving Umbraco properties", ex);
                     return;
                 }
 
@@ -63,7 +64,7 @@ namespace Umbraco.NetPayment.Borgun
                 formValues.Add("returnurlsuccessserver", reportUrl);
 
 
-                formValues.Add("amount", total.ToString());
+                formValues.Add("amount", total);
                 formValues.Add("currency", "ISK");
                 formValues.Add("language", "IS");
 
@@ -81,12 +82,14 @@ namespace Umbraco.NetPayment.Borgun
                 // Persist in database and retrieve unique order id
                 string orderId;
 
+                NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
+
                 using (var db = new Database("umbracoDbDSN"))
                 {
                     orderId = db.Insert(new Order
                     {
                         member          = member,
-                        amount          = total,
+                        amount          = decimal.Parse(total, nfi),
                         date            = DateTime.Now,
                         paymentProvider = paymentProvider.Name
                     }).ToString();
@@ -96,7 +99,7 @@ namespace Umbraco.NetPayment.Borgun
                 var checkHash = CreateCheckHash(secretCode,
                     new CheckHashMessage(merchantId, baseUrl + successUrl, 
                                                      baseUrl + "/umbraco/surface/borgunresponse/post", 
-                                         orderId,  total.ToString(), "ISK"));
+                                         orderId, total, "ISK"));
 
                 formValues.Add("checkhash", checkHash);
                 formValues.Add("orderid", orderId);

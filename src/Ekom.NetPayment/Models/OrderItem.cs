@@ -10,7 +10,7 @@ namespace Umbraco.NetPayment
     {
         public decimal GrandTotal { get; set; }
 
-        public int Price { get; set; }
+        public decimal Price { get; set; }
 
         public int Discount { get; set; }
 
