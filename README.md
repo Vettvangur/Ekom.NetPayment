@@ -31,3 +31,7 @@ they can additionally contain
 - reportUrl
 
 - paymentInfo
+
+Payment Provider names must match the searched for names in Umbraco.NetPayment.Payment.Request
+
+f.x. "Borgun" or "borgun"
