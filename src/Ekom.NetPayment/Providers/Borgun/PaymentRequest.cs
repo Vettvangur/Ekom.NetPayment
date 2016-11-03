@@ -28,6 +28,7 @@ namespace Umbraco.NetPayment.Borgun
                 var successUrl = string.Empty;
                 var errorUrl   = string.Empty;
 
+                var portalUrl        = string.Empty;
                 var merchantId       = string.Empty;
                 var paymentGatewayId = string.Empty;
                 var secretCode       = string.Empty;
@@ -42,13 +43,14 @@ namespace Umbraco.NetPayment.Borgun
                     successUrl = umbracoHelper.TypedContent(umbracoHelper.GetDictionaryValue("PaymentSuccess")).Url;
                     errorUrl   = umbracoHelper.TypedContent(umbracoHelper.GetDictionaryValue("PaymentError")).Url;
 
+                    portalUrl        = paymentProvider.GetProperty("portalUrl").Value.ToString();
                     merchantId       = paymentProvider.GetProperty("merchantId").Value.ToString();
                     paymentGatewayId = paymentProvider.GetProperty("paymentGatewayId").Value.ToString();
                     secretCode       = paymentProvider.GetProperty("secretCode").Value.ToString();
                 }
                 catch (Exception ex)
                 {
-                     Log.Error("Error retrieving Umbraco properties", ex);
+                    Log.Error("Error retrieving Umbraco properties", ex);
                     return;
                 }
 
@@ -106,7 +108,7 @@ namespace Umbraco.NetPayment.Borgun
 
                 Log.Info("Borgun Payment Request - Amount: " + total + " OrderId: " + orderId);
 
-                CreateRequest(formValues, Settings.url);
+                CreateRequest(formValues, portalUrl);
             }
             catch (Exception ex)
             {

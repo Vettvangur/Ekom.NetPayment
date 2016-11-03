@@ -261,7 +261,6 @@
     <Compile Include="Providers\Borgun\CheckHashMessage.cs" />
     <Compile Include="Providers\Borgun\PaymentRequest.cs" />
     <Compile Include="Providers\Borgun\BorgunResponseController.cs" />
-    <Compile Include="Providers\Borgun\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
