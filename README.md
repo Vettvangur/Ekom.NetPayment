@@ -35,3 +35,13 @@ they can additionally contain
 Payment Provider names must match the searched for names in Umbraco.NetPayment.Payment.Request
 
 f.x. "Borgun" or "borgun"
+
+
+uWebshop.NetPayment.BorgunLoans
+
+requires the following dictionary keys
+
+- BorgunLoans
+- InterestFree
+- WithInterest
+- ChristmasInvoice
