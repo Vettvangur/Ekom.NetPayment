@@ -37,11 +37,3 @@ Payment Provider names must match the searched for names in Umbraco.NetPayment.P
 f.x. "Borgun" or "borgun"
 
 
-# uWebshop.NetPayment.BorgunLoans
-
-requires the following dictionary keys
-
-- BorgunLoans
-- InterestFree
-- WithInterest
-- ChristmasInvoice
