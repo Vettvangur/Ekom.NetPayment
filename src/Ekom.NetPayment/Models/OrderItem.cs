@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Umbraco.NetPayment
 {
+    /// <summary>
+    /// A single item in an <see cref="Order"/>
+    /// </summary>
     public class OrderItem
     {
         public decimal GrandTotal { get; set; }

@@ -83,6 +83,8 @@ namespace Umbraco.NetPayment.Borgun
                     using (var db = new Database("umbracoDbDSN"))
                     {
                         db.Update(order);
+
+                        NetPayment.Payment.callback?.Invoke(order);
                     }
 
                     Log.Info("Borgun Payment Response - SUCCESS");

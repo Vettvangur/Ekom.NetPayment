@@ -9,7 +9,20 @@ namespace Umbraco.NetPayment
 {
     public static class Payment
     {
-        public static void Request(int uPaymentProviderNodeId, int member, decimal total, IEnumerable<OrderItem> orders)
+        /// <summary>
+        /// Allows for custom code to run after a response is received
+        /// </summary>
+        public static Action<Order> callback;
+
+        /// <summary>
+        /// This method is called to start a payment request, 
+        /// it determines which payment provider to run and calls the relevant method
+        /// </summary>
+        /// <param name="uPaymentProviderNodeId">Umbraco node id of payment provider</param>
+        /// <param name="member">The umbraco member making the request</param>
+        /// <param name="total">Grand total of order in unspecified currency</param>
+        /// <param name="orderItems">Collection of order items</param>
+        public static string Request(int uPaymentProviderNodeId, int member, decimal total, IEnumerable<OrderItem> orderItems, string orderCustomString)
         {
             var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
 
@@ -26,10 +39,11 @@ namespace Umbraco.NetPayment
                 case "borgun":
                 case "Borgun":
 
-                    Borgun.Payment.Request(uPaymentProviderNodeId, member, totalStr, orders);
+                    return Borgun.Payment.Request(uPaymentProviderNodeId, member, totalStr, orderItems, orderCustomString);
 
-                    break;
             }
+
+            throw new Exception("Unable to match payment provider");
         }
     }
 }

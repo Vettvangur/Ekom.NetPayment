@@ -7,7 +7,10 @@ using Umbraco.Core.Persistence;
 
 namespace Umbraco.NetPayment
 {
-    [TableName("customOrder")]
+    /// <summary>
+    /// Generalized object storing basic information on orders and their status
+    /// </summary>
+    [TableName("customNetPaymentOrder")]
     [PrimaryKey("id", autoIncrement = true)]
     public class Order
     {
@@ -22,5 +25,10 @@ namespace Umbraco.NetPayment
         public bool paid { get; set; }
 
         public string paymentProvider { get; set; }
+
+        /// <summary>
+        /// Store custom order data here
+        /// </summary>
+        public string custom { get; set; }
     }
 }

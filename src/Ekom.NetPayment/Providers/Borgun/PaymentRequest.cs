@@ -15,7 +15,7 @@ namespace Umbraco.NetPayment.Borgun
 {
     public static partial class Payment
     {
-        public static void Request(int uPaymentProviderNodeId, int member, string total, IEnumerable<OrderItem> orders)
+        public static string Request(int uPaymentProviderNodeId, int member, string total, IEnumerable<OrderItem> orders, string orderCustomString = "")
         {
             try
             {
@@ -24,7 +24,9 @@ namespace Umbraco.NetPayment.Borgun
                 string baseUrl = HttpContext.Current.Request.Url.Scheme + "://" +
                  HttpContext.Current.Request.Url.Authority;
 
+                // Umbraco.NetPayment ResponseController
                 var reportUrl  = baseUrl + "/umbraco/surface/borgunresponse/post";
+
                 var successUrl = string.Empty;
                 var errorUrl   = string.Empty;
 
@@ -40,8 +42,8 @@ namespace Umbraco.NetPayment.Borgun
 
                 try
                 {
-                    successUrl = umbracoHelper.TypedContent(umbracoHelper.GetDictionaryValue("PaymentSuccess")).Url;
-                    errorUrl   = umbracoHelper.TypedContent(umbracoHelper.GetDictionaryValue("PaymentError")).Url;
+                    successUrl       = paymentProvider.GetProperty("successUrl").Value.ToString();
+                    errorUrl         = paymentProvider.GetProperty("errorUrl").Value.ToString();
 
                     portalUrl        = paymentProvider.GetProperty("portalUrl").Value.ToString();
                     merchantId       = paymentProvider.GetProperty("merchantId").Value.ToString();
@@ -51,7 +53,7 @@ namespace Umbraco.NetPayment.Borgun
                 catch (Exception ex)
                 {
                     Log.Error("Error retrieving Umbraco properties", ex);
-                    return;
+                    throw;
                 }
 
                 // Begin populating form values to be submitted
@@ -93,7 +95,8 @@ namespace Umbraco.NetPayment.Borgun
                         member          = member,
                         amount          = decimal.Parse(total, nfi),
                         date            = DateTime.Now,
-                        paymentProvider = paymentProvider.Name
+                        paymentProvider = paymentProvider.Name,
+                        custom          = orderCustomString
                     }).ToString();
                 }
 
@@ -108,7 +111,7 @@ namespace Umbraco.NetPayment.Borgun
 
                 Log.Info("Borgun Payment Request - Amount: " + total + " OrderId: " + orderId);
 
-                CreateRequest(formValues, portalUrl);
+                return CreateRequest(formValues, portalUrl);
             }
             catch (Exception ex)
             {
@@ -133,7 +136,7 @@ namespace Umbraco.NetPayment.Borgun
             return checkhash;
         }
 
-        static void CreateRequest(Dictionary<string, string> request, string url)
+        static string CreateRequest(Dictionary<string, string> request, string url)
         {
             var context = HttpContext.Current;
 
@@ -150,8 +153,7 @@ namespace Umbraco.NetPayment.Borgun
 
             html += "<script>(function(){ document.getElementById('payform').submit(); }())</script>";
 
-            context.Response.Write(html);
-            context.Response.End();
+            return html;
         }
 
         private static readonly ILog Log =
