@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Umbraco.Core;
 using Umbraco.Core.Persistence;
 
 namespace Umbraco.NetPayment.Helpers
@@ -49,6 +51,38 @@ namespace Umbraco.NetPayment.Helpers
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Persist in database and retrieve unique order id
+        /// </summary>
+        /// <returns>Order Id</returns>
+        public static string Save(int member, 
+                                  string total,
+                                  string paymentProvider, 
+                                  string custom, 
+                                  IEnumerable<OrderItem> orders)
+        {
+            NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
+
+            var name = new StringBuilder();
+
+            foreach (var order in orders)
+                name.Append(order.Title + " ");
+
+            using (var db = ApplicationContext.Current.DatabaseContext.Database)
+            {
+                // Return order id
+                return db.Insert(new Order
+                {
+                    name = name.ToString(),
+                    member = member,
+                    amount = decimal.Parse(total, nfi),
+                    date = DateTime.Now,
+                    paymentProvider = paymentProvider,
+                    custom = custom
+                }).ToString();
+            }
         }
     }
 }

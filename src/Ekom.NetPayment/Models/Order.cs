@@ -14,6 +14,8 @@ namespace Umbraco.NetPayment
     [PrimaryKey("id", autoIncrement = true)]
     public class Order
     {
+        public string name { get; set; }
+
         public int id { get; set; }
 
         public int member { get; set; }

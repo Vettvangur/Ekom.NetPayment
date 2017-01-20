@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
 using Umbraco.Core.Persistence;
+using Umbraco.NetPayment.Helpers;
 
 namespace Umbraco.NetPayment.Borgun
 {
@@ -83,22 +84,9 @@ namespace Umbraco.NetPayment.Borgun
                     formValues.Add("itemamount_" + lineNumber, order.GrandTotal.ToString());
                 }
 
+
                 // Persist in database and retrieve unique order id
-                string orderId;
-
-                NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
-
-                using (var db = new Database("umbracoDbDSN"))
-                {
-                    orderId = db.Insert(new Order
-                    {
-                        member          = member,
-                        amount          = decimal.Parse(total, nfi),
-                        date            = DateTime.Now,
-                        paymentProvider = paymentProvider.Name,
-                        custom          = orderCustomString
-                    }).ToString();
-                }
+                string orderId = OrderHelper.Save(member, total, paymentProvider.Name, orderCustomString, orders);
 
                 //CheckHash
                 var checkHash = CreateCheckHash(secretCode,
