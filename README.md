@@ -35,3 +35,8 @@ Payment Provider names must match the searched for names in Umbraco.NetPayment.P
 f.x. "Borgun" or "borgun"
 
 
+A custom callback can be assigned to the static class
+
+Payment.callback = PaymentCallback.Method;
+
+This method is then called after a successful payment has been verified
