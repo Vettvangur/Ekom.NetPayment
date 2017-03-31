@@ -16,7 +16,7 @@ namespace Umbraco.NetPayment.Borgun
 {
     public static partial class Payment
     {
-        public static string Request(int uPaymentProviderNodeId, int member, string total, IEnumerable<OrderItem> orders, string orderCustomString = "")
+        public static string Request(int uPaymentProviderNodeId, int member, string total, IEnumerable<OrderItem> orders, string orderCustomString = "", bool skipReceipt = true)
         {
             try
             {
@@ -99,7 +99,7 @@ namespace Umbraco.NetPayment.Borgun
 
                 Log.Info("Borgun Payment Request - Amount: " + total + " OrderId: " + orderId);
 
-                return CreateRequest(formValues, portalUrl);
+                return CreateRequest(formValues, portalUrl, skipReceipt);
             }
             catch (Exception ex)
             {
@@ -124,7 +124,7 @@ namespace Umbraco.NetPayment.Borgun
             return checkhash;
         }
 
-        static string CreateRequest(Dictionary<string, string> request, string url)
+        static string CreateRequest(Dictionary<string, string> request, string url, bool skipReceipt)
         {
             var context = HttpContext.Current;
 
@@ -134,6 +134,8 @@ namespace Umbraco.NetPayment.Borgun
             {
                 html += "<input type=\"hidden\" name=\"" + parameter.Key + "\" value=\"" + parameter.Value + "\">\r\n";
             }
+
+            if (skipReceipt) html += "<input type=\"text\" name=\"skipreceiptpage\" value=\"1\">\r\n";
 
             html += "<input type=\"submit\" value=\"Submitting\">\r\n";
 
