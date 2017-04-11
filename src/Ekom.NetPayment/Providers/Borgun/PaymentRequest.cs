@@ -135,7 +135,7 @@ namespace Umbraco.NetPayment.Borgun
                 html += "<input type=\"hidden\" name=\"" + parameter.Key + "\" value=\"" + parameter.Value + "\">\r\n";
             }
 
-            if (skipReceipt) html += "<input type=\"text\" name=\"skipreceiptpage\" value=\"1\">\r\n";
+            if (skipReceipt) html += "<input type=\"hidden\" name=\"skipreceiptpage\" value=\"1\">\r\n";
 
             html += "<input type=\"submit\" value=\"Submitting\">\r\n";
 
