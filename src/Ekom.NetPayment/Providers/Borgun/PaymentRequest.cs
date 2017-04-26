@@ -14,9 +14,15 @@ using Umbraco.NetPayment.Helpers;
 
 namespace Umbraco.NetPayment.Borgun
 {
-    public static partial class Payment
+    /// <summary>
+    /// Initiate a payment request with Borgun
+    /// </summary>
+    static partial class Payment
     {
-        public static string Request(int uPaymentProviderNodeId, int member, string total, IEnumerable<OrderItem> orders, string orderCustomString = "", bool skipReceipt = true)
+        /// <summary>
+        /// Initiate a payment request with Borgun
+        /// </summary>
+        public static string Request(int uPaymentProviderNodeId, string total, IEnumerable<OrderItem> orders, bool skipReceipt, int member = 0, string orderCustomString = "")
         {
             try
             {
@@ -58,21 +64,21 @@ namespace Umbraco.NetPayment.Borgun
                 }
 
                 // Begin populating form values to be submitted
-                var formValues = new Dictionary<string, string>();
+                var formValues = new Dictionary<string, string>
+                {
+                    { "merchantid", merchantId },
+                    { "paymentgatewayid", paymentGatewayId },
 
-                formValues.Add("merchantid", merchantId);
-                formValues.Add("paymentgatewayid", paymentGatewayId);
-
-                formValues.Add("returnurlsuccess", baseUrl + successUrl);
-                formValues.Add("returnurlcancel", baseUrl + errorUrl);
-                formValues.Add("returnurlerror", baseUrl + errorUrl);
-                formValues.Add("returnurlsuccessserver", reportUrl);
+                    { "returnurlsuccess", baseUrl + successUrl },
+                    { "returnurlcancel", baseUrl + errorUrl },
+                    { "returnurlerror", baseUrl + errorUrl },
+                    { "returnurlsuccessserver", reportUrl },
 
 
-                formValues.Add("amount", total);
-                formValues.Add("currency", "ISK");
-                formValues.Add("language", "IS");
-
+                    { "amount", total },
+                    { "currency", "ISK" },
+                    { "language", "IS" }
+                };
 
                 for (int lineNumber = 0, length = orders.Count(); lineNumber < length; lineNumber++)
                 {
@@ -83,7 +89,6 @@ namespace Umbraco.NetPayment.Borgun
                     formValues.Add("itemunitamount_" + lineNumber, order.Price.ToString());
                     formValues.Add("itemamount_" + lineNumber, order.GrandTotal.ToString());
                 }
-
 
                 // Persist in database and retrieve unique order id
                 string orderId = OrderHelper.Save(member, total, paymentProvider.Name, orderCustomString, orders);
@@ -123,6 +128,7 @@ namespace Umbraco.NetPayment.Borgun
 
             return checkhash;
         }
+
 
         static string CreateRequest(Dictionary<string, string> request, string url, bool skipReceipt)
         {

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Umbraco.NetPayment
 {
+    /// <summary>
+    /// Base class to initiate a Payment Request, offers configuration of custom callback as well.
+    /// </summary>
     public static class Payment
     {
         /// <summary>
@@ -22,7 +25,9 @@ namespace Umbraco.NetPayment
         /// <param name="member">The umbraco member making the request</param>
         /// <param name="total">Grand total of order in unspecified currency</param>
         /// <param name="orderItems">Collection of order items</param>
-        public static string Request(int uPaymentProviderNodeId, int member, decimal total, IEnumerable<OrderItem> orderItems, string orderCustomString)
+        /// <param name="orderCustomString">Custom string to persist in database with order</param>
+        /// <param name="skipReceipt">Skip the receipt page of payment provider if possible</param>
+        public static string Request(int uPaymentProviderNodeId, int member, decimal total, IEnumerable<OrderItem> orderItems, string orderCustomString, bool skipReceipt = true)
         {
             var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
 
@@ -34,13 +39,11 @@ namespace Umbraco.NetPayment
 
             string totalStr = Math.Round(total, 2).ToString("#.00", nfi);
 
-            switch (paymentProvider.Name)
+            switch (paymentProvider.Name.ToLower())
             {
                 case "borgun":
-                case "Borgun":
 
-                    return Borgun.Payment.Request(uPaymentProviderNodeId, member, totalStr, orderItems, orderCustomString);
-
+                    return Borgun.Payment.Request(uPaymentProviderNodeId, totalStr, orderItems, skipReceipt, member, orderCustomString);
             }
 
             throw new Exception("Unable to match payment provider");

@@ -10,6 +10,9 @@ using Umbraco.Core.Persistence;
 
 namespace Umbraco.NetPayment.Helpers
 {
+    /// <summary>
+    /// Utility functions for handling <see cref="Order"/> objects
+    /// </summary>
     public static class OrderHelper
     {
         /// <summary>
@@ -37,9 +40,7 @@ namespace Umbraco.NetPayment.Helpers
 
             if (!string.IsNullOrEmpty(reference))
             {
-                int referenceId;
-
-                bool _referenceId = int.TryParse(reference, out referenceId);
+                bool _referenceId = int.TryParse(reference, out var referenceId);
 
                 if (_referenceId)
                 {

@@ -1,6 +1,6 @@
 ﻿namespace Umbraco.NetPayment.Borgun
 {
-    public class CheckHashMessage
+    class CheckHashMessage
     {
         public string message;
 

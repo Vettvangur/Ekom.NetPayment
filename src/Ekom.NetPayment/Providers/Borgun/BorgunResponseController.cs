@@ -15,8 +15,16 @@ using Umbraco.Web.WebApi;
 
 namespace Umbraco.NetPayment.Borgun
 {
+    /// <summary>
+    /// Receives a callback from Borgun when customer completes payment.
+    /// Changes order status and optionally runs a custom callback provided by the application consuming this library.
+    /// </summary>
     public class BorgunResponseController : SurfaceController
     {
+        /// <summary>
+        /// Receives a callback from Borgun when customer completes payment.
+        /// Changes order status and optionally runs a custom callback provided by the application consuming this library.
+        /// </summary>
         public void Post(FormCollection form)
         {
             try
