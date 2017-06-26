@@ -1,7 +1,9 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,8 +28,17 @@ namespace Umbraco.NetPayment
         /// <param name="total">Grand total of order in unspecified currency</param>
         /// <param name="orderItems">Collection of order items</param>
         /// <param name="orderCustomString">Custom string to persist in database with order</param>
+        /// <param name="culture">Language culture to use when retrieving data from Vorto properties</param>
         /// <param name="skipReceipt">Skip the receipt page of payment provider if possible</param>
-        public static string Request(int uPaymentProviderNodeId, int member, decimal total, IEnumerable<OrderItem> orderItems, string orderCustomString, bool skipReceipt = true)
+        public static string Request(
+            int uPaymentProviderNodeId, 
+            int member, 
+            decimal total, 
+            IEnumerable<OrderItem> orderItems, 
+            string orderCustomString, 
+            string culture = "", 
+            bool skipReceipt = true
+        )
         {
             var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
 
@@ -39,14 +50,24 @@ namespace Umbraco.NetPayment
 
             string totalStr = Math.Round(total, 2).ToString("#.00", nfi);
 
+            if (string.IsNullOrEmpty(culture))
+            {
+                culture = umbracoHelper.CultureDictionary.Culture.TwoLetterISOLanguageName;
+            }
+
             switch (paymentProvider.Name.ToLower())
             {
                 case "borgun":
 
-                    return Borgun.Payment.Request(uPaymentProviderNodeId, totalStr, orderItems, skipReceipt, member, orderCustomString);
+                    return Borgun.Payment.Request(uPaymentProviderNodeId, totalStr, orderItems, skipReceipt, culture, member, orderCustomString);
             }
 
             throw new Exception("Unable to match payment provider");
         }
+
+        private static readonly ILog Log =
+            LogManager.GetLogger(
+                MethodBase.GetCurrentMethod().DeclaringType
+            );
     }
 }

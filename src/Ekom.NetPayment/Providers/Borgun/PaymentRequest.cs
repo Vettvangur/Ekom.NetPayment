@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Our.Umbraco.Vorto.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -22,7 +23,7 @@ namespace Umbraco.NetPayment.Borgun
         /// <summary>
         /// Initiate a payment request with Borgun
         /// </summary>
-        public static string Request(int uPaymentProviderNodeId, string total, IEnumerable<OrderItem> orders, bool skipReceipt, int member = 0, string orderCustomString = "")
+        public static string Request(int uPaymentProviderNodeId, string total, IEnumerable<OrderItem> orders, bool skipReceipt, string culture, int member = 0, string orderCustomString = "")
         {
             try
             {
@@ -49,8 +50,8 @@ namespace Umbraco.NetPayment.Borgun
 
                 try
                 {
-                    successUrl       = paymentProvider.GetProperty("successUrl").Value.ToString();
-                    errorUrl         = paymentProvider.GetProperty("errorUrl").Value.ToString();
+                    successUrl       = paymentProvider.GetVortoValue<string>("successUrl", culture);
+                    errorUrl         = paymentProvider.GetVortoValue<string>("errorUrl", culture);
 
                     portalUrl        = paymentProvider.GetProperty("portalUrl").Value.ToString();
                     merchantId       = paymentProvider.GetProperty("merchantId").Value.ToString();
