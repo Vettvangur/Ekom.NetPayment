@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Umbraco.Web;
 
 namespace Umbraco.NetPayment
 {
@@ -40,7 +37,7 @@ namespace Umbraco.NetPayment
             bool skipReceipt = true
         )
         {
-            var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
+            var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
 
             var paymentProvider = umbracoHelper.TypedContent(uPaymentProviderNodeId);
 
