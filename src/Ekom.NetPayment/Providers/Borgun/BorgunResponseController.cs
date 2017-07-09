@@ -78,13 +78,12 @@ namespace Umbraco.NetPayment.Borgun
                     new CheckHashMessage(orderid.ToString(), orderAmount, "ISK"));
 
                 Log.Info("Borgun Payment Response Hit - Checking Validation with:\r\n" +
-                            "secretCode: " + secretCode + "\r\n" +
                             "orderid: "    + orderid    + "\r\n" + 
                             "amount: "     + orderAmount);
 
                 if (string.Compare(orderhash, orderhashcheck, true) == 0)
                 {
-                    Log.Info("Borgun Payment Response Hit - Validation Success - OrderHash");
+                    Log.Info("Borgun Payment Response Hit - OrderHash Validation Success");
 
                     order.paid = true;
 
