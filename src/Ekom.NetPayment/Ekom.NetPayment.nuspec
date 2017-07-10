@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Umbraco.NetPayment</id>
-    <version>2.0.2</version>
+    <version>2.1.0</version>
     <title>Umbraco.NetPayment</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
@@ -11,7 +11,7 @@
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, does not use uWebshop.</description>
-    <releaseNotes>Vorto property types.</releaseNotes>
+    <releaseNotes>Control culture of portal, supposedly restores backwards compatibility.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags></tags>
   </metadata>

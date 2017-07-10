@@ -12,6 +12,7 @@ using System.Web;
 using System.Xml.Linq;
 using Umbraco.Core.Persistence;
 using Umbraco.NetPayment.Helpers;
+using Umbraco.Web;
 
 namespace Umbraco.NetPayment.Borgun
 {
@@ -44,25 +45,35 @@ namespace Umbraco.NetPayment.Borgun
                 var secretCode       = string.Empty;
 
                 // Retrieve properties from umbraco payment provider node
-                var umbracoHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
+                var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
 
                 var paymentProvider = umbracoHelper.TypedContent(uPaymentProviderNodeId);
 
                 try
                 {
-                    successUrl       = paymentProvider.GetVortoValue<string>("successUrl", culture);
-                    errorUrl         = paymentProvider.GetVortoValue<string>("errorUrl", culture);
+                    if (!string.IsNullOrEmpty(culture))
+                    {
+                        successUrl = paymentProvider.GetVortoValue<string>("successUrl", culture);
+                        errorUrl = paymentProvider.GetVortoValue<string>("errorUrl", culture);
+                    }
+                    else
+                    {
+                        successUrl   = paymentProvider.GetPropertyValue<string>("successUrl");
+                        errorUrl     = paymentProvider.GetPropertyValue<string>("errorUrl");
+                    }
 
-                    portalUrl        = paymentProvider.GetProperty("portalUrl").Value.ToString();
-                    merchantId       = paymentProvider.GetProperty("merchantId").Value.ToString();
-                    paymentGatewayId = paymentProvider.GetProperty("paymentGatewayId").Value.ToString();
-                    secretCode       = paymentProvider.GetProperty("secretCode").Value.ToString();
+                    portalUrl        = paymentProvider.GetPropertyValue<string>("portalUrl");
+                    merchantId       = paymentProvider.GetPropertyValue<string>("merchantId");
+                    paymentGatewayId = paymentProvider.GetPropertyValue<string>("paymentGatewayId");
+                    secretCode       = paymentProvider.GetPropertyValue<string>("secretCode");
                 }
                 catch (Exception ex)
                 {
                     Log.Error("Error retrieving Umbraco properties", ex);
                     throw;
                 }
+
+                if (string.IsNullOrEmpty(culture)) culture = "IS";
 
                 // Begin populating form values to be submitted
                 var formValues = new Dictionary<string, string>
@@ -78,7 +89,7 @@ namespace Umbraco.NetPayment.Borgun
 
                     { "amount", total },
                     { "currency", "ISK" },
-                    { "language", "IS" }
+                    { "language", culture.ToUpper() }
                 };
 
                 for (int lineNumber = 0, length = orders.Count(); lineNumber < length; lineNumber++)
