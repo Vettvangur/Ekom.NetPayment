@@ -33,5 +33,41 @@ namespace Umbraco.NetPayment
                 return _ppConfigPath;
             }
         }
+
+        private int _ppUNode;
+        /// <summary>
+        /// Umbraco node id of payment providers container.
+        /// </summary>
+        public virtual int PPUmbracoNode
+        {
+            get
+            {
+                return _ppUNode;
+            }
+            set
+            {
+                _ppUNode = value;
+            }
+        }
+
+        private string _ppDocType = null;
+
+        /// <summary>
+        /// Payment providers document type alias.
+        /// </summary>
+        public virtual string PPDocumentTypeAlias
+        {
+            get
+            {
+                if (_ppDocType == null)
+                {
+                    var ppDocTypeAlias = ConfigurationManager.AppSettings["NetPayment.PPDocumentTypeAlias"];
+
+                    _ppDocType = ppDocTypeAlias ?? "paymentProviders";
+                }
+
+                return _ppDocType;
+            }
+        }
     }
 }
