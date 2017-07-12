@@ -3,52 +3,42 @@ using log4net;
 using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Practices.Unity;
+using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Umbraco.NetPayment
 {
+    /// <summary>
+    /// Hooks into the umbraco application startup lifecycle 
+    /// </summary>
     public class UmbEvents : ApplicationEventHandler
     {
         UmbracoApplicationBase _umbracoApplication;
         ApplicationContext _applicationContext;
         Settings _settings;
 
+        /// <summary>
+        /// Umbraco lifecycle method
+        /// </summary>
+        /// <param name="umbracoApplication"></param>
+        /// <param name="applicationContext"></param>
         protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
+            _umbracoApplication = umbracoApplication;
+            _applicationContext = applicationContext;
             _settings = UnityConfig.GetConfiguredContainer().Resolve<Settings>();
+            var xmlConfigService = UnityConfig.GetConfiguredContainer().Resolve<XMLConfigurationService>();
+
+            var url = umbracoApplication.Context.Request.Url;
+            _settings.BasePath = $"{url.Scheme}://{url.Authority}";
+
+            // PaymentProviders.config
+            var doc = xmlConfigService.Configuration;
+            SetConfiguration(doc);
         }
 
-        private XDocument LoadConfiguration()
-        {
-            var configFileExists = System.IO.File.Exists(configFile);
 
-            if (configFileExists)
-            {
-                return XDocument.Load(configFile);
-            }
-        }
-
-        private object F()
-        {
-            if (ppConfig != null)
-            {
-                var ppNode = ppConfig?.FirstNode?.Document?.Element("paymentProvidersNode")?.Value;
-
-                if (ppNode != null)
-                {
-                    bool bPPNode = int.TryParse(ppNode, out int ppNodeId);
-
-                    if (bPPNode)
-                    {
-                        settings.PPUmbracoNode = ppNodeId;
-                    }
-                }
-            }
-        }
-
-        private object F2()
-        {
-            var ctId = _applicationContext.Services.ContentTypeService.GetContentType(_settings.PPDocumentTypeAlias).Id;
-            var id = _applicationContext.Services.ContentService.GetContentOfContentType(ctId).First().Id;
-        }
     }
 }

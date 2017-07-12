@@ -1,6 +1,10 @@
 using System;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Umbraco.Web;
+using Umbraco.Core;
+using System.Web;
+using System.IO.Abstractions;
 
 namespace Umbraco.NetPayment
 {
@@ -35,8 +39,17 @@ namespace Umbraco.NetPayment
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            // TODO: Register your types here
-            // container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<HttpContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => HttpContext.Current));
+            container.RegisterType<ApplicationContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
+            container.RegisterType<UmbracoContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => UmbracoContext.Current));
+            container.RegisterType<UmbracoHelper>(new PerRequestLifetimeManager(), new InjectionConstructor(typeof(UmbracoContext)));
+
+            container.RegisterInstance(new Settings());
+
+            container.RegisterType<UmbracoService>();
+            container.RegisterType<OrderService>();
+
+            container.RegisterType<IFileSystem, FileSystem>();
         }
     }
 }

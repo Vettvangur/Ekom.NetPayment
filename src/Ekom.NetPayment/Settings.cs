@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Umbraco.NetPayment
 {
@@ -34,11 +35,11 @@ namespace Umbraco.NetPayment
             }
         }
 
-        private int _ppUNode;
+        private Guid _ppUNode;
         /// <summary>
         /// Umbraco node id of payment providers container.
         /// </summary>
-        public virtual int PPUmbracoNode
+        public virtual Guid PPUmbracoNode
         {
             get
             {
@@ -49,6 +50,12 @@ namespace Umbraco.NetPayment
                 _ppUNode = value;
             }
         }
+
+        /// <summary>
+        /// Payment providers umbraco node configuration element name.
+        /// xml element name of configuration element that holds umbraco payment providers container Guid
+        /// </summary>
+        public virtual string PPUNodeConfElName { get; } = "paymentProvidersNode";
 
         private string _ppDocType = null;
 
@@ -69,5 +76,7 @@ namespace Umbraco.NetPayment
                 return _ppDocType;
             }
         }
+
+        public virtual string BasePath { get; set; }
     }
 }

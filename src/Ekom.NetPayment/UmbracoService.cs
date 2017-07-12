@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Our.Umbraco.Vorto.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Umbraco.Core.Models;
 using Umbraco.Web;
 
-namespace Umbraco.NetPayment.Services
+namespace Umbraco.NetPayment
 {
     /// <summary>
     /// Retrieves Umbraco data
@@ -13,7 +15,7 @@ namespace Umbraco.NetPayment.Services
     public class UmbracoService
     {
         /// <summary>
-        ///            
+        /// Default set of properties common for all payment providers
         /// </summary>
         public static Dictionary<string, string> BasePPProperties
         {
@@ -22,27 +24,38 @@ namespace Umbraco.NetPayment.Services
                 return new Dictionary<string, string>
                 {
                     { "successUrl", "" },
+                    { "cancelUrl", "" },
                     { "errorUrl", "" },
                 };
             }
         }
 
         UmbracoHelper _umbracoHelper;
+        Settings _settings;
 
-        public UmbracoService(UmbracoHelper umbracoHelper)
+        public UmbracoService(UmbracoHelper umbracoHelper, Settings settings)
         {
             _umbracoHelper = umbracoHelper;
+            _settings = settings;
         }
 
-        public Dictionary<string, string> GetPPProperties(Dictionary<string, string> properties, string culture)
+        public virtual IPublishedContent GetPPNode(string ppDocTypeAlias)
         {
-            var pp = _umbracoHelper.TypedContent(ppNodeId);
+            var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
+            return ppContainer.Children.First(x => x.DocumentTypeAlias == ppDocTypeAlias);
+        }
+
+        public virtual Dictionary<string, string> GetPPProperties(IPublishedContent node, string culture, Dictionary<string, string> properties = null)
+        {
+            var pp = _umbracoHelper.TypedContent(node);
+
+            properties = properties ?? BasePPProperties;
 
             foreach (var prop in properties)
             {
                 if (pp.HasVortoValue(prop.Key))
                 {
-                    properties[prop.Key] = pp.GetVortoValue<string>(prop.Key);
+                    properties[prop.Key] = pp.GetVortoValue<string>(prop.Key, culture);
                 }
                 else
                 {
@@ -50,7 +63,7 @@ namespace Umbraco.NetPayment.Services
                 }
             }
 
-
+            return properties;
         }
     }
 }
