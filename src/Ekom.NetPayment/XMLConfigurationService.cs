@@ -17,20 +17,20 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class XMLConfigurationService
     {
-        HttpContext _httpContext;
+        HttpServerUtilityBase _server;
         ApplicationContext _appContext;
         Settings _settings;
         IFileSystem _fs;
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="httpContext"></param>
+        /// <param name="server"></param>
         /// <param name="appContext"></param>
         /// <param name="settings"></param>
         /// <param name="fileSystem"></param>
-        public XMLConfigurationService(HttpContext httpContext, ApplicationContext appContext, Settings settings, IFileSystem fileSystem)
+        public XMLConfigurationService(HttpServerUtilityBase server, ApplicationContext appContext, Settings settings, IFileSystem fileSystem)
         {
-            _httpContext = httpContext;
+            _server = server;
             _appContext = appContext;
             _settings = settings;
             _fs = fileSystem;
@@ -52,8 +52,8 @@ namespace Umbraco.NetPayment
         /// </summary>
         private XDocument LoadConfiguration()
         {
-            var path = _httpContext.Server.MapPath(_settings.PPConfigPath);
-            var configFileExists = File.Exists(path);
+            var path = _server.MapPath(_settings.PPConfigPath);
+            var configFileExists = _fs.File.Exists(path);
 
             if (configFileExists)
             {
@@ -63,12 +63,44 @@ namespace Umbraco.NetPayment
             return null;
         }
 
-        public object GetConfigForPP(string pp)
+        /// <summary>
+        /// Parses the configuration for a given payment provider and returns all nodes as
+        /// key values pairs.
+        /// </summary>
+        /// <param name="pp">Payment Provider title attribute</param>
+        /// <param name="secondaryMatches">Optional collection of attributes and values to match on provider</param>
+        public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
         {
-            var provider = Configuration.Root.Elements("provider")
-                            .FirstOrDefault(x => x.Attribute("title")?.Value == pp);
+            var providers = Configuration.Root.Elements("provider")
+                            .Where(x => x.Attribute("title")?.Value == pp);
 
+            if (providers.Count() > 0)
+            {
+                XElement provider;
 
+                if (secondaryMatches != null)
+                {
+                    provider = providers.FirstOrDefault(x => secondaryMatches.All(kvp => x.Attribute(kvp.Key)?.Value == kvp.Value));
+                }
+                else
+                {
+                    provider = providers.FirstOrDefault();
+                }
+                
+                if (provider != null)
+                {
+                    var config = new Dictionary<string, string>();
+
+                    foreach (var element in provider.Elements())
+                    {
+                        config.Add(element.Name.LocalName, element.Value);
+                    }
+
+                    return config;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -103,8 +135,10 @@ namespace Umbraco.NetPayment
                 }
 
                 // Couldn't find element
-                var newPPNode = new XElement(_settings.PPUNodeConfElName);
-                newPPNode.Value = FindPPContainerNodeKey().ToString();
+                var newPPNode = new XElement(_settings.PPUNodeConfElName)
+                {
+                    Value = FindPPContainerNodeKey().ToString()
+                };
                 ppConfigRoot.Add(newPPNode);
                 ppConfig.Save(_settings.PPConfigPath);
             }
@@ -122,15 +156,20 @@ namespace Umbraco.NetPayment
 
         private async Task CreateConfigurationXML()
         {
-            var path = _httpContext.Server.MapPath(_settings.PPConfigPath);
+            var path = _server.MapPath(_settings.PPConfigPath);
             var nodeKey = FindPPContainerNodeKey().ToString();
 
             await WriteXMLAsync(path, nodeKey).ConfigureAwait(false);
         }
 
+        static XmlWriterSettings xmlWrSettings = new XmlWriterSettings
+        {
+            Async = true,
+        };
+
         private async Task WriteXMLAsync(string path, string nodeKey)
         {
-            using (var xmlWriter = XmlWriter.Create(path))
+            using (var xmlWriter = XmlWriter.Create(path, xmlWrSettings))
             {
                 await xmlWriter.WriteStartDocumentAsync();
                 await xmlWriter.WriteStartElementAsync("", "providers", "");

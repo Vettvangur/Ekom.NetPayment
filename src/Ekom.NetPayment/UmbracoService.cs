@@ -17,7 +17,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// Default set of properties common for all payment providers
         /// </summary>
-        public static Dictionary<string, string> BasePPProperties
+        public Dictionary<string, string> BasePPProperties
         {
             get
             {

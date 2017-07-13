@@ -36,9 +36,7 @@ namespace Umbraco.NetPayment
 
             // PaymentProviders.config
             var doc = xmlConfigService.Configuration;
-            SetConfiguration(doc);
+            xmlConfigService.SetConfiguration(doc);
         }
-
-
     }
 }

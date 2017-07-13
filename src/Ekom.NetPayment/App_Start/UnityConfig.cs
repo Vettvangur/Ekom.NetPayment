@@ -40,6 +40,13 @@ namespace Umbraco.NetPayment
             // container.LoadConfiguration();
 
             container.RegisterType<HttpContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => HttpContext.Current));
+            container.RegisterType<HttpServerUtilityBase>(
+                new PerRequestLifetimeManager(), 
+                new InjectionFactory(c => 
+                    new HttpServerUtilityWrapper(
+                        container.Resolve<HttpContext>().Server)
+            ));
+
             container.RegisterType<ApplicationContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
             container.RegisterType<UmbracoContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => UmbracoContext.Current));
             container.RegisterType<UmbracoHelper>(new PerRequestLifetimeManager(), new InjectionConstructor(typeof(UmbracoContext)));
@@ -48,7 +55,7 @@ namespace Umbraco.NetPayment
 
             container.RegisterType<UmbracoService>();
             container.RegisterType<OrderService>();
-
+            
             container.RegisterType<IFileSystem, FileSystem>();
         }
     }
