@@ -39,14 +39,25 @@ namespace Umbraco.NetPayment
         {
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
-
             container.RegisterType<HttpContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => HttpContext.Current));
+            container.RegisterType<HttpRequestBase>(
+                new PerRequestLifetimeManager(),
+                new InjectionFactory(c =>
+                    new HttpRequestWrapper(
+                        container.Resolve<HttpContext>().Request
+            )));
+            container.RegisterType<HttpResponseBase>(
+                new PerRequestLifetimeManager(),
+                new InjectionFactory(c =>
+                    new HttpResponseWrapper(
+                        container.Resolve<HttpContext>().Response
+            )));
             container.RegisterType<HttpServerUtilityBase>(
                 new PerRequestLifetimeManager(), 
                 new InjectionFactory(c => 
                     new HttpServerUtilityWrapper(
-                        container.Resolve<HttpContext>().Server)
-            ));
+                        container.Resolve<HttpContext>().Server
+            )));
 
             container.RegisterType<ApplicationContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
             container.RegisterType<UmbracoContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => UmbracoContext.Current));
@@ -56,6 +67,7 @@ namespace Umbraco.NetPayment
 
             container.RegisterType<UmbracoService>();
             container.RegisterType<OrderService>();
+            container.RegisterType<XMLConfigurationService>();
 
             container.RegisterType<IFileSystem, FileSystem>();
             container.RegisterType<ILogFactory, LogFactory>();

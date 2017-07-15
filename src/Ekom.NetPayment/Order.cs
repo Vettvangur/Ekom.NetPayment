@@ -21,14 +21,19 @@ namespace Umbraco.NetPayment
         public string Name { get; set; }
 
         /// <summary>
-        /// Order Id
+        /// Order SQL unique Id
         /// </summary>
         public Guid Id { get; set; }
 
-        /// <summary>
-        /// Umbraco member id
-        /// </summary>
-        public int Member { get; set; }
+		/// <summary>
+		/// Friendly order name: f.x. IS0001
+		/// </summary>
+		public string OrderId { get; set; }
+
+		/// <summary>
+		/// Umbraco member id
+		/// </summary>
+		public int Member { get; set; }
 
         /// <summary>
         /// Total amount

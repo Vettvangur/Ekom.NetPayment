@@ -32,9 +32,6 @@ namespace Umbraco.NetPayment
             _settings = UnityConfig.GetConfiguredContainer().Resolve<Settings>();
             var xmlConfigService = UnityConfig.GetConfiguredContainer().Resolve<XMLConfigurationService>();
 
-            var url = umbracoApplication.Context.Request.Url;
-            _settings.BasePath = $"{url.Scheme}://{url.Authority}";
-
             // PaymentProviders.config
             var doc = xmlConfigService.Configuration;
             xmlConfigService.SetConfiguration(doc);

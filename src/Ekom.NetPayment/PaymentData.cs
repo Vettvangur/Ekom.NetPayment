@@ -1,24 +1,19 @@
 ﻿using System;
 using Umbraco.Core.Persistence;
 
-namespace uWebshop.Payment.Valitor
+namespace Umbraco.NetPayment
 {
     /// <summary>
     /// Saves payment information for transactions
     /// </summary>
     [TableName("customPayments")]
-    [PrimaryKey("Id", autoIncrement = true)]
-    public class paymentData
+    [PrimaryKey("Id", autoIncrement = false)]
+    public class PaymentData
     {
         /// <summary>
         /// SQL entry Id
         /// </summary>
-        public int Id { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public int OrderId { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 

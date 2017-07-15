@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Umbraco.NetPayment
@@ -77,6 +73,23 @@ namespace Umbraco.NetPayment
             }
         }
 
-        public virtual string BasePath { get; set; }
+        private string _basePath;
+        /// <summary>
+        /// Public server URL, used as basepath when requesting callbacks from remote PP's
+        /// </summary>
+        public virtual string BasePath
+        {
+            get
+            {
+                if (_basePath == null)
+                {
+                    var url = HttpContext.Current.Request.Url;
+                    _basePath = $"{url.Scheme}://{url.Authority}";
+                }
+
+                return _basePath;
+            }
+            set { _basePath = value; }
+        }
     }
 }
