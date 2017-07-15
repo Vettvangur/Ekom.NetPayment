@@ -74,9 +74,9 @@ namespace Umbraco.NetPayment
         }
 
         private string _basePath;
-        /// <summary>
-        /// Public server URL, used as basepath when requesting callbacks from remote PP's
-        /// </summary>
+        /// <summary> 
+        /// Public server URL, used as basepath when requesting callbacks from remote PP's 
+        /// </summary> 
         public virtual string BasePath
         {
             get

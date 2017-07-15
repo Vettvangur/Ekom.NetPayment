@@ -1,9 +1,12 @@
-﻿using Our.Umbraco.Vorto.Extensions;
+﻿using GMO.Umbraco;
+using Our.Umbraco.Vorto.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Web;
 
@@ -33,33 +36,46 @@ namespace Umbraco.NetPayment
         UmbracoHelper _umbracoHelper;
         Settings _settings;
 
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="umbracoHelper"></param>
+        /// <param name="settings"></param>
         public UmbracoService(UmbracoHelper umbracoHelper, Settings settings)
         {
             _umbracoHelper = umbracoHelper;
             _settings = settings;
         }
 
+        /// <summary>
+        /// Get umbraco content by document type alias
+        /// </summary>
+        /// <param name="ppDocTypeAlias">Document type alias</param>
         public virtual IPublishedContent GetPPNode(string ppDocTypeAlias)
         {
             var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
             return ppContainer.Children.First(x => x.DocumentTypeAlias == ppDocTypeAlias);
         }
 
-        public virtual Dictionary<string, string> GetPPProperties(IPublishedContent node, string culture, Dictionary<string, string> properties = null)
+        /// <summary>
+        /// Fill dictionary with values for each dictionary key.
+        /// </summary>
+        /// <param name="pp">Umbraco payment provider content node</param>
+        /// <param name="culture">IS/EN f.x.</param>
+        /// <param name="properties">Optional dictionary of keys to get, default uses base properties dictionary</param>
+        public virtual Dictionary<string, string> GetPPProperties(IPublishedContent pp, string culture, Dictionary<string, string> properties = null)
         {
-            var pp = _umbracoHelper.TypedContent(node);
-
             properties = properties ?? BasePPProperties;
 
-            foreach (var prop in properties)
+            for (var x = 0; x < properties.Count; x++)
             {
-                if (pp.HasVortoValue(prop.Key))
+                var key = properties.ElementAt(x).Key;
+                var prop = pp.GetProperty(key);
+
+                if (prop != null)
                 {
-                    properties[prop.Key] = pp.GetVortoValue<string>(prop.Key, culture);
-                }
-                else
-                {
-                    properties[prop.Key] = pp.GetPropertyValue<string>(prop.Key);
+                    var value = _umbracoHelper.GetValueFromProperty(prop, pp, culture, forceUrl: true);
+                    properties[key] = value.ToString();
                 }
             }
 

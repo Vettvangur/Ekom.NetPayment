@@ -1,9 +1,9 @@
-﻿using System;
+﻿using log4net;
+using Microsoft.Practices.Unity;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
@@ -17,6 +17,7 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class XMLConfigurationService
     {
+        ILog _log;
         HttpServerUtilityBase _server;
         ApplicationContext _appContext;
         Settings _settings;
@@ -34,6 +35,9 @@ namespace Umbraco.NetPayment
             _appContext = appContext;
             _settings = settings;
             _fs = fileSystem;
+
+            var logFac = UnityConfig.GetConfiguredContainer().Resolve<ILogFactory>();
+            _log = logFac.GetLogger(typeof(XMLConfigurationService));
         }
 
         /// <summary>
@@ -149,9 +153,17 @@ namespace Umbraco.NetPayment
 
         private Guid FindPPContainerNodeKey()
         {
-            var ctId = _appContext.Services.ContentTypeService.GetContentType(_settings.PPDocumentTypeAlias).Id;
-            var key = _appContext.Services.ContentService.GetContentOfContentType(ctId).First().Key;
-            return key;
+            try
+            {
+                var ctId = _appContext.Services.ContentTypeService.GetContentType(_settings.PPDocumentTypeAlias).Id;
+                var key = _appContext.Services.ContentService.GetContentOfContentType(ctId).First().Key;
+                return key;
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Unable to find payment provider node, please verify document type alias and umbraco node presence.", ex);
+                throw;
+            }
         }
 
         private async Task CreateConfigurationXML()
@@ -165,10 +177,15 @@ namespace Umbraco.NetPayment
         static XmlWriterSettings xmlWrSettings = new XmlWriterSettings
         {
             Async = true,
+            Indent = true,
+            NewLineOnAttributes = true,
         };
 
         private async Task WriteXMLAsync(string path, string nodeKey)
         {
+            var dirPath = _fs.Path.GetDirectoryName(path);
+            _fs.Directory.CreateDirectory(dirPath);
+            
             using (var xmlWriter = XmlWriter.Create(path, xmlWrSettings))
             {
                 await xmlWriter.WriteStartDocumentAsync();

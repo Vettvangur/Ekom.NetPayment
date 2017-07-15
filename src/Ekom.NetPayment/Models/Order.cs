@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence;
+using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Umbraco.NetPayment
 {
@@ -25,10 +26,11 @@ namespace Umbraco.NetPayment
         /// </summary>
         public Guid Id { get; set; }
 
-		/// <summary>
-		/// Friendly order name: f.x. IS0001
-		/// </summary>
-		public string OrderId { get; set; }
+        /// <summary>
+        /// Friendly order name: f.x. IS0001
+        /// </summary>
+        [NullSetting(NullSetting = NullSettings.Null)]
+        public string OrderId { get; set; }
 
 		/// <summary>
 		/// Umbraco member id
@@ -58,11 +60,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// Store custom order data here
         /// </summary>
+        [NullSetting(NullSetting = NullSettings.Null)]
         public string Custom { get; set; }
-
-        /// <summary>
-        /// Visa/Mastercard/etc..
-        /// </summary>
-        public string CardType { get; set; }
     }
 }

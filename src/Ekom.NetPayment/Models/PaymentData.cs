@@ -1,5 +1,6 @@
 ﻿using System;
 using Umbraco.Core.Persistence;
+using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Umbraco.NetPayment
 {
@@ -18,6 +19,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// 
         /// </summary>
+        [NullSetting(NullSetting = NullSettings.Null)]
         public string PaymentDate { get; set; }
 
         /// <summary>

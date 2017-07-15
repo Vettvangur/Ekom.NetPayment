@@ -16,34 +16,34 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class UmbEvents : ApplicationEventHandler
     {
-        UmbracoApplicationBase _umbracoApplication;
-        ApplicationContext _applicationContext;
-        Settings _settings;
-
         /// <summary>
         /// Umbraco lifecycle method
         /// </summary>
         /// <param name="umbracoApplication"></param>
         /// <param name="applicationContext"></param>
-        protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
+        protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            _umbracoApplication = umbracoApplication;
-            _applicationContext = applicationContext;
-            _settings = UnityConfig.GetConfiguredContainer().Resolve<Settings>();
+            var settings = UnityConfig.GetConfiguredContainer().Resolve<Settings>();
             var xmlConfigService = UnityConfig.GetConfiguredContainer().Resolve<XMLConfigurationService>();
 
             // PaymentProviders.config
             var doc = xmlConfigService.Configuration;
             xmlConfigService.SetConfiguration(doc);
 
-            var ctx = applicationContext.DatabaseContext;
-            var db = new DatabaseSchemaHelper(ctx.Database, applicationContext.ProfilingLogger.Logger, ctx.SqlSyntax);
+            var dbCtx = applicationContext.DatabaseContext;
+            var db = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
 
             //Check if the DB table does NOT exist
-            if (!db.TableExist("JobAlertQueue"))
+            if (!db.TableExist("customNetPaymentOrder"))
             {
                 //Create DB table - and set overwrite to false
-                db.CreateTable<object>(false);
+                db.CreateTable<Order>(false);
+            }
+            //Check if the DB table does NOT exist
+            if (!db.TableExist("customPayments"))
+            {
+                //Create DB table - and set overwrite to false
+                db.CreateTable<PaymentData>(false);
             }
         }
     }
