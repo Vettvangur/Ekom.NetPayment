@@ -163,6 +163,9 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.4.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="Our.Umbraco.Vorto, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Our.Umbraco.Vorto.1.5.3\lib\net45\Our.Umbraco.Vorto.dll</HintPath>
     </Reference>
@@ -283,6 +286,8 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Helpers\MD5StringSum.cs" />
+    <Compile Include="LogFactory.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="OrderItem.cs" />
@@ -295,6 +300,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Umbraco.NetPayment.nuspec" />
   </ItemGroup>

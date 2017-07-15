@@ -5,6 +5,7 @@ using Umbraco.Web;
 using Umbraco.Core;
 using System.Web;
 using System.IO.Abstractions;
+using log4net;
 
 namespace Umbraco.NetPayment
 {
@@ -55,8 +56,9 @@ namespace Umbraco.NetPayment
 
             container.RegisterType<UmbracoService>();
             container.RegisterType<OrderService>();
-            
+
             container.RegisterType<IFileSystem, FileSystem>();
+            container.RegisterType<ILogFactory, LogFactory>();
         }
     }
 }
