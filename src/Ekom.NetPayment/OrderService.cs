@@ -70,7 +70,7 @@ namespace Umbraco.NetPayment
         /// Persist in database and retrieve unique order id
         /// </summary>
         /// <returns>Order Id</returns>
-        public virtual string Save(
+        public virtual Guid Save(
             int member, 
             string total,
             string paymentProvider, 
@@ -87,19 +87,24 @@ namespace Umbraco.NetPayment
                 name.Append(order.Title + " ");
             }
 
+            var orderid = Guid.NewGuid();
+
             using (var db = _appCtx.DatabaseContext.Database)
             {
                 // Return order id
-                return db.Insert(new Order
+                db.Insert(new Order
                 {
-                    name = name.ToString(),
-                    member = member,
-                    amount = decimal.Parse(total, nfi),
-                    date = DateTime.Now,
-                    paymentProvider = paymentProvider,
-                    custom = custom
-                }).ToString();
+                    Id = orderid,
+                    Name = name.ToString(),
+                    Member = member,
+                    Amount = decimal.Parse(total, nfi),
+                    Date = DateTime.Now,
+                    PaymentProvider = paymentProvider,
+                    Custom = custom
+                });
             }
+
+            return orderid;
         }
     }
 }

@@ -7,8 +7,15 @@ using System.Threading.Tasks;
 
 namespace Umbraco.NetPayment.Helpers
 {
+    /// <summary>
+    /// MD5 calculations
+    /// </summary>
     public class MD5Helper
     {
+        /// <summary>
+        /// Calculates MD5 hash from the provided string input.
+        /// </summary>
+        /// <param name="input">String to hash</param>
         public static string GetMD5StringSum(string input)
         {
             MD5 md5Hasher = MD5.Create();

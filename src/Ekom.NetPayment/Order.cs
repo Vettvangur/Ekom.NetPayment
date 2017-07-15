@@ -12,47 +12,52 @@ namespace Umbraco.NetPayment
     /// Generalized object storing basic information on orders and their status
     /// </summary>
     [TableName("customNetPaymentOrder")]
-    [PrimaryKey("id", autoIncrement = true)]
+    [PrimaryKey("id", autoIncrement = false)]
     public class Order
     {
         /// <summary>
         /// 
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
-        /// Database ID
+        /// Order Id
         /// </summary>
-        public int id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Umbraco member id
         /// </summary>
-        public int member { get; set; }
+        public int Member { get; set; }
+
+        /// <summary>
+        /// Total amount
+        /// </summary>
+        public decimal Amount { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public decimal amount { get; set; }
+        public DateTime Date { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public DateTime date { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public bool paid { get; set; }
+        public bool Paid { get; set; }
 
         /// <summary>
         /// String name of payment provider <see cref="IPublishedContent"/> node
         /// </summary>
-        public string paymentProvider { get; set; }
+        public string PaymentProvider { get; set; }
 
         /// <summary>
         /// Store custom order data here
         /// </summary>
-        public string custom { get; set; }
+        public string Custom { get; set; }
+
+        /// <summary>
+        /// Visa/Mastercard/etc..
+        /// </summary>
+        public string CardType { get; set; }
     }
 }
