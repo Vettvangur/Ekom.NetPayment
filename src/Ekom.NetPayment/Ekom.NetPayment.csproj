@@ -246,8 +246,10 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Helpers\MD5Helper.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="LocalCallbacks.cs" />
     <Compile Include="LogFactory.cs" />
+    <Compile Include="MailService.cs" />
     <Compile Include="Models\OrderStatus.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Models\OrderItem.cs" />

@@ -5,7 +5,7 @@ using Umbraco.Web;
 using Umbraco.Core;
 using System.Web;
 using System.IO.Abstractions;
-using log4net;
+using Umbraco.Core.Configuration;
 
 namespace Umbraco.NetPayment
 {
@@ -62,12 +62,14 @@ namespace Umbraco.NetPayment
             container.RegisterType<ApplicationContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
             container.RegisterType<UmbracoContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => UmbracoContext.Current));
             container.RegisterType<UmbracoHelper>(new PerRequestLifetimeManager(), new InjectionConstructor(typeof(UmbracoContext)));
+            container.RegisterType<UmbracoConfig>(new InjectionFactory(c => UmbracoConfig.For));
 
             container.RegisterInstance(new Settings());
 
             container.RegisterType<UmbracoService>();
             container.RegisterType<OrderService>();
             container.RegisterType<XMLConfigurationService>();
+            container.RegisterType<MailService>();
 
             container.RegisterType<IFileSystem, FileSystem>();
             container.RegisterType<ILogFactory, LogFactory>();
