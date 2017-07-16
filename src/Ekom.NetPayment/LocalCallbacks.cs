@@ -22,6 +22,7 @@ namespace Umbraco.NetPayment
         /// Callback to run on error
         /// </summary>
         /// <param name="o"></param>
-        public delegate void errorCallback(Order o);
+        /// <param name="ex"></param>
+        public delegate void errorCallback(Order o, Exception ex);
     }
 }

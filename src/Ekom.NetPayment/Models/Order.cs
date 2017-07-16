@@ -13,7 +13,7 @@ namespace Umbraco.NetPayment
     /// Generalized object storing basic information on orders and their status
     /// </summary>
     [TableName("customNetPaymentOrder")]
-    [PrimaryKey("id", autoIncrement = false)]
+    [PrimaryKey("Id", autoIncrement = false)]
     public class Order
     {
         /// <summary>

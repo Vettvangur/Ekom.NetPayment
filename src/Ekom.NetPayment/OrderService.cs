@@ -33,7 +33,7 @@ namespace Umbraco.NetPayment
         {
             var request = HttpContext.Current.Request;
 
-            string reference = request.QueryString["referenceNumber"];
+            string reference = request.QueryString["ReferenceNumber"];
 
             if (string.IsNullOrEmpty(reference))
             {
@@ -52,7 +52,7 @@ namespace Umbraco.NetPayment
 
             if (!string.IsNullOrEmpty(reference))
             {
-                bool _referenceId = int.TryParse(reference, out var referenceId);
+                bool _referenceId = Guid.TryParse(reference, out var referenceId);
 
                 if (_referenceId)
                 {
@@ -64,6 +64,18 @@ namespace Umbraco.NetPayment
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Get order with the given unique id
+        /// </summary>
+        /// <param name="id">Order id</param>
+        public Order Get(Guid id)
+        {
+            using (var db = _appCtx.DatabaseContext.Database)
+            {
+                return db.Single<Order>(id);
+            }
         }
 
         /// <summary>
