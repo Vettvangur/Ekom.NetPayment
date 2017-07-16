@@ -248,7 +248,7 @@
     <Compile Include="Helpers\MD5Helper.cs" />
     <Compile Include="LocalCallbacks.cs" />
     <Compile Include="LogFactory.cs" />
-    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderStatus.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\PaymentData.cs" />

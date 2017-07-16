@@ -11,7 +11,7 @@ using Umbraco.Core.Persistence;
 namespace Umbraco.NetPayment
 {
     /// <summary>
-    /// Utility functions for handling <see cref="Order"/> objects
+    /// Utility functions for handling <see cref="OrderStatus"/> objects
     /// </summary>
     public class OrderService
     {
@@ -29,7 +29,7 @@ namespace Umbraco.NetPayment
         /// Attempts to retrieve an order using data from the querystring or posted values
         /// </summary>
         /// <returns>Returns the referenced order or null otherwise</returns>
-        public static Order Get()
+        public static OrderStatus Get()
         {
             var request = HttpContext.Current.Request;
 
@@ -58,7 +58,7 @@ namespace Umbraco.NetPayment
                 {
                     using (var db = ApplicationContext.Current.DatabaseContext.Database)
                     {
-                        return db.Single<Order>(referenceId);
+                        return db.Single<OrderStatus>(referenceId);
                     }
                 }
             }
@@ -70,11 +70,11 @@ namespace Umbraco.NetPayment
         /// Get order with the given unique id
         /// </summary>
         /// <param name="id">Order id</param>
-        public Order Get(Guid id)
+        public OrderStatus Get(Guid id)
         {
             using (var db = _appCtx.DatabaseContext.Database)
             {
-                return db.Single<Order>(id);
+                return db.Single<OrderStatus>(id);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Umbraco.NetPayment
             using (var db = _appCtx.DatabaseContext.Database)
             {
                 // Return order id
-                db.Insert(new Order
+                db.Insert(new OrderStatus
                 {
                     Id = orderid,
                     Name = name.ToString(),

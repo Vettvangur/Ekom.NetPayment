@@ -1,12 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Our.Umbraco.Vorto.Extensions;
+using Our.Umbraco.Vorto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.Core.Models;
+using Umbraco.Core.ObjectResolution;
+using Umbraco.Core.Profiling;
+using Umbraco.Core.PropertyEditors;
 using Umbraco.Web;
 using Umbraco.Web.Models;
 
@@ -32,29 +38,46 @@ namespace Umbraco.NetPayment.Tests
 
         // Needs mock for all methods called here:
         // https://github.com/umco/umbraco-vorto/blob/master/src/Our.Umbraco.Vorto/Extensions/IPublishedContentExtensions.cs
+        // Update: probably impossible....
         //[TestMethod]
         //public void GetsStringVortoValues()
         //{
+        //    var cacheMocks = new CacheMocks();
+        //    var appCtx = new ApplicationContext(cacheMocks.cacheHelper, new ProfilingLogger(Mock.Of<ILogger>(), Mock.Of<IProfiler>()));
+        //    ApplicationContext.EnsureContext(appCtx, true);
+        //    var propValueConverter = new Mock<ManyObjectsResolverBase<PropertyValueConvertersResolver, IPropertyValueConverter>>();
+        //    PropertyValueConvertersResolver.Current = (PropertyValueConvertersResolver) propValueConverter.Object;
+
+        //    var dtd = new Mock<IDataTypeDefinition>();
+
+        //    cacheMocks.runtimeCache.Setup(x => x.GetCacheItem(It.IsAny<string>(), It.IsAny<Func<object>>())).Returns(dtd.Object);
+
         //    var propertyDic = new Dictionary<string, string>
         //    {
         //        { "propKey", "" }
         //    };
 
+        //    var vortoCultureValue = new Dictionary<string, object>
+        //    {
+
+        //        { "is-IS", "propValue" }
+        //    };
+
+        //    var vortoValue = new VortoValue
+        //    {
+        //        DtdGuid = Guid.Parse("8001d413-aee2-4586-952b-cf0d7e021de5"),
+        //        Values = vortoCultureValue,
+        //    };
+
         //    var prop = new Mock<IPublishedProperty>();
         //    prop.Setup(x => x.PropertyTypeAlias).Returns("propKey");
+        //    prop.Setup(x => x.Value).Returns(vortoValue);
+        //    prop.Setup(x => x.HasValue).Returns(true);
 
         //    var content = new Mock<IPublishedContent>();
-        //    content.Setup(x => x.HasVortoValue(
-        //        It.Is<string>(y => y == "propKey"), 
-        //        It.IsAny<string>(), 
-        //        false, null
-        //    )).Returns(true);
-        //    Our.Umbraco.Vorto.Models.VortoValue();
-        //    content.Setup(x => x.GetVortoValue(
-        //        It.Is<string>(y => y == "propKey"), 
-        //        It.IsAny<string>(), 
-        //        false, null, null)
-        //    ).Returns("propValue");
+        //    //content.Setup(x => x.HasValue(It.Is<string>(y => y == "propKey"))).Returns(true);
+        //    content.Setup(x => x.GetProperty(It.Is<string>(y => y == "propKey"))).Returns(prop.Object);
+        //    content.Setup(x => x.GetProperty(It.Is<string>(y => y == "propKey"), It.IsAny<bool>())).Returns(prop.Object);
 
         //    var uSvc = new UmbracoServiceMocks(true);
 

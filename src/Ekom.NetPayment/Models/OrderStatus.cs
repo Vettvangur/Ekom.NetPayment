@@ -14,23 +14,25 @@ namespace Umbraco.NetPayment
     /// </summary>
     [TableName("customNetPaymentOrder")]
     [PrimaryKey("Id", autoIncrement = false)]
-    public class Order
+    public class OrderStatus
     {
         /// <summary>
-        /// 
+        /// Description of ordered item or items f.x.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
         /// Order SQL unique Id
         /// </summary>
+        [PrimaryKeyColumn(AutoIncrement = false)]
+        [NullSetting(NullSetting = NullSettings.NotNull)]
         public Guid Id { get; set; }
 
         /// <summary>
         /// Friendly order name: f.x. IS0001
         /// </summary>
         [NullSetting(NullSetting = NullSettings.Null)]
-        public string OrderId { get; set; }
+        public string OrderName { get; set; }
 
 		/// <summary>
 		/// Umbraco member id

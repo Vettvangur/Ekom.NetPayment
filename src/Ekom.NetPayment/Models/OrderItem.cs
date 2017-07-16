@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Umbraco.NetPayment
 {
     /// <summary>
-    /// A single item in an <see cref="Order"/>
+    /// A single item in an <see cref="OrderStatus"/>
     /// </summary>
     public class OrderItem
     {

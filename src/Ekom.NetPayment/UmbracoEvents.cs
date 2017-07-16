@@ -37,7 +37,7 @@ namespace Umbraco.NetPayment
             if (!db.TableExist("customNetPaymentOrder"))
             {
                 //Create DB table - and set overwrite to false
-                db.CreateTable<Order>(false);
+                db.CreateTable<OrderStatus>(false);
             }
             //Check if the DB table does NOT exist
             if (!db.TableExist("customPayments"))

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Security;
 using Umbraco.Core;
+using Umbraco.Core.Cache;
 using Umbraco.Core.Configuration.UmbracoSettings;
 using Umbraco.Core.Dictionary;
 using Umbraco.Core.Logging;
@@ -64,6 +65,33 @@ namespace Umbraco.NetPayment.Tests
                 new MembershipHelper(umbCtx, Mock.Of<MembershipProvider>(), Mock.Of<RoleProvider>()));
 
             return helper;
+        }
+
+
+    }
+
+    internal class ActivatorServiceProvider : IServiceProvider
+    {
+        public object GetService(Type serviceType)
+        {
+            return Activator.CreateInstance(serviceType);
+        }
+    }
+
+    public class CacheMocks
+    {
+        public Mock<IRuntimeCacheProvider> runtimeCache;
+        public Mock<ICacheProvider> staticCache;
+        public Mock<ICacheProvider> requestCache;
+        public CacheHelper cacheHelper;
+
+        public CacheMocks()
+        {
+            runtimeCache = new Mock<IRuntimeCacheProvider>();
+            staticCache = new Mock<ICacheProvider>();
+            requestCache = new Mock<ICacheProvider>();
+
+            cacheHelper = new CacheHelper(runtimeCache.Object, staticCache.Object, requestCache.Object);
         }
     }
 }

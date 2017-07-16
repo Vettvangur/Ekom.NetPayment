@@ -16,13 +16,13 @@ namespace Umbraco.NetPayment
         /// Callback to run on success
         /// </summary>
         /// <param name="o"></param>
-        public delegate void successCallback(Order o);
+        public delegate void successCallback(OrderStatus o);
 
         /// <summary>
         /// Callback to run on error
         /// </summary>
         /// <param name="o"></param>
         /// <param name="ex"></param>
-        public delegate void errorCallback(Order o, Exception ex);
+        public delegate void errorCallback(OrderStatus o, Exception ex);
     }
 }
