@@ -6,6 +6,9 @@ using Umbraco.Core;
 using System.Web;
 using System.IO.Abstractions;
 using Umbraco.Core.Configuration;
+using Microsoft.Practices.Unity.Mvc;
+using System.Web.Mvc;
+using System.Linq;
 
 namespace Umbraco.NetPayment
 {
@@ -37,6 +40,12 @@ namespace Umbraco.NetPayment
         /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
+            container.RegisterTypes(
+                AllClasses.FromAssemblies(typeof(UnityConfig).Assembly),
+                WithMappings.FromMatchingInterface,
+                WithName.Default
+            );
+
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
             container.RegisterType<HttpContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => HttpContext.Current));
@@ -66,13 +75,7 @@ namespace Umbraco.NetPayment
 
             container.RegisterInstance(new Settings());
 
-            container.RegisterType<UmbracoService>();
-            container.RegisterType<OrderService>();
-            container.RegisterType<XMLConfigurationService>();
-            container.RegisterType<MailService>();
-
             container.RegisterType<IFileSystem, FileSystem>();
-            container.RegisterType<ILogFactory, LogFactory>();
         }
     }
 }

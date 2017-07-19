@@ -8,6 +8,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using Umbraco.Core.Persistence;
+using System.Web.Mvc;
+using Microsoft.Practices.Unity.Mvc;
 
 namespace Umbraco.NetPayment
 {
@@ -23,8 +25,10 @@ namespace Umbraco.NetPayment
         /// <param name="applicationContext"></param>
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            var settings = UnityConfig.GetConfiguredContainer().Resolve<Settings>();
-            var xmlConfigService = UnityConfig.GetConfiguredContainer().Resolve<XMLConfigurationService>();
+            var container = UnityConfig.GetConfiguredContainer();
+
+            var settings = container.Resolve<Settings>();
+            var xmlConfigService = container.Resolve<XMLConfigurationService>();
 
             // PaymentProviders.config
             var doc = xmlConfigService.Configuration;
