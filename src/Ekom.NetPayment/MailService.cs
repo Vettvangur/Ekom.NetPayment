@@ -44,7 +44,7 @@ namespace Umbraco.NetPayment
             Sender = smtpSection.From;
         }
 
-        public void Send()
+        public virtual void Send()
         {
             using (var smtp = new SmtpClient(_host, _port))
             {

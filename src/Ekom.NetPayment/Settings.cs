@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Unity;
+using System;
 using System.Configuration;
 using System.Web;
 using Umbraco.NetPayment.Helpers;
@@ -11,6 +12,14 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class Settings
     {
+        private HttpContextBase _httpCtx
+        {
+            get
+            {
+                return UnityConfig.GetConfiguredContainer().Resolve<HttpContextBase>();
+            }
+        }
+
         /// <summary>
         /// Path to payment provider configuration.
         /// That file stores payment provider specific information that often gets xml transformed.
@@ -37,25 +46,6 @@ namespace Umbraco.NetPayment
         public virtual string PPDocumentTypeAlias { get; set; }
             = ConfigurationManager.AppSettings["NetPayment.PPDocumentTypeAlias"]
             ?? "paymentProviders";
-
-        private string _basePath;
-        /// <summary> 
-        /// Public server URL, used as basepath when requesting callbacks from remote PP's 
-        /// </summary> 
-        public virtual string BasePath
-        {
-            get
-            {
-                if (_basePath == null)
-                {
-                    var url = HttpContext.Current.Request.Url;
-                    _basePath = $"{url.Scheme}://{url.Authority}";
-                }
-
-                return _basePath;
-            }
-            set { _basePath = value; }
-        }
 
         private bool? _sendEmailAlerts;
         /// <summary>

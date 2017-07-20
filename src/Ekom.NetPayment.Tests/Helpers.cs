@@ -9,6 +9,9 @@ using System.Web;
 using System.Web.Security;
 using Umbraco.Core;
 using Umbraco.Core.Cache;
+using Umbraco.Core.Configuration;
+using Umbraco.Core.Configuration.BaseRest;
+using Umbraco.Core.Configuration.Dashboard;
 using Umbraco.Core.Configuration.UmbracoSettings;
 using Umbraco.Core.Dictionary;
 using Umbraco.Core.Logging;
@@ -36,6 +39,21 @@ namespace Umbraco.NetPayment.Tests
         {
             var appCtx = new ApplicationContext(CacheHelper.CreateDisabledCacheHelper(), new ProfilingLogger(Mock.Of<ILogger>(), Mock.Of<IProfiler>()));
             return ApplicationContext.EnsureContext(appCtx, true);
+        }
+
+        public static void GetSetAppUmbracoCtx()
+        {
+            var appCtx = new ApplicationContext(CacheHelper.CreateDisabledCacheHelper(), new ProfilingLogger(Mock.Of<ILogger>(), Mock.Of<IProfiler>()));
+            ApplicationContext.EnsureContext(appCtx, true);
+
+            var umbCtx = UmbracoContext.EnsureContext(
+                new Mock<HttpContextBase>().Object,
+                appCtx,
+                new Mock<WebSecurity>(null, null).Object,
+                Mock.Of<IUmbracoSettingsSection>(section => section.WebRouting == Mock.Of<IWebRoutingSection>(routingSection => routingSection.UrlProviderMode == "AutoLegacy")),
+                Enumerable.Empty<IUrlProvider>(),
+                true
+            );
         }
 
         public static UmbracoHelper GetUHelper()
@@ -66,8 +84,6 @@ namespace Umbraco.NetPayment.Tests
 
             return helper;
         }
-
-
     }
 
     internal class ActivatorServiceProvider : IServiceProvider
@@ -92,6 +108,23 @@ namespace Umbraco.NetPayment.Tests
             requestCache = new Mock<ICacheProvider>();
 
             cacheHelper = new CacheHelper(runtimeCache.Object, staticCache.Object, requestCache.Object);
+        }
+    }
+
+    public class UmbracoSettingsMocks
+    {
+        public Mock<IUmbracoSettingsSection> umbracoSettings;
+        public Mock<IBaseRestSection> baseRest;
+        public Mock<IDashboardSection> dashboard;
+        public UmbracoConfig umbracoConfig;
+
+        public UmbracoSettingsMocks()
+        {
+            umbracoSettings = new Mock<IUmbracoSettingsSection>();
+            baseRest = new Mock<IBaseRestSection>();
+            dashboard = new Mock<IDashboardSection>();
+
+            umbracoConfig = new UmbracoConfig(umbracoSettings.Object, baseRest.Object, dashboard.Object);
         }
     }
 }
