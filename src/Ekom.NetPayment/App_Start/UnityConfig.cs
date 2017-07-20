@@ -48,32 +48,29 @@ namespace Umbraco.NetPayment
 
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
-            container.RegisterType<HttpContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => HttpContext.Current));
+            container.RegisterType<HttpContext>(new InjectionFactory(c => HttpContext.Current));
             container.RegisterType<HttpRequestBase>(
-                new PerRequestLifetimeManager(),
                 new InjectionFactory(c =>
                     new HttpRequestWrapper(
                         container.Resolve<HttpContext>().Request
             )));
             container.RegisterType<HttpResponseBase>(
-                new PerRequestLifetimeManager(),
                 new InjectionFactory(c =>
                     new HttpResponseWrapper(
                         container.Resolve<HttpContext>().Response
             )));
             container.RegisterType<HttpServerUtilityBase>(
-                new PerRequestLifetimeManager(), 
                 new InjectionFactory(c => 
                     new HttpServerUtilityWrapper(
                         container.Resolve<HttpContext>().Server
             )));
 
-            container.RegisterType<ApplicationContext>(new InjectionFactory(c => ApplicationContext.Current));
-            container.RegisterType<UmbracoContext>(new PerRequestLifetimeManager(), new InjectionFactory(c => UmbracoContext.Current));
-            container.RegisterType<UmbracoHelper>(new PerRequestLifetimeManager(), new InjectionConstructor(typeof(UmbracoContext)));
-            container.RegisterType<UmbracoConfig>(new InjectionFactory(c => UmbracoConfig.For));
+            container.RegisterType<Settings>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => new Settings()));
+            container.RegisterType<ApplicationContext>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
+            container.RegisterType<UmbracoConfig>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => UmbracoConfig.For));
 
-            container.RegisterInstance(new Settings());
+            container.RegisterType<UmbracoContext>(new InjectionFactory(c => UmbracoContext.Current));
+            container.RegisterType<UmbracoHelper>(new InjectionConstructor(typeof(UmbracoContext)));
 
             container.RegisterType<IFileSystem, FileSystem>();
         }
