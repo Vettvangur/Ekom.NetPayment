@@ -25,7 +25,6 @@ namespace Umbraco.NetPayment
         /// Order SQL unique Id
         /// </summary>
         [PrimaryKeyColumn(AutoIncrement = false)]
-        [NullSetting(NullSetting = NullSettings.NotNull)]
         public Guid Id { get; set; }
 
         /// <summary>
