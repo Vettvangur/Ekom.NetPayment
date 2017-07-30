@@ -84,13 +84,16 @@ namespace Umbraco.NetPayment.Tests
         public void CreatesReadableConfig()
         {
             var xmlConfigSvcMocks = new XMLCfgSvcMocks(new FileSystem());
+            var xmlConfigSvc = xmlConfigSvcMocks.xmlConfigSvcMocked.Object;
             string path = Directory.GetCurrentDirectory() + "\\tests\\test.xml";
 
-            var task = typeof(XMLConfigurationService).GetMethod(
-                "WriteXMLAsync", 
-                BindingFlags.Instance | BindingFlags.NonPublic
+            var task = new PrivateObject(
+                xmlConfigSvc, 
+                new PrivateType(
+                    typeof(XMLConfigurationService)
+                )
             ).Invoke(
-                xmlConfigSvcMocks.xmlConfigSvcMocked.Object, 
+                "WriteXMLAsync", 
                 new object[] { path, "12345" }
             ) as Task;
 
@@ -98,12 +101,13 @@ namespace Umbraco.NetPayment.Tests
 
             xmlConfigSvcMocks.server.Setup(x => x.MapPath(It.IsAny<string>())).Returns(path);
 
-            var xdoc 
-                = typeof(XMLConfigurationService).GetMethod(
-                "LoadConfiguration",
-                BindingFlags.Instance | BindingFlags.NonPublic
+            var xdoc = new PrivateObject(
+                xmlConfigSvc,
+                new PrivateType(
+                    typeof(XMLConfigurationService)
+                )
             ).Invoke(
-                xmlConfigSvcMocks.xmlConfigSvcMocked.Object,
+                "LoadConfiguration",
                 null
             ) as XDocument;
 
