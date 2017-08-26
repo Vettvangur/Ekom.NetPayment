@@ -31,7 +31,9 @@ namespace Umbraco.NetPayment.Tests
             public UmbracoServiceMocks(bool unMocked)
             {
                 settings = new Settings();
-                _umbracoHelper = Helpers.GetUHelper();
+				var uHelperMocks = new UHelperMocks();
+
+				_umbracoHelper = uHelperMocks.uHelper;
                 umbracoSvc = new UmbracoService(_umbracoHelper, settings);
             }
         }

@@ -132,42 +132,7 @@ namespace Umbraco.NetPayment.Tests
 
             <providers>
              <paymentProvidersNode>8d7c912e-3744-46a0-801f-3e7d3c8a991e</paymentProvidersNode>
-              <provider title=""Borgun"">
-                <provider>borgun</provider>
-                <merchantid>9909725</merchantid>
-                <secretcode>abfa29a72e7c41ff89f3fdfee72d11fc</secretcode>
-                <paymentgatewayid>3156</paymentgatewayid>
-                <url>https://securepay.borgun.is/securepay/default.aspx</url>
-                <testURL>https://securepay.borgun.is/securepay/default.aspx</testURL>
-              </provider>
 
-	            <provider title=""BorgunLoans"">
-		            <merchantid>9909725</merchantid>
-		            <username>FranchMichelsenrad</username>
-		            <password>FhxbgN9g8G5jp56Hgzi440jStCn509</password>
-		            <url>https://radgreidslur.borgun.is/Login/Token/</url>
-		            <testURL>https://radgreidslur.borgun.is/Login/Token/</testURL>
-	            </provider>
-		
-              <provider title=""Netgiro"">
-		            <provider>netgiro</provider>
-		            <applicationid>87133bfc-93ba-482e-bbcc-a70d1978e29f</applicationid>
-		            <iframe>false</iframe>
-		            <secretkey>RGgFHirWD8qDyoq6G6wnfsIvPdiB85KwGIkaBevpZ57ENhq/IswTmrVR9XcInqRkR6X30iKjAYSdLdBaPMKSi60f96SjB/fhL7WXHJk9FWQ6A7EV9EuFy6cexVshqKWh4856xPb3ynNJEpVz1FrFT2BkYtqdHddzYMf9I25h140=</secretkey>
-		            <url>https://securepay.netgiro.is/v1/</url>
-		            <testURL>http://test.netgiro.is/user/securepay/</testURL>
-	            </provider>
-
-              <provider title=""Pei"">
-                <provider>pei</provider>
-                <clientId>michelsen</clientId>
-                <secret>BYKadJSZ6OwWEI8s9aKi</secret>
-                <merchantid>1077</merchantid>
-                <portalUrl>https://gattin.pei.is/</portalUrl>
-                <apiUrl>https://api.pei.is/</apiUrl>
-                <tokenEndpointUrl>https://auth.pei.is/core/connect/token/</tokenEndpointUrl>
-              </provider>
-  
               <provider title=""testBorgun"">
                 <provider>borgun</provider>
                 <merchantid>9275444</merchantid>
@@ -194,15 +159,6 @@ namespace Umbraco.NetPayment.Tests
                 <url>https://testgreidslusida.valitor.is</url>
                 <testURL>https://testgreidslusida.valitor.is</testURL>
               </provider>
-
-              <provider title=""Greitt"" store=""IS"">
-                <provider>greitt</provider>
-                <authorization>Basic YnVkaW5AYnVkaW4uaXM6MTIzNDU2</authorization>
-                <apiKey>5eB2jSklLFooTQ2BY8DuVPuiRs23CWeG</apiKey>
-                <liveUrl>https://api.greitt.is/v1/</liveUrl>
-                <testUrl>https://private-anon-b0c26e14d-greitt.apiary-mock.com/v1/</testUrl>
-              </provider>
-
 
             </providers>";
     }
