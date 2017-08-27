@@ -250,7 +250,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
-    <Compile Include="Helpers\MD5Helper.cs" />
+    <Compile Include="Helpers\CryptoHelpers.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\URLHelper.cs" />
     <Compile Include="LocalCallbacks.cs" />

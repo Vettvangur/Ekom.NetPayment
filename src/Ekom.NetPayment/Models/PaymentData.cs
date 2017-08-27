@@ -7,9 +7,9 @@ namespace Umbraco.NetPayment
 	/// <summary>
 	/// Saves payment information for transactions
 	/// </summary>
-	[TableName("customPayments")]
+	[TableName("customNetPayments")]
 	[PrimaryKey("Id", AutoIncrement = false)]
-	[Umbraco.Core.Persistence.TableName("customPayments")]
+	[Umbraco.Core.Persistence.TableName("customNetPayments")]
 	[Umbraco.Core.Persistence.PrimaryKey("Id", autoIncrement = false)]
 	public class PaymentData
 	{
@@ -24,26 +24,32 @@ namespace Umbraco.NetPayment
 		/// 
 		/// </summary>
 		[NullSetting(NullSetting = NullSettings.Null)]
+		[Length(20)]
 		public string PaymentDate { get; set; }
 
 		/// <summary>
 		/// From remote payment provider
 		/// </summary>
+		[Length(30)]
 		public string AuthorizationNumber { get; set; }
 
 		/// <summary>
 		/// Masked credit card number
 		/// </summary>
+		[Length(16)]
 		public string CardNumber { get; set; }
 
 		/// <summary>
 		/// Mastercard/Visa/etc...
 		/// </summary>
+		[NullSetting(NullSetting = NullSettings.Null)]
+		[Length(30)]
 		public string CardType { get; set; }
 
 		/// <summary>
 		/// Total
 		/// </summary>
+		[Length(20)]
 		public string Amount { get; set; }
 
 		/// <summary>

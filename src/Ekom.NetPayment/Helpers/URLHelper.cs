@@ -9,8 +9,7 @@ namespace Umbraco.NetPayment.Helpers
 	static class URIHelper
 	{
 		/// <summary>
-		/// Ensures that the provided uri contains a scheme, adds one if not present
-		/// to form a full uri
+		/// Ensures param is full URI, otherwise adds components using data from Request
 		/// </summary>
 		/// <param name="uri">absolute or relative uri</param>
 		/// <param name="Request"></param>

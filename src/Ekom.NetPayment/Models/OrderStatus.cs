@@ -29,6 +29,7 @@ namespace Umbraco.NetPayment
 		/// Friendly order name: f.x. IS0001
 		/// </summary>
 		[NullSetting(NullSetting = NullSettings.Null)]
+		[Length(50)]
 		public string OrderName { get; set; }
 
 		/// <summary>
@@ -54,6 +55,7 @@ namespace Umbraco.NetPayment
 		/// <summary>
 		/// String name of payment provider <see cref="IPublishedContent"/> node
 		/// </summary>
+		[Length(50)]
 		public string PaymentProvider { get; set; }
 
 		/// <summary>
