@@ -9,7 +9,7 @@ namespace Umbraco.NetPayment.Helpers
     /// <summary>
     /// String extension methods
     /// </summary>
-    public static class StringExtensions
+    static class StringExtensions
     {
         /// <summary>
         /// Coerces a string to a boolean value, case insensitive and also registers true for 1 and y

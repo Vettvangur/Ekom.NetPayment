@@ -10,7 +10,7 @@ namespace Umbraco.NetPayment.Helpers
     /// <summary>
     /// MD5 calculations
     /// </summary>
-    public class MD5Helper
+    static class MD5Helper
     {
         /// <summary>
         /// Calculates MD5 hash from the provided string input.

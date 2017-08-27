@@ -115,7 +115,9 @@ namespace Umbraco.NetPayment.Tests
 			staticCache = new Mock<ICacheProvider>();
 			requestCache = new Mock<ICacheProvider>();
 
+#pragma warning disable CS0618 // Type or member is obsolete
 			cacheHelper = new CacheHelper(runtimeCache.Object, staticCache.Object, requestCache.Object);
+#pragma warning restore CS0618 // Type or member is obsolete
 		}
 	}
 

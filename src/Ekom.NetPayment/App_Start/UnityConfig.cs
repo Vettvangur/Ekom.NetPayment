@@ -15,7 +15,7 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Specifies the Unity configuration for the main container.
     /// </summary>
-    public class UnityConfig
+    class UnityConfig
     {
         #region Unity Container
         private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
@@ -70,6 +70,7 @@ namespace Umbraco.NetPayment
             container.RegisterType<UmbracoHelper>(new InjectionConstructor(typeof(UmbracoContext)));
 
             container.RegisterType<IFileSystem, FileSystem>();
+			container.RegisterType<ILogFactory, LogFactory>();
         }
     }
 }
