@@ -1,4 +1,5 @@
-﻿using NPoco;
+using Microsoft.Practices.Unity;
+using NPoco;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,26 +15,15 @@ namespace Umbraco.NetPayment
 	/// </summary>
 	class OrderService
 	{
-		ApplicationContext _appCtx;
-		Settings _settings;
-
-		/// <summary>
-		/// ctor
-		/// </summary>
-		/// <param name="appCtx"></param>
-		/// <param name="settings"></param>
-		public OrderService(ApplicationContext appCtx, Settings settings)
-		{
-			_appCtx = appCtx;
-			_settings = settings;
-		}
-
 		/// <summary>
 		/// Attempts to retrieve an order using data from the querystring or posted values
 		/// </summary>
 		/// <returns>Returns the referenced order or null otherwise</returns>
 		public static OrderStatus Get()
 		{
+			var container = UnityConfig.GetConfiguredContainer();
+			var orderSvc = container.Resolve<OrderService>();
+
 			var request = HttpContext.Current.Request;
 
 			string reference = request.QueryString["ReferenceNumber"];
@@ -59,15 +49,27 @@ namespace Umbraco.NetPayment
 
 				if (_referenceId)
 				{
-					using (var db = ApplicationContext.Current.DatabaseContext.Database)
-					{
-						return db.Single<OrderStatus>(referenceId);
-					}
+					return orderSvc.GetAsync(referenceId).Result;
 				}
 			}
 
 			return null;
 		}
+
+		ApplicationContext _appCtx;
+		Settings _settings;
+
+		/// <summary>
+		/// ctor
+		/// </summary>
+		/// <param name="appCtx"></param>
+		/// <param name="settings"></param>
+		public OrderService(ApplicationContext appCtx, Settings settings)
+		{
+			_appCtx = appCtx;
+			_settings = settings;
+		}
+
 
 		/// <summary>
 		/// Get order with the given unique id
@@ -77,7 +79,7 @@ namespace Umbraco.NetPayment
 		{
 			using (var db = new Database(_settings.ConnectionStringName))
 			{
-				return await db.SingleByIdAsync<OrderStatus>(id);
+				return await db.SingleByIdAsync<OrderStatus>(id).ConfigureAwait(false);
 			}
 		}
 
@@ -116,7 +118,7 @@ namespace Umbraco.NetPayment
 					Date = DateTime.Now,
 					PaymentProvider = paymentProvider,
 					Custom = custom
-				});
+				}).ConfigureAwait(false);
 			}
 
 			return orderid;

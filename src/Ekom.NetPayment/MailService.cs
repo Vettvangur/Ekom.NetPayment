@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using System.Net;
 using System.Net.Configuration;
 using System.Net.Mail;
@@ -69,7 +69,7 @@ namespace Umbraco.NetPayment
 						smtp.EnableSsl = _ssl;
 					}
 
-					await smtp.SendMailAsync(message);
+					await smtp.SendMailAsync(message).ConfigureAwait(false);
 				}
 			}
 		}

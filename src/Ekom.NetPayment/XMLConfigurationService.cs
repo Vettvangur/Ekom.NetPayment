@@ -1,4 +1,4 @@
-﻿using log4net;
+using log4net;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -115,39 +115,43 @@ namespace Umbraco.NetPayment
 		/// <param name="ppConfig">PaymentProviders.config XML</param>
 		public virtual void SetConfiguration(XDocument ppConfig)
 		{
+			// No configuration file
 			if (ppConfig != null)
 			{
 				var ppConfigRoot = ppConfig?.Root;
 
 				// Can't find root element
-				if (ppConfigRoot == null) throw new Exception("Malformed configuration xml");
-
-				var ppNode = ppConfigRoot.Element(_settings.PPUNodeConfElName);
-
-				if (ppNode != null)
+				if (ppConfigRoot != null)
 				{
-					bool bPPNode = Guid.TryParse(ppNode.Value, out Guid ppNodeId);
+					var ppNode = ppConfigRoot.Element(_settings.PPUNodeConfElName);
 
-					if (bPPNode)
+					// Couldn't find element
+					if (ppNode == null)
 					{
-						_settings.PPUmbracoNode = ppNodeId;
-						return;
+						ppNode = new XElement(_settings.PPUNodeConfElName)
+						{
+							Value = FindPPContainerNodeKey().ToString()
+						};
+						ppConfigRoot.Add(ppNode);
+						ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
 					}
 
-					ppNode.Value = FindPPContainerNodeKey().ToString();
+					bool bPPNode = Guid.TryParse(ppNode.Value, out Guid ppNodeKey);
+
+					// Malformed value
+					if (!bPPNode)
+					{
+						ppNodeKey = FindPPContainerNodeKey();
+						ppNode.Value = ppNodeKey.ToString();
+						ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
+					}
+
+					_settings.PPUmbracoNode = ppNodeKey;
 					return;
 				}
-
-				// Couldn't find element
-				var newPPNode = new XElement(_settings.PPUNodeConfElName)
-				{
-					Value = FindPPContainerNodeKey().ToString()
-				};
-				ppConfigRoot.Add(newPPNode);
-				ppConfig.Save(_settings.PPConfigPath);
 			}
 
-			// No file
+			// No file or malformed
 			CreateConfigurationXML().Wait();
 		}
 
@@ -171,7 +175,7 @@ namespace Umbraco.NetPayment
 			var path = _server.MapPath(_settings.PPConfigPath);
 			var nodeKey = FindPPContainerNodeKey().ToString();
 
-			await WriteXMLAsync(path, nodeKey).ConfigureAwait(false);
+			await WriteXMLAsync(path, nodeKey);
 		}
 
 		static XmlWriterSettings xmlWrSettings = new XmlWriterSettings
@@ -181,6 +185,10 @@ namespace Umbraco.NetPayment
 			NewLineOnAttributes = true,
 		};
 
+		/// <summary>
+		/// This was made async for shits and giggles.
+		/// Needs configureAwait if to be used outside of startup method.
+		/// </summary>
 		private async Task WriteXMLAsync(string path, string nodeKey)
 		{
 			var dirPath = _fs.Path.GetDirectoryName(path);

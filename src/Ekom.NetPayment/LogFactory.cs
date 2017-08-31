@@ -1,4 +1,4 @@
-﻿using log4net;
+using log4net;
 using System;
 
 namespace Umbraco.NetPayment

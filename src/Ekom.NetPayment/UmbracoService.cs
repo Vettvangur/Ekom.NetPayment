@@ -1,4 +1,4 @@
-﻿using GMO.Umbraco;
+using GMO.Umbraco;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
