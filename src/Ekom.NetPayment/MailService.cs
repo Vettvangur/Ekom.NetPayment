@@ -7,71 +7,71 @@ using Umbraco.Core.Configuration;
 
 namespace Umbraco.NetPayment
 {
-	/// <summary>
-	/// Handles creation and sending of emails, uses defaults from configuration when possible.
-	/// Default assumes a notification email intended for the administrator.
-	/// All defaults are overridable.
-	/// </summary>
-	class MailService
-	{
-		private const int Timeout = 180000;
-		private readonly string _host;
-		private readonly int _port;
-		private readonly string _user;
-		private readonly string _pass;
-		private readonly bool _ssl;
+    /// <summary>
+    /// Handles creation and sending of emails, uses defaults from configuration when possible.
+    /// Default assumes a notification email intended for the administrator.
+    /// All defaults are overridable.
+    /// </summary>
+    class MailService
+    {
+        private const int Timeout = 180000;
+        private readonly string _host;
+        private readonly int _port;
+        private readonly string _user;
+        private readonly string _pass;
+        private readonly bool _ssl;
 
-		private UmbracoConfig _uConfig;
+        private UmbracoConfig _uConfig;
 
-		public string Sender { get; set; } = "no-reply@umbraco.netpayment";
-		public string Recipient { get; set; }
-		public string Subject { get; set; }
-		public string Body { get; set; }
+        public string Sender { get; set; } = "no-reply@umbraco.netpayment";
+        public string Recipient { get; set; }
+        public string Subject { get; set; }
+        public string Body { get; set; }
 
-		/// <summary>
-		/// ctor
-		/// </summary>
-		/// <param name="uConfig">/config/umbracoSettings.config</param>
-		public MailService(UmbracoConfig uConfig)
-		{
-			_uConfig = uConfig;
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="uConfig">/config/umbracoSettings.config</param>
+        public MailService(UmbracoConfig uConfig)
+        {
+            _uConfig = uConfig;
 
-			var smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-			string username = smtpSection.Network.UserName;
-			Recipient = _uConfig.UmbracoSettings().Content.NotificationEmailAddress;
+            var smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+            string username = smtpSection.Network.UserName;
+            Recipient = _uConfig.UmbracoSettings().Content.NotificationEmailAddress;
 
-			//MailServer - Represents the SMTP Server
-			_host = smtpSection.Network.Host;
-			//Port- Represents the port number
-			_port = smtpSection.Network.Port;
-			//MailAuthUser and MailAuthPass - Used for Authentication for sending email
-			_user = smtpSection.Network.UserName;
-			_pass = smtpSection.Network.Password;
-			_ssl = smtpSection.Network.EnableSsl;
+            //MailServer - Represents the SMTP Server
+            _host = smtpSection.Network.Host;
+            //Port- Represents the port number
+            _port = smtpSection.Network.Port;
+            //MailAuthUser and MailAuthPass - Used for Authentication for sending email
+            _user = smtpSection.Network.UserName;
+            _pass = smtpSection.Network.Password;
+            _ssl = smtpSection.Network.EnableSsl;
 
-			Sender = smtpSection.From;
-		}
+            Sender = smtpSection.From;
+        }
 
-		/// <summary>
-		/// Send email message
-		/// </summary>
-		public async virtual Task SendAsync()
-		{
-			using (var smtp = new SmtpClient(_host, _port))
-			{
-				// We do not catch the error here... let it pass direct to the caller
-				using (var message = new MailMessage(Sender, Recipient, Subject, Body) { IsBodyHtml = true })
-				{
-					if (_user.Length > 0 && _pass.Length > 0)
-					{
-						smtp.UseDefaultCredentials = false;
-						smtp.Credentials = new NetworkCredential(_user, _pass);
-						smtp.EnableSsl = _ssl;
-					}
+        /// <summary>
+        /// Send email message
+        /// </summary>
+        public async virtual Task SendAsync()
+        {
+            using (var smtp = new SmtpClient(_host, _port))
+            {
+                // We do not catch the error here... let it pass direct to the caller
+                using (var message = new MailMessage(Sender, Recipient, Subject, Body) { IsBodyHtml = true })
+                {
+                    if (_user.Length > 0 && _pass.Length > 0)
+                    {
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new NetworkCredential(_user, _pass);
+                        smtp.EnableSsl = _ssl;
+                    }
 
-					await smtp.SendMailAsync(message).ConfigureAwait(false);
-				}
-			}
-		}
-	}
+                    await smtp.SendMailAsync(message).ConfigureAwait(false);
+                }
+            }
+        }
+    }
 }
