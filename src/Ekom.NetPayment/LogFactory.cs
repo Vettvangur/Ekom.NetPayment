@@ -8,6 +8,11 @@ namespace Umbraco.NetPayment
     /// </summary>
     class LogFactory : ILogFactory
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="T">Type of class this logger logs for</param>
+        /// <returns></returns>
         public ILog GetLogger(Type T)
         {
             return LogManager.GetLogger(T);
@@ -19,6 +24,11 @@ namespace Umbraco.NetPayment
     /// </summary>
     public interface ILogFactory
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="T">Type of class this logger logs for</param>
+        /// <returns></returns>
         ILog GetLogger(Type T);
     }
 }
