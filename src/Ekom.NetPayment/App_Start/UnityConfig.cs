@@ -58,7 +58,7 @@ namespace Umbraco.NetPayment
                         container.Resolve<HttpContextBase>().Server
             ));
 
-            container.RegisterType<Settings>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => new Settings()));
+            container.RegisterType<Settings>(new ContainerControlledLifetimeManager());
             container.RegisterType<ApplicationContext>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
             container.RegisterType<UmbracoConfig>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => UmbracoConfig.For));
 
