@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>uWebshop.Payment.Valitor</id>
+    <version>1.1.1</version>
+    <title>uWebshop.Payment.Valitor</title>
+    <authors>Vettvangur</authors>
+    <owners>Vettvangur</owners>
+    <licenseUrl>http://www.vettvangur.is</licenseUrl>
+    <projectUrl>https://github.com/Vettvangur/uWebshop.Payment</projectUrl>
+    <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>uWebshop Payment Provider.</description>
+    <releaseNotes>First local NuGet release.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags></tags>
+  </metadata>
+</package>
