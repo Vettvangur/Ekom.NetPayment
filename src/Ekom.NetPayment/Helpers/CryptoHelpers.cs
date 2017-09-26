@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -15,17 +15,31 @@ namespace Umbraco.NetPayment.Helpers
         /// <param name="input">String to hash</param>
         public static string GetMD5StringSum(string input)
         {
-            MD5 md5Hasher = MD5.Create();
-
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
-
-            StringBuilder sBuilder = new StringBuilder();
-
-            for (int i = 0; i < data.Length; i++)
+            using (MD5 md5Hasher = MD5.Create())
             {
-                sBuilder.Append(data[i].ToString("x2"));
+                byte[] data = md5Hasher.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                StringBuilder sBuilder = new StringBuilder();
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+                return sBuilder.ToString();
             }
-            return sBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Computes SHA256 sum from string, returns as Base64 encoded string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>Base64 encoded SHA256 sum</returns>
+        public static string GetSHA256StringSum(string input)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                return Convert.ToBase64String(sha.ComputeHash(Encoding.UTF8.GetBytes(input)));
+            }
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Umbraco.NetPayment
         ILog _log;
         HttpServerUtilityBase _server;
         ApplicationContext _appContext;
-        Settings _settings;
+        ISettings _settings;
         IFileSystem _fs;
         /// <summary>
         /// ctor
@@ -29,7 +29,7 @@ namespace Umbraco.NetPayment
         /// <param name="appContext"></param>
         /// <param name="settings"></param>
         /// <param name="fileSystem"></param>
-        public XMLConfigurationService(HttpServerUtilityBase server, ApplicationContext appContext, Settings settings, IFileSystem fileSystem)
+        public XMLConfigurationService(HttpServerUtilityBase server, ApplicationContext appContext, ISettings settings, IFileSystem fileSystem)
         {
             _server = server;
             _appContext = appContext;

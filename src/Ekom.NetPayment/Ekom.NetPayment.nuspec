@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package >
   <metadata>
     <id>Umbraco.NetPayment</id>
-    <version>3.0.0</version>
+    <version>4.0.0</version>
     <title>Umbraco.NetPayment</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/Vettvangur/Umbraco.NetPayment</projectUrl>
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Allows configuration of payment providers within umbraco, does not use uWebshop.</description>
-    <releaseNotes>Minor bugfixes.</releaseNotes>
+    <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
+    <releaseNotes>Order id encryption and OrderService API change.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags></tags>
   </metadata>

@@ -1,70 +1,44 @@
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using NPoco;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using Umbraco.Core;
+using Umbraco.NetPayment.Helpers;
 
 namespace Umbraco.NetPayment
 {
     /// <summary>
     /// Utility functions for handling <see cref="OrderStatus"/> objects
     /// </summary>
-    class OrderService
+    public class OrderService : IOrderService
     {
+        private static OrderService _current;
         /// <summary>
-        /// Attempts to retrieve an order using data from the querystring or posted values
+        /// OrderService Singleton
         /// </summary>
-        /// <returns>Returns the referenced order or null otherwise</returns>
-        public static OrderStatus Get()
+        public static OrderService Current
         {
-            var container = UnityConfig.GetConfiguredContainer();
-            var orderSvc = container.Resolve<OrderService>();
-
-            var request = HttpContext.Current.Request;
-
-            string reference = request.QueryString["ReferenceNumber"];
-
-            if (string.IsNullOrEmpty(reference))
+            get
             {
-                reference = request.QueryString["orderId"];
+                return _current ?? (_current = UnityConfig.GetConfiguredContainer().Resolve<OrderService>());
             }
-
-            if (string.IsNullOrEmpty(reference))
-            {
-                reference = request["reference"];
-            }
-
-            if (string.IsNullOrEmpty(reference))
-            {
-                reference = request["orderid"];
-            }
-
-            if (!string.IsNullOrEmpty(reference))
-            {
-                bool _referenceId = Guid.TryParse(reference, out var referenceId);
-
-                if (_referenceId)
-                {
-                    return orderSvc.GetAsync(referenceId).Result;
-                }
-            }
-
-            return null;
         }
 
         ApplicationContext _appCtx;
-        Settings _settings;
+        ISettings _settings;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="appCtx"></param>
         /// <param name="settings"></param>
-        public OrderService(ApplicationContext appCtx, Settings settings)
+        public OrderService(
+            ApplicationContext appCtx,
+            ISettings settings
+        )
         {
             _appCtx = appCtx;
             _settings = settings;
@@ -84,10 +58,29 @@ namespace Umbraco.NetPayment
         }
 
         /// <summary>
+        /// Attempts to retrieve an order using data from the querystring or posted values
+        /// </summary>
+        /// <returns>Returns the referenced order or null otherwise</returns>
+        internal OrderStatus GetOrderFromEncryptedReference(string reference, string key)
+        {
+            var keyShaSum = CryptoHelpers.GetSHA256StringSum(key);
+            var orderIdStr = AesCryptoHelper.Decrypt(keyShaSum, reference);
+
+            var orderId = Guid.Parse(orderIdStr);
+
+            return Current.GetAsync(orderId).Result;
+        }
+
+        OrderStatus IOrderService.GetOrderFromEncryptedReference(string reference, string key)
+        {
+            return GetOrderFromEncryptedReference(reference, key);
+        }
+
+        /// <summary>
         /// Persist in database and retrieve unique order id
         /// </summary>
         /// <returns>Order Id</returns>
-        public async virtual Task<Guid> SaveAsync(
+        internal async Task<Guid> InsertAsync(
             int member,
             string total,
             string paymentProvider,
@@ -122,6 +115,17 @@ namespace Umbraco.NetPayment
             }
 
             return orderid;
+        }
+
+        Task<Guid> IOrderService.InsertAsync(
+            int member,
+            string total,
+            string paymentProvider,
+            string custom,
+            IEnumerable<OrderItem> orders
+        )
+        {
+            return InsertAsync(member, total, paymentProvider, custom, orders);
         }
     }
 }

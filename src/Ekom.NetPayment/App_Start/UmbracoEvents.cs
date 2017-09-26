@@ -1,4 +1,4 @@
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
 
@@ -18,7 +18,7 @@ namespace Umbraco.NetPayment
         {
             var container = UnityConfig.GetConfiguredContainer();
 
-            var settings = container.Resolve<Settings>();
+            var settings = container.Resolve<ISettings>();
             var xmlConfigService = container.Resolve<XMLConfigurationService>();
 
             // PaymentProviders.config

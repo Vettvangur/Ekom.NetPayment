@@ -1,4 +1,4 @@
-using GMO.Umbraco;
+﻿using GMO.Umbraco;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
@@ -28,14 +28,14 @@ namespace Umbraco.NetPayment
         }
 
         UmbracoHelper _umbracoHelper;
-        Settings _settings;
+        ISettings _settings;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="umbracoHelper"></param>
         /// <param name="settings"></param>
-        public UmbracoService(UmbracoHelper umbracoHelper, Settings settings)
+        public UmbracoService(UmbracoHelper umbracoHelper, ISettings settings)
         {
             _umbracoHelper = umbracoHelper;
             _settings = settings;

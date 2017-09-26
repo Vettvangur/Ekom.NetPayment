@@ -1,4 +1,4 @@
-using Microsoft.Practices.Unity;
+﻿using Microsoft.Practices.Unity;
 using System;
 using System.IO.Abstractions;
 using System.Web;
@@ -58,7 +58,7 @@ namespace Umbraco.NetPayment
                         container.Resolve<HttpContextBase>().Server
             ));
 
-            container.RegisterType<Settings>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ISettings, Settings>(new ContainerControlledLifetimeManager());
             container.RegisterType<ApplicationContext>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
             container.RegisterType<UmbracoConfig>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => UmbracoConfig.For));
 
@@ -67,6 +67,7 @@ namespace Umbraco.NetPayment
 
             container.RegisterType<IFileSystem, FileSystem>();
             container.RegisterType<ILogFactory, LogFactory>();
+            container.RegisterType<IOrderService>(new InjectionFactory(c => OrderService.Current));
         }
     }
 }

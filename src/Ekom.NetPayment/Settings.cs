@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Configuration;
 using Umbraco.NetPayment.Helpers;
 
@@ -8,7 +8,7 @@ namespace Umbraco.NetPayment
     /// Various settings for the Umbraco.NetPayment package.
     /// Most settings can be overriden in AppSettings.
     /// </summary>
-    class Settings
+    class Settings : ISettings
     {
         public virtual string ConnectionStringName { get; }
             = ConfigurationManager.AppSettings["NetPayment.ConnectionStringName"]
