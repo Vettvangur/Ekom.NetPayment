@@ -15,7 +15,7 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Handles the Payment Providers XML configuration
     /// </summary>
-    class XMLConfigurationService
+    class XMLConfigurationService : IXMLConfigurationService
     {
         ILog _log;
         HttpServerUtilityBase _server;

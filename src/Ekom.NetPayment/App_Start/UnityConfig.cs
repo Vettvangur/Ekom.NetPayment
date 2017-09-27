@@ -68,7 +68,8 @@ namespace Umbraco.NetPayment
             container.RegisterType<IFileSystem, FileSystem>();
             container.RegisterType<IDatabaseFactory, DatabaseFactory>();
             container.RegisterType<ILogFactory, LogFactory>();
-            container.RegisterType<IOrderService>(new InjectionFactory(c => OrderService.Current));
+            container.RegisterType<IOrderService, OrderService>();
+            container.RegisterType<IXMLConfigurationService, XMLConfigurationService>();
         }
     }
 }

@@ -5,12 +5,9 @@ using System.Threading.Tasks;
 namespace Umbraco.NetPayment
 {
     /// <summary>
-    /// This internal interface allows us to include <see cref="IOrderService"/> as a dependency
-    /// without causing a circular IOC resolution to occur when getting the singleton.
-    /// We implement some of these members explicitly to hide them from public consumers of the
-    /// <see cref="OrderService"/> API.
+    /// Utility functions for handling <see cref="OrderStatus"/> objects
     /// </summary>
-    internal interface IOrderService
+    public interface IOrderService
     {
         /// <summary>
         /// Get order with the given unique id

@@ -19,7 +19,7 @@ namespace Umbraco.NetPayment
             var container = UnityConfig.GetConfiguredContainer();
 
             var settings = container.Resolve<ISettings>();
-            var xmlConfigService = container.Resolve<XMLConfigurationService>();
+            var xmlConfigService = container.Resolve<IXMLConfigurationService>();
 
             // PaymentProviders.config
             var doc = xmlConfigService.Configuration;

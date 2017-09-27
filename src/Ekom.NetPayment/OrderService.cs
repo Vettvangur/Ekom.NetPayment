@@ -1,5 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
@@ -12,20 +11,8 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Utility functions for handling <see cref="OrderStatus"/> objects
     /// </summary>
-    public class OrderService : IOrderService
+    class OrderService : IOrderService
     {
-        private static OrderService _current;
-        /// <summary>
-        /// OrderService Singleton
-        /// </summary>
-        public static OrderService Current
-        {
-            get
-            {
-                return _current ?? (_current = UnityConfig.GetConfiguredContainer().Resolve<OrderService>());
-            }
-        }
-
         ApplicationContext _appCtx;
         ISettings _settings;
         IDatabaseFactory _dbFac;
@@ -47,7 +34,6 @@ namespace Umbraco.NetPayment
             _dbFac = dbFac;
         }
 
-
         /// <summary>
         /// Get order with the given unique id
         /// </summary>
@@ -64,26 +50,21 @@ namespace Umbraco.NetPayment
         /// Attempts to retrieve an order using data from the querystring or posted values
         /// </summary>
         /// <returns>Returns the referenced order or null otherwise</returns>
-        internal OrderStatus GetOrderFromEncryptedReference(string reference, string key)
+        public OrderStatus GetOrderFromEncryptedReference(string reference, string key)
         {
             var keyShaSum = CryptoHelpers.GetSHA256StringSum(key);
             var orderIdStr = AesCryptoHelper.Decrypt(keyShaSum, reference);
 
             var orderId = Guid.Parse(orderIdStr);
 
-            return Current.GetAsync(orderId).Result;
-        }
-
-        OrderStatus IOrderService.GetOrderFromEncryptedReference(string reference, string key)
-        {
-            return GetOrderFromEncryptedReference(reference, key);
+            return GetAsync(orderId).Result;
         }
 
         /// <summary>
         /// Persist in database and retrieve unique order id
         /// </summary>
         /// <returns>Order Id</returns>
-        internal async Task<Guid> InsertAsync(
+        public async Task<Guid> InsertAsync(
             int member,
             string total,
             string paymentProvider,
@@ -120,15 +101,5 @@ namespace Umbraco.NetPayment
             return orderid;
         }
 
-        Task<Guid> IOrderService.InsertAsync(
-            int member,
-            string total,
-            string paymentProvider,
-            string custom,
-            IEnumerable<OrderItem> orders
-        )
-        {
-            return InsertAsync(member, total, paymentProvider, custom, orders);
-        }
     }
 }

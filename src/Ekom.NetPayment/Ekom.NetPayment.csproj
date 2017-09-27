@@ -237,9 +237,6 @@
     <Reference Include="UmbracoExamine, Version=0.7.0.7971, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UmbracoCms.Core.7.6.0\lib\net45\UmbracoExamine.dll</HintPath>
     </Reference>
-    <Reference Include="UrlRewritingNet.UrlRewriter, Version=2.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UrlRewritingNet.2.0.7\lib\UrlRewritingNet.UrlRewriter.dll</HintPath>
-    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
@@ -252,8 +249,9 @@
     <Compile Include="Helpers\CryptoHelpers.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\URLHelper.cs" />
-    <Compile Include="IOrderService.cs" />
-    <Compile Include="ISettings.cs" />
+    <Compile Include="Interfaces\IOrderService.cs" />
+    <Compile Include="Interfaces\ISettings.cs" />
+    <Compile Include="Interfaces\IXMLConfigurationService.cs" />
     <Compile Include="LocalCallbacks.cs" />
     <Compile Include="LogFactory.cs" />
     <Compile Include="MailService.cs" />
