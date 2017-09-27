@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Umbraco.NetPayment</id>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
     <title>Umbraco.NetPayment</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
