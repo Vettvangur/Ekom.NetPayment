@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Umbraco.NetPayment
 {
@@ -6,7 +6,7 @@ namespace Umbraco.NetPayment
     /// Callbacks to run on success/error.
     /// Supplied by library consumer.
     /// </summary>
-    public class LocalCallbacks
+    public abstract class LocalCallbacks
     {
         /// <summary>
         /// Callback to run on success

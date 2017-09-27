@@ -28,19 +28,19 @@ namespace Umbraco.NetPayment
 
             var dbCtx = applicationContext.DatabaseContext;
 
-            var db = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
+            var dbHelper = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
 
             //Check if the DB table does NOT exist
-            if (!db.TableExist("customNetPaymentOrder"))
+            if (!dbHelper.TableExist("customNetPaymentOrder"))
             {
                 //Create DB table - and set overwrite to false
-                db.CreateTable<OrderStatus>(false);
+                dbHelper.CreateTable<OrderStatus>(false);
             }
             //Check if the DB table does NOT exist
-            if (!db.TableExist("customPayments"))
+            if (!dbHelper.TableExist("customNetPayments"))
             {
                 //Create DB table - and set overwrite to false
-                db.CreateTable<PaymentData>(false);
+                dbHelper.CreateTable<PaymentData>(false);
             }
         }
     }

@@ -72,7 +72,10 @@ namespace Umbraco.NetPayment
         /// key values pairs.
         /// </summary>
         /// <param name="pp">Payment Provider title attribute</param>
-        /// <param name="secondaryMatches">Optional collection of attributes and values to match on provider</param>
+        /// <param name="secondaryMatches">
+        /// Optional collection of attributes and values to match on provider element.
+        /// F.x. lang
+        /// </param>
         public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
         {
             var providers = Configuration.Root.Elements("provider")

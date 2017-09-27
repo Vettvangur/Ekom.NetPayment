@@ -1,5 +1,4 @@
 ﻿using Microsoft.Practices.Unity;
-using NPoco;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -29,19 +28,23 @@ namespace Umbraco.NetPayment
 
         ApplicationContext _appCtx;
         ISettings _settings;
+        IDatabaseFactory _dbFac;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="appCtx"></param>
         /// <param name="settings"></param>
+        /// <param name="dbFac"></param>
         public OrderService(
             ApplicationContext appCtx,
-            ISettings settings
+            ISettings settings,
+            IDatabaseFactory dbFac
         )
         {
             _appCtx = appCtx;
             _settings = settings;
+            _dbFac = dbFac;
         }
 
 
@@ -51,7 +54,7 @@ namespace Umbraco.NetPayment
         /// <param name="id">Order id</param>
         public async Task<OrderStatus> GetAsync(Guid id)
         {
-            using (var db = new Database(_settings.ConnectionStringName))
+            using (var db = _dbFac.GetDb())
             {
                 return await db.SingleByIdAsync<OrderStatus>(id).ConfigureAwait(false);
             }
@@ -99,7 +102,7 @@ namespace Umbraco.NetPayment
 
             var orderid = Guid.NewGuid();
 
-            using (var db = new Database(_settings.ConnectionStringName))
+            using (var db = _dbFac.GetDb())
             {
                 // Return order id
                 await db.InsertAsync(new OrderStatus

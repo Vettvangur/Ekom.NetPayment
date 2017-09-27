@@ -247,6 +247,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
+    <Compile Include="DatabaseFactory.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
