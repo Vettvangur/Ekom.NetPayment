@@ -250,7 +250,6 @@
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\URLHelper.cs" />
     <Compile Include="Interfaces\IOrderService.cs" />
-    <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Interfaces\IXMLConfigurationService.cs" />
     <Compile Include="LocalCallbacks.cs" />
     <Compile Include="LogFactory.cs" />

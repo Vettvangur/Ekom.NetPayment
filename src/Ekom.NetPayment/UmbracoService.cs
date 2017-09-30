@@ -28,14 +28,14 @@ namespace Umbraco.NetPayment
         }
 
         UmbracoHelper _umbracoHelper;
-        ISettings _settings;
+        Settings _settings;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="umbracoHelper"></param>
         /// <param name="settings"></param>
-        public UmbracoService(UmbracoHelper umbracoHelper, ISettings settings)
+        public UmbracoService(UmbracoHelper umbracoHelper, Settings settings)
         {
             _umbracoHelper = umbracoHelper;
             _settings = settings;

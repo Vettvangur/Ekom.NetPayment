@@ -14,7 +14,7 @@ namespace Umbraco.NetPayment
     class OrderService : IOrderService
     {
         ApplicationContext _appCtx;
-        ISettings _settings;
+        Settings _settings;
         IDatabaseFactory _dbFac;
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Umbraco.NetPayment
         /// <param name="dbFac"></param>
         public OrderService(
             ApplicationContext appCtx,
-            ISettings settings,
+            Settings settings,
             IDatabaseFactory dbFac
         )
         {

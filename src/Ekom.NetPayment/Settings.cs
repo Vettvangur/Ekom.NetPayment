@@ -8,9 +8,9 @@ namespace Umbraco.NetPayment
     /// Various settings for the Umbraco.NetPayment package.
     /// Most settings can be overriden in AppSettings.
     /// </summary>
-    class Settings : ISettings
+    public class Settings
     {
-        public string ConnectionStringName { get; }
+        public virtual string ConnectionStringName { get; }
             = ConfigurationManager.AppSettings["NetPayment.ConnectionStringName"]
             ?? "umbracoDbDsn";
 
@@ -19,25 +19,25 @@ namespace Umbraco.NetPayment
         /// That file stores payment provider specific information that often gets xml transformed.
         /// F.x. merchantId and secret
         /// </summary>
-        public string PPConfigPath { get; set; }
+        public virtual string PPConfigPath { get; set; }
             = ConfigurationManager.AppSettings["NetPayment.PPConfigPath"]
             ?? "~/App_Plugins/NetPayment/config/PaymentProviders.config";
 
         /// <summary>
         /// Umbraco node id of payment providers container.
         /// </summary>
-        public Guid PPUmbracoNode { get; set; }
+        public virtual Guid PPUmbracoNode { get; set; }
 
         /// <summary>
         /// Payment providers umbraco node configuration element name.
         /// xml element name of configuration element that holds umbraco payment providers container Guid
         /// </summary>
-        public string PPUNodeConfElName { get; } = "paymentProvidersNode";
+        public virtual string PPUNodeConfElName { get; } = "paymentProvidersNode";
 
         /// <summary>
         /// Payment providers document type alias.
         /// </summary>
-        public string PPDocumentTypeAlias { get; set; }
+        public virtual string PPDocumentTypeAlias { get; set; }
             = ConfigurationManager.AppSettings["NetPayment.PPDocumentTypeAlias"]
             ?? "paymentProviders";
 
@@ -47,7 +47,7 @@ namespace Umbraco.NetPayment
         /// Used in response controllers.
         /// Defaults to true.
         /// </summary>
-        public bool SendEmailAlerts
+        public virtual bool SendEmailAlerts
         {
             get
             {
@@ -73,5 +73,10 @@ namespace Umbraco.NetPayment
                 _sendEmailAlerts = value;
             }
         }
+
+        /// <summary>
+        /// Enables more detailed logging, serialise request bodies to log f.x.
+        /// </summary>
+        public virtual bool DetailedLogging => ConfigurationManager.AppSettings["NetPayment.DetailedLogging"].ConvertToBool();
     }
 }
