@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Umbraco.NetPayment</id>
-    <version>4.0.4</version>
+    <version>5.0.0</version>
     <title>Umbraco.NetPayment</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
@@ -11,7 +11,7 @@
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
-    <releaseNotes>Detailed logging.</releaseNotes>
+    <releaseNotes>Use decimal as param for requests.</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags></tags>
   </metadata>

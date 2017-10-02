@@ -66,7 +66,7 @@ namespace Umbraco.NetPayment
         /// <returns>Order Id</returns>
         public async Task<Guid> InsertAsync(
             int member,
-            string total,
+            decimal total,
             string paymentProvider,
             string custom,
             IEnumerable<OrderItem> orders
@@ -91,7 +91,7 @@ namespace Umbraco.NetPayment
                     Id = orderid,
                     Name = name.ToString(),
                     Member = member,
-                    Amount = decimal.Parse(total, nfi),
+                    Amount = total,
                     Date = DateTime.Now,
                     PaymentProvider = paymentProvider,
                     Custom = custom
@@ -100,6 +100,5 @@ namespace Umbraco.NetPayment
 
             return orderid;
         }
-
     }
 }

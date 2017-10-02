@@ -21,7 +21,7 @@ namespace Umbraco.NetPayment
         /// <returns>Order Id</returns>
         Task<Guid> InsertAsync(
             int member,
-            string total,
+            decimal total,
             string paymentProvider,
             string custom,
             IEnumerable<OrderItem> orders
