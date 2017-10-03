@@ -1,5 +1,4 @@
 ﻿using log4net;
-using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -29,14 +28,20 @@ namespace Umbraco.NetPayment
         /// <param name="appContext"></param>
         /// <param name="settings"></param>
         /// <param name="fileSystem"></param>
-        public XMLConfigurationService(HttpServerUtilityBase server, ApplicationContext appContext, Settings settings, IFileSystem fileSystem)
+        /// <param name="logFac"></param>
+        public XMLConfigurationService(
+            HttpServerUtilityBase server,
+            ApplicationContext appContext,
+            Settings settings,
+            IFileSystem fileSystem,
+            ILogFactory logFac
+        )
         {
             _server = server;
             _appContext = appContext;
             _settings = settings;
             _fs = fileSystem;
 
-            var logFac = UnityConfig.GetConfiguredContainer().Resolve<ILogFactory>();
             _log = logFac.GetLogger(typeof(XMLConfigurationService));
         }
 
@@ -181,7 +186,7 @@ namespace Umbraco.NetPayment
             await WriteXMLAsync(path, nodeKey);
         }
 
-        static XmlWriterSettings xmlWrSettings = new XmlWriterSettings
+        static readonly XmlWriterSettings xmlWrSettings = new XmlWriterSettings
         {
             Async = true,
             Indent = true,

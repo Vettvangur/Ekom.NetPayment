@@ -6,7 +6,10 @@ using System.Text;
 
 namespace Umbraco.NetPayment.Helpers
 {
-    static class AesCryptoHelper
+    /// <summary>
+    /// Helps with AES crypto calculations
+    /// </summary>
+    public static class AesCryptoHelper
     {
         /// <summary>
         /// Encrypt chosen input with the provided base64 encoded secret key.

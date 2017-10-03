@@ -7,7 +7,7 @@ namespace Umbraco.NetPayment.Helpers
     /// <summary>
     /// Perform crypto calculations
     /// </summary>
-    static class CryptoHelpers
+    public static class CryptoHelpers
     {
         /// <summary>
         /// Valitor - Calculates MD5 hash from the provided string input.

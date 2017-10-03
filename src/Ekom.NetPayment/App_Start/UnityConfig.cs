@@ -18,6 +18,7 @@ namespace Umbraco.NetPayment
         {
             var container = new UnityContainer();
             RegisterTypes(container);
+            Settings.container = new Microsoft.Practices.Unity.Mvc.UnityDependencyResolver(container);
             return container;
         });
 

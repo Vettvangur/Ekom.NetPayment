@@ -12,7 +12,7 @@ namespace Umbraco.NetPayment
     /// Default assumes a notification email intended for the administrator.
     /// All defaults are overridable.
     /// </summary>
-    class MailService
+    public class MailService
     {
         private const int Timeout = 180000;
         private readonly string _host;
@@ -23,9 +23,21 @@ namespace Umbraco.NetPayment
 
         private UmbracoConfig _uConfig;
 
+        /// <summary>
+        /// Defaults to "no-reply@umbraco.netpayment"
+        /// </summary>
         public string Sender { get; set; } = "no-reply@umbraco.netpayment";
+        /// <summary>
+        /// 
+        /// </summary>
         public string Recipient { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
         public string Subject { get; set; }
+        /// <summary>
+        /// Email message body
+        /// </summary>
         public string Body { get; set; }
 
         /// <summary>

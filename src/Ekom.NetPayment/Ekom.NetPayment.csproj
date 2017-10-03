@@ -131,6 +131,9 @@
     <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.4.0.1\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
@@ -242,14 +245,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\NetPayment.cs" />
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="DatabaseFactory.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />
+    <Compile Include="Helpers\GetTypesWithInterface.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\URLHelper.cs" />
+    <Compile Include="Interfaces\IOrderRetriever.cs" />
     <Compile Include="Interfaces\IOrderService.cs" />
+    <Compile Include="Interfaces\IPaymentProvider.cs" />
     <Compile Include="Interfaces\IXMLConfigurationService.cs" />
     <Compile Include="LocalCallbacks.cs" />
     <Compile Include="LogFactory.cs" />

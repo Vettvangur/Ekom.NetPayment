@@ -1,14 +1,25 @@
 ﻿using Microsoft.Practices.Unity;
+using System;
+using System.Linq;
+using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
+using Umbraco.NetPayment.Helpers;
+using Umbraco.NetPayment.Interfaces;
 
 namespace Umbraco.NetPayment
 {
     /// <summary>
     /// Hooks into the umbraco application startup lifecycle 
     /// </summary>
-    public class UmbEvents : ApplicationEventHandler
+    class UmbEvents : ApplicationEventHandler
     {
+        protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
+        {
+            // Initialise DI container, required by extensions also hooking into ApplicationStarted
+            UnityConfig.GetConfiguredContainer();
+        }
+
         /// <summary>
         /// Umbraco lifecycle method
         /// </summary>
@@ -41,6 +52,45 @@ namespace Umbraco.NetPayment
             {
                 //Create DB table - and set overwrite to false
                 dbHelper.CreateTable<PaymentData>(false);
+            }
+
+            RegisterPaymentProviders();
+            RegisterOrderRetrievers();
+        }
+
+        /// <summary>
+        /// Find and register all <see cref="IPaymentProvider"/> with reflection.
+        /// </summary>
+        private void RegisterPaymentProviders()
+        {
+            var ppType = typeof(IPaymentProvider);
+            var paymentProviders = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+
+            foreach (var pp in paymentProviders)
+            {
+                var fi = pp.GetField("_ppNodeName", BindingFlags.Static | BindingFlags.NonPublic);
+
+                if (fi != null)
+                {
+                    var dta = (string)fi.GetRawConstantValue();
+                    API.NetPayment._paymentProviders[dta] = pp;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Find and register all <see cref="IPaymentProvider"/> with reflection.
+        /// </summary>
+        private void RegisterOrderRetrievers()
+        {
+            var ppType = typeof(IOrderRetriever);
+            var orderRetrievers = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+
+            foreach (var or in orderRetrievers)
+            {
+                API.NetPayment._orderRetrievers.Add(or);
             }
         }
     }

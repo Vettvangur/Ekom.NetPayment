@@ -1,4 +1,5 @@
 ﻿using GMO.Umbraco;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
@@ -9,7 +10,7 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Retrieves Umbraco data
     /// </summary>
-    class UmbracoService
+    public class UmbracoService
     {
         /// <summary>
         /// Default set of properties common for all payment providers
@@ -42,13 +43,13 @@ namespace Umbraco.NetPayment
         }
 
         /// <summary>
-        /// Get umbraco content by document type alias
+        /// Get umbraco content by node name
         /// </summary>
-        /// <param name="ppDocTypeAlias">Document type alias</param>
-        public virtual IPublishedContent GetPPNode(string ppDocTypeAlias)
+        /// <param name="ppNodeName">Payment Provider Node Name</param>
+        public virtual IPublishedContent GetPPNode(string ppNodeName)
         {
             var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
-            return ppContainer.Children.First(x => x.DocumentTypeAlias == ppDocTypeAlias);
+            return ppContainer.Children.First(x => x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>

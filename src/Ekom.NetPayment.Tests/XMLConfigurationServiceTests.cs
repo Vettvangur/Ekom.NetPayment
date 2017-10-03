@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using log4net;
 
 namespace Umbraco.NetPayment.Tests
 {
@@ -27,16 +28,20 @@ namespace Umbraco.NetPayment.Tests
                 fs = new Mock<IFileSystem>();
                 settings = new Settings();
                 server = new Mock<HttpServerUtilityBase>();
+                var logFac = new Mock<ILogFactory>();
+                logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
 
-                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object);
+                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object);
             }
 
             public XMLCfgSvcMocks(IFileSystem _fs)
             {
                 settings = new Settings();
                 server = new Mock<HttpServerUtilityBase>();
+                var logFac = new Mock<ILogFactory>();
+                logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
 
-                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, _fs);
+                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, _fs, logFac.Object);
             }
             
             public XMLCfgSvcMocks(bool unMocked)
@@ -44,8 +49,11 @@ namespace Umbraco.NetPayment.Tests
                 fs = new Mock<IFileSystem>();
                 settings = new Settings();
                 server = new Mock<HttpServerUtilityBase>();
-                
-                xmlConfigSvc = new XMLConfigurationService(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object);
+
+                var logFac = new Mock<ILogFactory>();
+                logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
+
+                xmlConfigSvc = new XMLConfigurationService(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object);
             }
         }
 

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Web.Mvc;
 using Umbraco.NetPayment.Helpers;
+using Umbraco.NetPayment.Interfaces;
 
 namespace Umbraco.NetPayment
 {
@@ -10,6 +13,15 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class Settings
     {
+        /// <summary>
+        /// Current dependency resolver instance
+        /// </summary>
+        public static IDependencyResolver container;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual string ConnectionStringName { get; }
             = ConfigurationManager.AppSettings["NetPayment.ConnectionStringName"]
             ?? "umbracoDbDsn";

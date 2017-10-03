@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Web;
 
 namespace Umbraco.NetPayment.Helpers
@@ -6,7 +6,7 @@ namespace Umbraco.NetPayment.Helpers
     /// <summary>
     /// URI Helper methods
     /// </summary>
-    static class URIHelper
+    public static class URIHelper
     {
         /// <summary>
         /// Ensures param is full URI, otherwise adds components using data from Request
