@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Mvc;
 using Umbraco.NetPayment.Interfaces;
 
 namespace Umbraco.NetPayment.API
 {
+    /// <summary>
+    /// The NetPayment API, access payment providers and get orders from request data.
+    /// </summary>
     public class NetPayment
     {
         private static NetPayment _current;
@@ -16,7 +18,7 @@ namespace Umbraco.NetPayment.API
         {
             get
             {
-                return _current ?? (_current = Settings.container.GetService<NetPayment>());
+                return _current ?? (_current = Settings.container.GetInstance<NetPayment>());
             }
         }
 
@@ -32,7 +34,7 @@ namespace Umbraco.NetPayment.API
 
             foreach (var orType in _orderRetrievers)
             {
-                var or = Settings.container.GetService(orType) as IOrderRetriever;
+                var or = Settings.container.GetInstance(orType) as IOrderRetriever;
                 var order = or.Get(request);
 
                 if (order != null) return order;

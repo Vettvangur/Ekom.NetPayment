@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Configuration;
-using System.Web.Mvc;
 using Umbraco.NetPayment.Helpers;
-using Umbraco.NetPayment.Interfaces;
 
 namespace Umbraco.NetPayment
 {
@@ -16,7 +14,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// Current dependency resolver instance
         /// </summary>
-        public static IDependencyResolver container;
+        public static IServiceLocator container;
 
 
         /// <summary>
