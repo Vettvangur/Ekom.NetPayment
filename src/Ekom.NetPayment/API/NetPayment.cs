@@ -50,7 +50,7 @@ namespace Umbraco.NetPayment.API
         /// <returns></returns>
         public IPaymentProvider GetPaymentProvider(string pp)
         {
-            var ppType = _paymentProviders[pp];
+            var ppType = _paymentProviders[pp.ToLower()];
             return Activator.CreateInstance(ppType) as IPaymentProvider;
         }
 

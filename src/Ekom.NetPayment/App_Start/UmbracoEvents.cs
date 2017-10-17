@@ -69,18 +69,19 @@ namespace Umbraco.NetPayment
 
             foreach (var pp in paymentProviders)
             {
+                // Get value of "_ppNodeName" constant
                 var fi = pp.GetField("_ppNodeName", BindingFlags.Static | BindingFlags.NonPublic);
 
                 if (fi != null)
                 {
                     var dta = (string)fi.GetRawConstantValue();
-                    API.NetPayment._paymentProviders[dta] = pp;
+                    API.NetPayment._paymentProviders[dta.ToLower()] = pp;
                 }
             }
         }
 
         /// <summary>
-        /// Find and register all <see cref="IPaymentProvider"/> with reflection.
+        /// Find and register all <see cref="IOrderRetriever"/> with reflection.
         /// </summary>
         private void RegisterOrderRetrievers()
         {
