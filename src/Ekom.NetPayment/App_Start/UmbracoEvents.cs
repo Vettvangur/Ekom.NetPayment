@@ -1,11 +1,11 @@
-﻿using Microsoft.Practices.Unity;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
 using Umbraco.NetPayment.Helpers;
 using Umbraco.NetPayment.Interfaces;
+using Unity;
 
 namespace Umbraco.NetPayment
 {

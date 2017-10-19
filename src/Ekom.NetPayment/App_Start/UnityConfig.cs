@@ -1,10 +1,13 @@
-﻿using Microsoft.Practices.Unity;
-using System;
+﻿using System;
 using System.IO.Abstractions;
 using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Configuration;
 using Umbraco.Web;
+using Unity;
+using Unity.Injection;
+using Unity.Lifetime;
+using Unity.ServiceLocation;
 
 namespace Umbraco.NetPayment
 {
@@ -37,12 +40,6 @@ namespace Umbraco.NetPayment
         /// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
         public static void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterTypes(
-                AllClasses.FromAssemblies(typeof(UnityConfig).Assembly),
-                WithMappings.FromMatchingInterface,
-                WithName.Default
-            );
-
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
             container.RegisterType<HttpContextBase>(new InjectionFactory(c => new HttpContextWrapper(HttpContext.Current)));

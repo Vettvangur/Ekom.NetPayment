@@ -1,4 +1,4 @@
-# editorconfig.org
+﻿# editorconfig.org
 
 # top-most EditorConfig file
 root = true
@@ -14,5 +14,5 @@ insert_final_newline = true
 [*.{js,jsx,ts,tsx}]
 indent_size = 2
 
-[*.{html,config}]
+[*.{html,config,nuspec}]
 indent_size = 2

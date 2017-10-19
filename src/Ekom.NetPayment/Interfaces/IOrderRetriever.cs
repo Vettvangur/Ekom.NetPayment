@@ -7,6 +7,10 @@ namespace Umbraco.NetPayment.Interfaces
     /// </summary>
     public interface IOrderRetriever
     {
+        /// <summary>
+        /// Attempts to retrieve an order using data from the <see cref="HttpRequestBase"/>
+        /// </summary>
+        /// <returns>Returns the referenced order</returns>
         OrderStatus Get(HttpRequestBase request);
     }
 }

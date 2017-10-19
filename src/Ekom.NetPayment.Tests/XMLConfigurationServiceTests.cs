@@ -1,14 +1,13 @@
-﻿using System;
+﻿using log4net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Web;
+using Moq;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Abstractions;
-using Moq;
-using System.Reflection;
-using System.Xml.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using log4net;
+using System.Web;
+using System.Xml.Linq;
 
 namespace Umbraco.NetPayment.Tests
 {
@@ -43,7 +42,7 @@ namespace Umbraco.NetPayment.Tests
 
                 xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, _fs, logFac.Object);
             }
-            
+
             public XMLCfgSvcMocks(bool unMocked)
             {
                 fs = new Mock<IFileSystem>();
@@ -96,12 +95,12 @@ namespace Umbraco.NetPayment.Tests
             string path = Directory.GetCurrentDirectory() + "\\tests\\test.xml";
 
             var task = new PrivateObject(
-                xmlConfigSvc, 
+                xmlConfigSvc,
                 new PrivateType(
                     typeof(XMLConfigurationService)
                 )
             ).Invoke(
-                "WriteXMLAsync", 
+                "WriteXMLAsync",
                 new object[] { path, "12345" }
             ) as Task;
 
