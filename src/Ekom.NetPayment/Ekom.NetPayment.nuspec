@@ -11,7 +11,7 @@
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
-    <releaseNotes>NET452</releaseNotes>
+    <releaseNotes>Unity v5</releaseNotes>
     <copyright>Copyright 2017</copyright>
     <tags></tags>
   </metadata>
