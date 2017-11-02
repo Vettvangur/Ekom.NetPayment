@@ -169,21 +169,26 @@ namespace Umbraco.NetPayment
             {
                 var ctId = _appContext.Services.ContentTypeService.GetContentType(_settings.PPDocumentTypeAlias).Id;
                 var key = _appContext.Services.ContentService.GetContentOfContentType(ctId).First().Key;
+
                 return key;
             }
             catch (Exception ex)
             {
                 _log.Error("Unable to find payment provider node, please verify document type alias and umbraco node presence.", ex);
-                throw;
+
+                return Guid.Empty;
             }
         }
 
         private async Task CreateConfigurationXML()
         {
             var path = _server.MapPath(_settings.PPConfigPath);
-            var nodeKey = FindPPContainerNodeKey().ToString();
+            var nodeKey = FindPPContainerNodeKey();
 
-            await WriteXMLAsync(path, nodeKey);
+            if (nodeKey != Guid.Empty)
+            {
+                await WriteXMLAsync(path, nodeKey.ToString());
+            }
         }
 
         static readonly XmlWriterSettings xmlWrSettings = new XmlWriterSettings
