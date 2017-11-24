@@ -49,7 +49,7 @@ namespace Umbraco.NetPayment
         /// </summary>
         public virtual string PPDocumentTypeAlias { get; set; }
             = ConfigurationManager.AppSettings["NetPayment.PPDocumentTypeAlias"]
-            ?? "paymentProviders";
+            ?? "netPaymentProviders";
 
         private bool? _sendEmailAlerts;
         /// <summary>
