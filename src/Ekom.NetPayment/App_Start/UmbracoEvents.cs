@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Linq;
 using System.Reflection;
 using Umbraco.Core;
@@ -27,35 +28,41 @@ namespace Umbraco.NetPayment
         /// <param name="applicationContext"></param>
         protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
         {
-            var container = UnityConfig.GetConfiguredContainer();
-
-            var settings = container.Resolve<Settings>();
-            var xmlConfigService = container.Resolve<IXMLConfigurationService>();
-
-            // PaymentProviders.config
-            var doc = xmlConfigService.Configuration;
-            xmlConfigService.SetConfiguration(doc);
-
-
-            var dbCtx = applicationContext.DatabaseContext;
-
-            var dbHelper = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
-
-            //Check if the DB table does NOT exist
-            if (!dbHelper.TableExist("customNetPaymentOrder"))
+            try
             {
-                //Create DB table - and set overwrite to false
-                dbHelper.CreateTable<OrderStatus>(false);
-            }
-            //Check if the DB table does NOT exist
-            if (!dbHelper.TableExist("customNetPayments"))
-            {
-                //Create DB table - and set overwrite to false
-                dbHelper.CreateTable<PaymentData>(false);
-            }
+                var container = UnityConfig.GetConfiguredContainer();
 
-            RegisterPaymentProviders();
-            RegisterOrderRetrievers();
+                var settings = container.Resolve<Settings>();
+                var xmlConfigService = container.Resolve<IXMLConfigurationService>();
+
+                // PaymentProviders.config
+                var doc = xmlConfigService.Configuration;
+                xmlConfigService.SetConfiguration(doc);
+
+                var dbCtx = applicationContext.DatabaseContext;
+
+                var dbHelper = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
+
+                //Check if the DB table does NOT exist
+                if (!dbHelper.TableExist("customNetPaymentOrder"))
+                {
+                    //Create DB table - and set overwrite to false
+                    dbHelper.CreateTable<OrderStatus>(false);
+                }
+                //Check if the DB table does NOT exist
+                if (!dbHelper.TableExist("customNetPayments"))
+                {
+                    //Create DB table - and set overwrite to false
+                    dbHelper.CreateTable<PaymentData>(false);
+                }
+
+                RegisterPaymentProviders();
+                RegisterOrderRetrievers();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Fatal NetPayment error, aborting", ex);
+            }
         }
 
         /// <summary>
@@ -94,5 +101,10 @@ namespace Umbraco.NetPayment
                 API.NetPayment._orderRetrievers.Add(or);
             }
         }
+
+        private static readonly ILog Log =
+            LogManager.GetLogger(
+                MethodBase.GetCurrentMethod().DeclaringType
+            );
     }
 }

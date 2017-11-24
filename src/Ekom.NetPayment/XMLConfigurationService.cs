@@ -175,8 +175,7 @@ namespace Umbraco.NetPayment
             catch (Exception ex)
             {
                 _log.Error("Unable to find payment provider node, please verify document type alias and umbraco node presence.", ex);
-
-                return Guid.Empty;
+                throw;
             }
         }
 
