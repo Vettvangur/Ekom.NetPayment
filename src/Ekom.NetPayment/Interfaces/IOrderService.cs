@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Umbraco.NetPayment
 {
@@ -24,7 +25,8 @@ namespace Umbraco.NetPayment
             decimal total,
             string paymentProvider,
             string custom,
-            IEnumerable<OrderItem> orders
+            IEnumerable<OrderItem> orders,
+            HttpRequestBase Request
         );
 
         /// <summary>

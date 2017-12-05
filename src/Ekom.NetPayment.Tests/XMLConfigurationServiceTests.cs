@@ -52,7 +52,7 @@ namespace Umbraco.NetPayment.Tests
                 var logFac = new Mock<ILogFactory>();
                 logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
 
-                xmlConfigSvc = new XMLConfigurationService(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object);
+                xmlConfigSvc = new XMLConfigurationService(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object, Mock.Of<ExamineManagerBase>());
             }
         }
 

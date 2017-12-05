@@ -249,6 +249,8 @@
     <Compile Include="App_Start\UnityActivator.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="DatabaseFactory.cs" />
+    <Compile Include="ExamineManagerBase.cs" />
+    <Compile Include="ExamineManagerWrapper.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />
     <Compile Include="Helpers\GetTypesWithInterface.cs" />
@@ -273,7 +275,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Umbraco.NetPayment.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
