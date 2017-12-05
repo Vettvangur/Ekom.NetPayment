@@ -1,4 +1,4 @@
-using NPoco;
+﻿using NPoco;
 using System;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
@@ -46,6 +46,16 @@ namespace Umbraco.NetPayment
         /// 
         /// </summary>
         public DateTime Date { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string IPAddress { get; set; }
+
+        /// <summary>
+        /// Browser User agent
+        /// </summary>
+        public string UserAgent { get; set; }
 
         /// <summary>
         /// 

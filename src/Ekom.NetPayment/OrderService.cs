@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Umbraco.Core;
 using Umbraco.NetPayment.Helpers;
 
@@ -69,17 +70,20 @@ namespace Umbraco.NetPayment
             decimal total,
             string paymentProvider,
             string custom,
-            IEnumerable<OrderItem> orders
+            IEnumerable<OrderItem> orders,
+            HttpRequestBase Request
         )
         {
             NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
 
-            var name = new StringBuilder();
+            var sb = new StringBuilder();
 
             foreach (var order in orders)
             {
-                name.Append(order.Title + " ");
+                sb.Append(order.Title + " ");
             }
+
+            var orderName = sb.ToString().TrimEnd(' ');
 
             var orderid = Guid.NewGuid();
 
@@ -89,10 +93,12 @@ namespace Umbraco.NetPayment
                 await db.InsertAsync(new OrderStatus
                 {
                     Id = orderid,
-                    Name = name.ToString(),
+                    Name = orderName,
                     Member = member,
                     Amount = total,
                     Date = DateTime.Now,
+                    IPAddress = Request?.UserHostAddress,
+                    UserAgent = Request.UserAgent,
                     PaymentProvider = paymentProvider,
                     Custom = custom
                 }).ConfigureAwait(false);
