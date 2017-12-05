@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using Examine.SearchCriteria;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -21,26 +22,24 @@ namespace Umbraco.NetPayment
         ApplicationContext _appContext;
         Settings _settings;
         IFileSystem _fs;
+        ExamineManagerBase _examineManager;
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="appContext"></param>
-        /// <param name="settings"></param>
-        /// <param name="fileSystem"></param>
-        /// <param name="logFac"></param>
         public XMLConfigurationService(
             HttpServerUtilityBase server,
             ApplicationContext appContext,
             Settings settings,
             IFileSystem fileSystem,
-            ILogFactory logFac
+            ILogFactory logFac,
+            ExamineManagerBase examineManagerBase
         )
         {
             _server = server;
             _appContext = appContext;
             _settings = settings;
             _fs = fileSystem;
+            _examineManager = examineManagerBase;
 
             _log = logFac.GetLogger(typeof(XMLConfigurationService));
         }
@@ -165,14 +164,17 @@ namespace Umbraco.NetPayment
 
         private Guid FindPPContainerNodeKey()
         {
+            var searcher = _examineManager.SearchProviderCollection["ExternalSearcher"];
+
+            ISearchCriteria searchCriteria = searcher.CreateSearchCriteria();
+            var query = searchCriteria.NodeTypeAlias(_settings.PPDocumentTypeAlias);
+            var results = searcher.Search(query.Compile());
+
             try
             {
-                var ctId = _appContext.Services.ContentTypeService.GetContentType(_settings.PPDocumentTypeAlias).Id;
-                var key = _appContext.Services.ContentService.GetContentOfContentType(ctId).First().Key;
-
-                return key;
+                return Guid.Parse(results.First().Fields["key"]);
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
                 _log.Error("Unable to find payment provider node, please verify document type alias and umbraco node presence.", ex);
                 throw;

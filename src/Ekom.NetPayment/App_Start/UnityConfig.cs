@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Examine;
+using System;
 using System.IO.Abstractions;
 using System.Web;
 using Umbraco.Core;
@@ -57,7 +58,14 @@ namespace Umbraco.NetPayment
             ));
 
             container.RegisterType<Settings>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ApplicationContext>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => ApplicationContext.Current));
+            container.RegisterType<ApplicationContext>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionFactory(c => ApplicationContext.Current)
+            );
+            container.RegisterType<ExamineManagerBase>(
+                new ContainerControlledLifetimeManager(),
+                new InjectionFactory(c => new ExamineManagerWrapper(ExamineManager.Instance))
+            );
             container.RegisterType<UmbracoConfig>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => UmbracoConfig.For));
 
             container.RegisterType<UmbracoContext>(new InjectionFactory(c => UmbracoContext.Current));
