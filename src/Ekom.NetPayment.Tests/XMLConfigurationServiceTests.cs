@@ -30,7 +30,7 @@ namespace Umbraco.NetPayment.Tests
                 var logFac = new Mock<ILogFactory>();
                 logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
 
-                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object);
+                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object, Mock.Of<ExamineManagerBase>());
             }
 
             public XMLCfgSvcMocks(IFileSystem _fs)
@@ -40,7 +40,7 @@ namespace Umbraco.NetPayment.Tests
                 var logFac = new Mock<ILogFactory>();
                 logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
 
-                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, _fs, logFac.Object);
+                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, _fs, logFac.Object, Mock.Of<ExamineManagerBase>());
             }
 
             public XMLCfgSvcMocks(bool unMocked)
