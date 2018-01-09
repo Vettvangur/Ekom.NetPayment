@@ -6,7 +6,6 @@ using Umbraco.Core;
 using Umbraco.Core.Persistence;
 using Umbraco.NetPayment.Helpers;
 using Umbraco.NetPayment.Interfaces;
-using Unity;
 
 namespace Umbraco.NetPayment
 {
@@ -15,12 +14,6 @@ namespace Umbraco.NetPayment
     /// </summary>
     class UmbEvents : ApplicationEventHandler
     {
-        protected override void ApplicationStarting(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
-        {
-            // Initialise DI container, required by extensions also hooking into ApplicationStarted
-            UnityConfig.GetConfiguredContainer();
-        }
-
         /// <summary>
         /// Umbraco lifecycle method
         /// </summary>
@@ -30,10 +23,10 @@ namespace Umbraco.NetPayment
         {
             try
             {
-                var container = UnityConfig.GetConfiguredContainer();
+                var container = Settings.container;
 
-                var settings = container.Resolve<Settings>();
-                var xmlConfigService = container.Resolve<IXMLConfigurationService>();
+                var settings = container.GetInstance<Settings>();
+                var xmlConfigService = container.GetInstance<IXMLConfigurationService>();
 
                 // PaymentProviders.config
                 var doc = xmlConfigService.Configuration;
