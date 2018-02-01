@@ -14,7 +14,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// Current dependency resolver instance
         /// </summary>
-        public static IServiceLocator container;
+        internal static IServiceLocator container;
 
 
         /// <summary>

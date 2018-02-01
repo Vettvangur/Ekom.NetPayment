@@ -6,8 +6,36 @@ namespace Umbraco.NetPayment
     /// Callbacks to run on success/error.
     /// Supplied by library consumer.
     /// </summary>
-    public abstract class LocalCallbacks
+    public class LocalCallbacks
     {
+        /// <summary>
+        /// Raises the success event on successful payment verification
+        /// </summary>
+        /// <param name="o"></param>
+        internal static void OnSuccess(OrderStatus o)
+        {
+            Success?.Invoke(o);
+        }
+
+        /// <summary>
+        /// Raises the success event on successful payment verification
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="ex"></param>
+        internal static void OnError(OrderStatus o, Exception ex)
+        {
+            Error?.Invoke(o, ex);
+        }
+
+        /// <summary>
+        /// Event fired on successful payment verification
+        /// </summary>
+        public static event successCallback Success;
+        /// <summary>
+        /// Event fired on payment verification error
+        /// </summary>
+        public static event errorCallback Error;
+
         /// <summary>
         /// Callback to run on success
         /// </summary>
