@@ -1,5 +1,4 @@
-﻿using NPoco;
-using System;
+﻿using System;
 using Umbraco.Core.Models;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
@@ -8,8 +7,6 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Generalized object storing basic information on orders and their status
     /// </summary>
-    [TableName("customNetPaymentOrder")]
-    [PrimaryKey("Id", AutoIncrement = false)]
     [Umbraco.Core.Persistence.TableName("customNetPaymentOrder")]
     [Umbraco.Core.Persistence.PrimaryKey("Id", autoIncrement = false)]
     public class OrderStatus

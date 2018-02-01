@@ -39,11 +39,11 @@ namespace Umbraco.NetPayment
         /// Get order with the given unique id
         /// </summary>
         /// <param name="id">Order id</param>
-        public async Task<OrderStatus> GetAsync(Guid id)
+        public Task<OrderStatus> GetAsync(Guid id)
         {
             using (var db = _dbFac.GetDb())
             {
-                return await db.SingleByIdAsync<OrderStatus>(id).ConfigureAwait(false);
+                return Task.FromResult(db.Single<OrderStatus>(id));
             }
         }
 
@@ -65,7 +65,7 @@ namespace Umbraco.NetPayment
         /// Persist in database and retrieve unique order id
         /// </summary>
         /// <returns>Order Id</returns>
-        public async Task<Guid> InsertAsync(
+        public Task<Guid> InsertAsync(
             int member,
             decimal total,
             string paymentProvider,
@@ -90,7 +90,7 @@ namespace Umbraco.NetPayment
             using (var db = _dbFac.GetDb())
             {
                 // Return order id
-                await db.InsertAsync(new OrderStatus
+                db.Insert(new OrderStatus
                 {
                     Id = orderid,
                     Name = orderName,
@@ -101,10 +101,10 @@ namespace Umbraco.NetPayment
                     UserAgent = Request.UserAgent,
                     PaymentProvider = paymentProvider,
                     Custom = custom
-                }).ConfigureAwait(false);
+                });
             }
 
-            return orderid;
+            return Task.FromResult(orderid);
         }
     }
 }

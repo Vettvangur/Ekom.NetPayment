@@ -1,4 +1,4 @@
-﻿using NPoco;
+﻿using Umbraco.Core.Persistence;
 
 namespace Umbraco.NetPayment
 {
@@ -10,22 +10,22 @@ namespace Umbraco.NetPayment
             _settings = settings;
         }
 
-        public IDatabase GetDb()
+        public Database GetDb()
         {
             return new Database(_settings.ConnectionStringName);
         }
     }
 
     /// <summary>
-    /// Creates instances of the NPoco <see cref="Database"/> class.
+    /// Creates instances of the Petapoco <see cref="Database"/> class.
     /// Must be disposed of after use.
     /// </summary>
     public interface IDatabaseFactory
     {
         /// <summary>
-        /// Creates instances of the NPoco <see cref="Database"/> class.
+        /// Creates instances of the Petapoco <see cref="Database"/> class.
         /// Must be disposed of after use.
         /// </summary>
-        IDatabase GetDb();
+        Database GetDb();
     }
 }
