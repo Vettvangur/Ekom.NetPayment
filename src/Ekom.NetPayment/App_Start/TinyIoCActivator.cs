@@ -6,10 +6,10 @@ using TinyIoC;
 
 namespace Umbraco.NetPayment.App_Start
 {
-    /// <summary>Provides the bootstrapping for integrating Unity with WebApi when it is hosted in ASP.NET</summary> 
+    /// <summary>Provides the bootstrapping for integrating TinyIoC when it is hosted in ASP.NET</summary> 
     static class TinyIoCActivator
     {
-        /// <summary>Integrates Unity when the application starts.</summary> 
+        /// <summary>Integrates TinyIoC when the application starts.</summary> 
         public static TinyIoCContainer Start()
         {
             // Register Types 
@@ -20,7 +20,7 @@ namespace Umbraco.NetPayment.App_Start
             return container;
         }
 
-        /// <summary>Disposes the Unity container when the application is shut down.</summary> 
+        /// <summary>Disposes the container when the application is shut down.</summary> 
         public static void Shutdown()
         {
             var container = TinyIoCContainer.Current;

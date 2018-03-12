@@ -1,8 +1,8 @@
-﻿using GMO.Umbraco;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
+using Umbraco.NetPayment.GMO.Umbraco;
 using Umbraco.Web;
 
 namespace Umbraco.NetPayment

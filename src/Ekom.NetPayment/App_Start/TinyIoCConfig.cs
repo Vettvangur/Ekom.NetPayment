@@ -32,9 +32,10 @@ namespace Umbraco.NetPayment
 
             container.Register<IFileSystem, FileSystem>().AsMultiInstance();
             container.Register<IDatabaseFactory, DatabaseFactory>().AsMultiInstance();
-            container.Register<ILogFactory, LogFactory>().AsMultiInstance();
             container.Register<IOrderService, OrderService>().AsMultiInstance();
             container.Register<IXMLConfigurationService, XMLConfigurationService>().AsMultiInstance();
+
+            container.Register<ILogFactory, LogFactory>();
         }
     }
 }

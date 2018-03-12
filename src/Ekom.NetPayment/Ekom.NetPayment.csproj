@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;TINYIOC_INTERNAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Umbraco.NetPayment.xml</DocumentationFile>
@@ -64,9 +64,6 @@
     </Reference>
     <Reference Include="Examine, Version=0.1.82.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Examine.0.1.82\lib\net45\Examine.dll</HintPath>
-    </Reference>
-    <Reference Include="GMO.Umbraco.PropertyHelper, Version=1.1.6502.28012, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GMO.Umbraco.PropertyHelper.1.1.2\lib\net452\GMO.Umbraco.PropertyHelper.dll</HintPath>
     </Reference>
     <Reference Include="GMO.Vorto, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GMO.Vorto.0.0.3\lib\net45\GMO.Vorto.dll</HintPath>
@@ -239,6 +236,7 @@
     <Compile Include="DatabaseFactory.cs" />
     <Compile Include="ExamineManagerBase.cs" />
     <Compile Include="ExamineManagerWrapper.cs" />
+    <Compile Include="GMO.Umbraco.PropertyHelper\PropertyHelper.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />
     <Compile Include="Helpers\GetTypesWithInterface.cs" />
