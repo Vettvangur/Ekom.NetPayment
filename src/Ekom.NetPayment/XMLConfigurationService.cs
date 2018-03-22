@@ -176,7 +176,7 @@ namespace Umbraco.NetPayment
             }
             catch (InvalidOperationException ex)
             {
-                _log.Error("Unable to find payment provider node, please verify document type alias and umbraco node presence.", ex);
+                _log.Error($"Unable to find payment provider node with docTypeAlias {_settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence.", ex);
                 throw;
             }
         }
