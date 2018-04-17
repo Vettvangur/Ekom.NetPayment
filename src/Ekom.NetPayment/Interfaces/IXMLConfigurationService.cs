@@ -23,13 +23,5 @@ namespace Umbraco.NetPayment
         /// F.x. lang
         /// </param>
         Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null);
-
-        /// <summary>
-        /// This method attempts to read the payment providers node guid from the PaymentProviders.config xml file.
-        /// It can handle failures such as no xml config present, no value present and more,
-        /// in some cases creating a new configuration file.
-        /// </summary>
-        /// <param name="ppConfig">PaymentProviders.config XML</param>
-        void SetConfiguration(XDocument ppConfig);
     }
 }

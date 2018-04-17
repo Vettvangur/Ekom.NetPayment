@@ -26,7 +26,9 @@ namespace Umbraco.NetPayment
                 var container = Settings.container;
 
                 var settings = container.GetInstance<Settings>();
-                var xmlConfigService = container.GetInstance<IXMLConfigurationService>();
+                var xmlConfigService = container.GetInstance<IXMLConfigurationService>()
+                    // Access internal method
+                    as XMLConfigurationService;
 
                 // PaymentProviders.config
                 var doc = xmlConfigService.Configuration;

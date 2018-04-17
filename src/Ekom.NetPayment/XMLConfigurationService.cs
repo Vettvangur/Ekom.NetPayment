@@ -15,8 +15,13 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Handles the Payment Providers XML configuration
     /// </summary>
-    class XMLConfigurationService : IXMLConfigurationService
+    public class XMLConfigurationService : IXMLConfigurationService
     {
+        /// <summary>
+        /// </summary>
+        public static IXMLConfigurationService Instance =>
+            Settings.container.GetInstance<IXMLConfigurationService>();
+
         ILog _log;
         HttpServerUtilityBase _server;
         ApplicationContext _appContext;
@@ -26,7 +31,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// ctor
         /// </summary>
-        public XMLConfigurationService(
+        internal XMLConfigurationService(
             HttpServerUtilityBase server,
             ApplicationContext appContext,
             Settings settings,
@@ -120,7 +125,7 @@ namespace Umbraco.NetPayment
         /// in some cases creating a new configuration file.
         /// </summary>
         /// <param name="ppConfig">PaymentProviders.config XML</param>
-        public virtual void SetConfiguration(XDocument ppConfig)
+        internal virtual void SetConfiguration(XDocument ppConfig)
         {
             // No configuration file
             if (ppConfig != null)
