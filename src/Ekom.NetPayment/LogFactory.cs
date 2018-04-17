@@ -1,4 +1,4 @@
-using log4net;
+﻿using log4net;
 using System;
 
 namespace Umbraco.NetPayment
@@ -8,14 +8,13 @@ namespace Umbraco.NetPayment
     /// </summary>
     class LogFactory : ILogFactory
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="T">Type of class this logger logs for</param>
-        /// <returns></returns>
         public ILog GetLogger(Type T)
         {
             return LogManager.GetLogger(T);
+        }
+        public ILog GetLogger<T>()
+        {
+            return LogManager.GetLogger(typeof(T));
         }
     }
 
@@ -30,5 +29,10 @@ namespace Umbraco.NetPayment
         /// <param name="T">Type of class this logger logs for</param>
         /// <returns></returns>
         ILog GetLogger(Type T);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        ILog GetLogger<T>();
     }
 }
