@@ -3,7 +3,8 @@
 namespace Umbraco.NetPayment
 {
     /// <summary>
-    /// Callbacks to run on success/error.
+    /// Callbacks to run for all payment providers on success/error.
+    /// Local in this context is in contrast with callbacks to be performed after a remote provider response f.x.
     /// Supplied by library consumer.
     /// </summary>
     public class LocalCallbacks
