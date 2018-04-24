@@ -21,7 +21,7 @@ namespace Umbraco.NetPayment
         /// 
         /// </summary>
         [NullSetting(NullSetting = NullSettings.Null)]
-        [Length(20)]
+        [Length(30)]
         public string PaymentDate { get; set; }
 
         /// <summary>
@@ -34,6 +34,7 @@ namespace Umbraco.NetPayment
         /// Masked credit card number
         /// </summary>
         [Length(16)]
+        [NullSetting(NullSetting = NullSettings.Null)]
         public string CardNumber { get; set; }
 
         /// <summary>

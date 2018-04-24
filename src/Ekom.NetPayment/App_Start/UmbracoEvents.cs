@@ -1,6 +1,7 @@
 ﻿using log4net;
 using System;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
@@ -53,6 +54,9 @@ namespace Umbraco.NetPayment
 
                 RegisterPaymentProviders();
                 RegisterOrderRetrievers();
+
+                // Disable SSL and older TLS versions
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             }
             catch (Exception ex)
             {

@@ -233,6 +233,7 @@
     <Compile Include="API\NetPayment.cs" />
     <Compile Include="App_Start\TinyIoCActivator.cs" />
     <Compile Include="App_Start\TinyIoCConfig.cs" />
+    <Compile Include="Currency.cs" />
     <Compile Include="DatabaseFactory.cs" />
     <Compile Include="ExamineManagerBase.cs" />
     <Compile Include="ExamineManagerWrapper.cs" />
