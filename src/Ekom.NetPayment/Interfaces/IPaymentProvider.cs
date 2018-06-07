@@ -15,14 +15,16 @@ namespace Umbraco.NetPayment.Interfaces
         /// <param name="total">Total amount due</param>
         /// <param name="orders">Order lines, displayed as a list during payment</param>
         /// <param name="skipReceipt">Skip Valitor receipt page after payment</param>
-        /// <param name="culture">IS/EN f.x.</param>
+        /// <param name="language">Controls payment portal language</param>
+        /// <param name="vortoLanguage">Vorto language for payment provider properties</param>
         /// <param name="member">Can be used to store umbraco member id</param>
         /// <param name="orderCustomString">Perfect for storing custom data/json :)</param>
         string Request(
             decimal total,
             IEnumerable<OrderItem> orders,
             bool skipReceipt,
-            string culture,
+            string language,
+            string vortoLanguage,
             int member = 0,
             string orderCustomString = ""
         );
@@ -34,14 +36,16 @@ namespace Umbraco.NetPayment.Interfaces
         /// <param name="total">Total amount due</param>
         /// <param name="orders">Order lines, displayed as a list during payment</param>
         /// <param name="skipReceipt">Skip Valitor receipt page after payment</param>
-        /// <param name="culture">IS/EN f.x.</param>
+        /// <param name="language">Controls payment portal language</param>
+        /// <param name="vortoLanguage">Vorto language for payment provider properties</param>
         /// <param name="member">Can be used to store umbraco member id</param>
         /// <param name="orderCustomString">Perfect for storing custom data/json :)</param>
         Task<string> RequestAsync(
             decimal total,
             IEnumerable<OrderItem> orders,
             bool skipReceipt,
-            string culture,
+            string language,
+            string vortoLanguage,
             int member = 0,
             string orderCustomString = ""
         );

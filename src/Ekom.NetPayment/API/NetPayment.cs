@@ -1,7 +1,9 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Web;
 using Umbraco.NetPayment.Interfaces;
+using Umbraco.Web;
 
 namespace Umbraco.NetPayment.API
 {
@@ -20,6 +22,17 @@ namespace Umbraco.NetPayment.API
             {
                 return _current ?? (_current = Settings.container.GetInstance<NetPayment>());
             }
+        }
+
+        private readonly ILog _log;
+        private readonly Settings _settings;
+        private readonly UmbracoService _uService;
+
+        public NetPayment(ILogFactory logFac, Settings settings, UmbracoService uService)
+        {
+            _log = logFac.GetLogger<NetPayment>();
+            _settings = settings;
+            _uService = uService;
         }
 
         /// <summary>
@@ -46,11 +59,16 @@ namespace Umbraco.NetPayment.API
         /// <summary>
         /// Retrieve a payment provider by name
         /// </summary>
-        /// <param name="pp"></param>
+        /// <param name="pp">Payment provider alias or name. Must have a matching umbraco pp node</param>
         /// <returns></returns>
         public IPaymentProvider GetPaymentProvider(string pp)
         {
-            var ppType = _paymentProviders[pp.ToLower()];
+            var ppNode = _uService.GetPPNode(pp);
+            var ppProp = ppNode.GetProperty("basePaymentProvider");
+
+            string basePpName = ppProp.HasValue ? ppProp.GetValue<string>() : pp;
+
+            var ppType = _paymentProviders[basePpName.ToLower()];
             return Activator.CreateInstance(ppType) as IPaymentProvider;
         }
 

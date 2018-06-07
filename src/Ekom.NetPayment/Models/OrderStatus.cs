@@ -52,6 +52,7 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// Browser User agent
         /// </summary>
+        [Length(1024)]
         public string UserAgent { get; set; }
 
         /// <summary>

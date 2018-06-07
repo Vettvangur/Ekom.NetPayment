@@ -49,7 +49,11 @@ namespace Umbraco.NetPayment
         public virtual IPublishedContent GetPPNode(string ppNodeName)
         {
             var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
-            return ppContainer.Children.First(x => x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
+            return ppContainer.Children.FirstOrDefault(x =>
+                       x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase))
+                   ?? ppContainer.Children.First(x =>
+                       x.GetPropertyValue<string>("basePaymentProvider")
+                           .Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -70,7 +74,7 @@ namespace Umbraco.NetPayment
                 if (prop != null)
                 {
                     var value = _umbracoHelper.GetValueFromProperty(prop, pp, culture, forceUrl: true);
-                    properties[key] = value.ToString();
+                    properties[key] = value?.ToString();
                 }
             }
 
