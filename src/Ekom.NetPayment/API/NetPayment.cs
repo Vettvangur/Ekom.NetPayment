@@ -59,17 +59,27 @@ namespace Umbraco.NetPayment.API
         /// <summary>
         /// Retrieve a payment provider by name
         /// </summary>
-        /// <param name="pp">Payment provider alias or name. Must have a matching umbraco pp node</param>
+        /// <param name="pp">Payment provider alias or name. Must have a matching umbraco pp node or basePaymentProvider property</param>
         /// <returns></returns>
         public IPaymentProvider GetPaymentProvider(string pp)
         {
             var ppNode = _uService.GetPPNode(pp);
-            var ppProp = ppNode.GetProperty("basePaymentProvider");
+            var ppProp = ppNode.HasProperty("basePaymentProvider") ? ppNode.GetProperty("basePaymentProvider") : null;
 
-            string basePpName = ppProp.HasValue ? ppProp.GetValue<string>() : pp;
+            var basePpName = ppProp != null && ppProp.HasValue ? ppProp.GetValue<string>() : pp;
 
-            var ppType = _paymentProviders[basePpName.ToLower()];
-            return Activator.CreateInstance(ppType) as IPaymentProvider;
+            basePpName = basePpName.ToLower();
+
+            if (_paymentProviders.ContainsKey(basePpName))
+            {
+                var ppType = _paymentProviders[basePpName];
+
+                return Activator.CreateInstance(ppType) as IPaymentProvider;
+            }
+            else
+            {
+               throw new ArgumentException("Payment Provider DLL not found. Name: " + basePpName);
+            }
         }
 
         internal static List<Type> _orderRetrievers = new List<Type>();

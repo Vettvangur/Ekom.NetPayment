@@ -49,11 +49,14 @@ namespace Umbraco.NetPayment
         public virtual IPublishedContent GetPPNode(string ppNodeName)
         {
             var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
-            return ppContainer.Children.FirstOrDefault(x =>
+
+            if (ppContainer == null) throw new ArgumentNullException("Payment Provider container node not found.", nameof(ppContainer));
+
+            return ppContainer.Children.Where(x => x.IsVisible()).FirstOrDefault(x =>
                        x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase))
                    ?? ppContainer.Children.First(x =>
-                       x.GetPropertyValue<string>("basePaymentProvider")
-                           .Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
+                       x.HasProperty("basePaymentProvider") && x.GetPropertyValue<string>("basePaymentProvider")
+                          .Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
