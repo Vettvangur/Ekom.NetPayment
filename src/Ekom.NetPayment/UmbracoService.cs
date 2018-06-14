@@ -60,6 +60,20 @@ namespace Umbraco.NetPayment
         }
 
         /// <summary>
+        /// Get umbraco content by node Key
+        /// </summary>
+        /// <param name="ppNodeName">Payment Provider Node Name</param>
+        public virtual IPublishedContent GetPPNode(Guid ppNodeKey)
+        {
+            var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
+
+            if (ppContainer == null) throw new ArgumentNullException("Payment Provider container node not found.", nameof(ppContainer));
+
+            return ppContainer.Children.Where(x => x.IsVisible()).FirstOrDefault(x =>
+                x.GetKey() == ppNodeKey);
+        }
+
+        /// <summary>
         /// Fill dictionary with values for each dictionary key.
         /// </summary>
         /// <param name="pp">Umbraco payment provider content node</param>

@@ -19,6 +19,7 @@ namespace Umbraco.NetPayment.Interfaces
         /// <param name="vortoLanguage">Vorto language for payment provider properties</param>
         /// <param name="member">Can be used to store umbraco member id</param>
         /// <param name="orderCustomString">Perfect for storing custom data/json :)</param>
+        /// <param name="paymentProviderId">Payment provider key if you want to have many of the same provider</param>
         string Request(
             decimal total,
             IEnumerable<OrderItem> orders,
@@ -26,7 +27,8 @@ namespace Umbraco.NetPayment.Interfaces
             string language,
             string vortoLanguage,
             int member = 0,
-            string orderCustomString = ""
+            string orderCustomString = "",
+            string paymentProviderId = ""
         );
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace Umbraco.NetPayment.Interfaces
         /// <param name="vortoLanguage">Vorto language for payment provider properties</param>
         /// <param name="member">Can be used to store umbraco member id</param>
         /// <param name="orderCustomString">Perfect for storing custom data/json :)</param>
+        /// <param name="paymentProviderId">Payment provider key if you want to have many of the same provider</param>
         Task<string> RequestAsync(
             decimal total,
             IEnumerable<OrderItem> orders,
@@ -47,7 +50,8 @@ namespace Umbraco.NetPayment.Interfaces
             string language,
             string vortoLanguage,
             int member = 0,
-            string orderCustomString = ""
+            string orderCustomString = "",
+            string paymentProviderId = ""
         );
     }
 }
