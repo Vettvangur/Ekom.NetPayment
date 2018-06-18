@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
     <releaseNotes>Complete api for supporting base payment provider overload with multiple umbraco nodes.</releaseNotes>
-    <copyright>Copyright 2017</copyright>
+    <copyright>Copyright 2018</copyright>
     <tags></tags>
     <dependencies>
       <dependency id="Microsoft.VisualStudio.SlowCheetah" version="3.0.0" />
