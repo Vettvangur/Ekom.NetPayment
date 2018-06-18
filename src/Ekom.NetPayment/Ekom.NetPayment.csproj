@@ -237,6 +237,8 @@
     <Compile Include="DatabaseFactory.cs" />
     <Compile Include="ExamineManagerBase.cs" />
     <Compile Include="ExamineManagerWrapper.cs" />
+    <Compile Include="Exceptions\PaymentProviderNotFoundException.cs" />
+    <Compile Include="Exceptions\NetPaymentException.cs" />
     <Compile Include="GMO.Umbraco.PropertyHelper\PropertyHelper.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />

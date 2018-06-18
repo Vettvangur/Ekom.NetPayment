@@ -81,7 +81,7 @@ namespace Umbraco.NetPayment
                 if (fi != null)
                 {
                     var dta = (string)fi.GetRawConstantValue();
-                    API.NetPayment._paymentProviders[dta.ToLower()] = pp;
+                    API.NetPayment.paymentProviders[dta.ToLower()] = pp;
                 }
             }
         }
@@ -97,7 +97,7 @@ namespace Umbraco.NetPayment
 
             foreach (var or in orderRetrievers)
             {
-                API.NetPayment._orderRetrievers.Add(or);
+                API.NetPayment.orderRetrievers.Add(or);
             }
         }
 

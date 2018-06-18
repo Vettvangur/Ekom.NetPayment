@@ -49,16 +49,8 @@ namespace Umbraco.NetPayment
             _log = logFac.GetLogger(typeof(XMLConfigurationService));
         }
 
-        /// <summary>
-        /// Tries to get the xml configuration from cache, falls back to file.
-        /// </summary>
-        public virtual XDocument Configuration
-        {
-            get
-            {
-                return _appContext.ApplicationCache.RuntimeCache.GetCacheItem("PPConfig", LoadConfiguration) as XDocument;
-            }
-        }
+        /// <inheritdoc />
+        public virtual XDocument Configuration => _appContext.ApplicationCache.RuntimeCache.GetCacheItem("PPConfig", LoadConfiguration) as XDocument;
 
         /// <summary>
         /// Load XML configuration from file
@@ -88,15 +80,17 @@ namespace Umbraco.NetPayment
         public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
         {
             var providers = Configuration.Root.Elements("provider")
-                            .Where(x => x.Attribute("title")?.Value == pp);
+                            .Where(x => x.Attribute("title")?.Value == pp)
+                            .ToList();
 
-            if (providers.Count() > 0)
+            if (providers.Any())
             {
                 XElement provider;
 
                 if (secondaryMatches != null)
                 {
-                    provider = providers.FirstOrDefault(x => secondaryMatches.All(kvp => x.Attribute(kvp.Key)?.Value == kvp.Value));
+                    provider = providers.FirstOrDefault(x => secondaryMatches.All(kvp => x.Attribute(kvp.Key)?.Value == kvp.Value))
+                        ?? providers.FirstOrDefault();
                 }
                 else
                 {

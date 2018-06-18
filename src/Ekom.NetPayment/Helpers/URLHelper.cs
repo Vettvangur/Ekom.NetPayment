@@ -28,7 +28,7 @@ namespace Umbraco.NetPayment.Helpers
                 return basePath + uri;
             }
 
-            throw new Exception("Not well formed Uri");
+            throw new Exception("Not well formed Uri, verify configured success / error url");
         }
     }
 }

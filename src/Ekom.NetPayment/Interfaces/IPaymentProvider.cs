@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Umbraco.NetPayment.Interfaces
@@ -10,6 +11,12 @@ namespace Umbraco.NetPayment.Interfaces
     public interface IPaymentProvider
     {
         /// <summary>
+        /// Chooses a specific payment provider node.
+        /// Useful when you have multiple umbraco nodes targetting the same base payment provider.
+        /// </summary>
+        Guid PaymentProviderKey { get; set; }
+
+        /// <summary>
         /// Initiate a payment request .
         /// </summary>
         /// <param name="total">Total amount due</param>
@@ -19,7 +26,6 @@ namespace Umbraco.NetPayment.Interfaces
         /// <param name="vortoLanguage">Vorto language for payment provider properties</param>
         /// <param name="member">Can be used to store umbraco member id</param>
         /// <param name="orderCustomString">Perfect for storing custom data/json :)</param>
-        /// <param name="paymentProviderId">Payment provider key if you want to have many of the same provider</param>
         string Request(
             decimal total,
             IEnumerable<OrderItem> orders,
@@ -27,8 +33,7 @@ namespace Umbraco.NetPayment.Interfaces
             string language,
             string vortoLanguage,
             int member = 0,
-            string orderCustomString = "",
-            string paymentProviderId = ""
+            string orderCustomString = ""
         );
 
         /// <summary>
@@ -42,7 +47,7 @@ namespace Umbraco.NetPayment.Interfaces
         /// <param name="vortoLanguage">Vorto language for payment provider properties</param>
         /// <param name="member">Can be used to store umbraco member id</param>
         /// <param name="orderCustomString">Perfect for storing custom data/json :)</param>
-        /// <param name="paymentProviderId">Payment provider key if you want to have many of the same provider</param>
+        /// <param name="paymentProviderKey">Payment provider key if you want to have many of the same provider</param>
         Task<string> RequestAsync(
             decimal total,
             IEnumerable<OrderItem> orders,
@@ -50,8 +55,7 @@ namespace Umbraco.NetPayment.Interfaces
             string language,
             string vortoLanguage,
             int member = 0,
-            string orderCustomString = "",
-            string paymentProviderId = ""
+            string orderCustomString = ""
         );
     }
 }

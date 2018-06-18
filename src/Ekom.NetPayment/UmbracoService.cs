@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
+using Umbraco.NetPayment.Exceptions;
 using Umbraco.NetPayment.GMO.Umbraco;
 using Umbraco.Web;
 
@@ -28,8 +29,8 @@ namespace Umbraco.NetPayment
             }
         }
 
-        UmbracoHelper _umbracoHelper;
-        Settings _settings;
+        readonly UmbracoHelper _umbracoHelper;
+        readonly Settings _settings;
 
         /// <summary>
         /// ctor
@@ -50,7 +51,7 @@ namespace Umbraco.NetPayment
         {
             var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
 
-            if (ppContainer == null) throw new ArgumentNullException("Payment Provider container node not found.", nameof(ppContainer));
+            if (ppContainer == null) throw new NetPaymentException("Payment Provider container node not found.");
 
             return ppContainer.Children.Where(x => x.IsVisible()).FirstOrDefault(x =>
                        x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase))
@@ -62,15 +63,10 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// Get umbraco content by node Key
         /// </summary>
-        /// <param name="ppNodeName">Payment Provider Node Name</param>
+        /// <param name="ppNodeKey">Payment Provider Node Guid</param>
         public virtual IPublishedContent GetPPNode(Guid ppNodeKey)
         {
-            var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
-
-            if (ppContainer == null) throw new ArgumentNullException("Payment Provider container node not found.", nameof(ppContainer));
-
-            return ppContainer.Children.Where(x => x.IsVisible()).FirstOrDefault(x =>
-                x.GetKey() == ppNodeKey);
+            return _umbracoHelper.TypedContent(ppNodeKey);
         }
 
         /// <summary>
