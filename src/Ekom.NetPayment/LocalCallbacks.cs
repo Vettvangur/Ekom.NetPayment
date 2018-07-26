@@ -13,7 +13,7 @@ namespace Umbraco.NetPayment
         /// Raises the success event on successful payment verification
         /// </summary>
         /// <param name="o"></param>
-        internal static void OnSuccess(OrderStatus o)
+        public static void OnSuccess(OrderStatus o)
         {
             Success?.Invoke(o);
         }
@@ -23,7 +23,7 @@ namespace Umbraco.NetPayment
         /// </summary>
         /// <param name="o"></param>
         /// <param name="ex"></param>
-        internal static void OnError(OrderStatus o, Exception ex)
+        public static void OnError(OrderStatus o, Exception ex)
         {
             Error?.Invoke(o, ex);
         }
