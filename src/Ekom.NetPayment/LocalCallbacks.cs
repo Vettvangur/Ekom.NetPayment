@@ -19,7 +19,7 @@ namespace Umbraco.NetPayment
         }
 
         /// <summary>
-        /// Raises the success event on successful payment verification
+        /// Raises the success event on failed payment verification
         /// </summary>
         /// <param name="o"></param>
         /// <param name="ex"></param>
