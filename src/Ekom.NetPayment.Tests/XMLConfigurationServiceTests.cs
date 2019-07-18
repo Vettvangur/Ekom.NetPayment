@@ -148,7 +148,7 @@ namespace Umbraco.NetPayment.Tests
             Assert.AreEqual(xmlConfigSvcMocks.settings.PPUmbracoNode, Guid.Parse("8d7c912e-3744-46a0-801f-3e7d3c8a991e"));
         }
 
-        string paymentProviders_config = @"<?xml version=""1.0""?>
+        readonly string paymentProviders_config = @"<?xml version=""1.0""?>
 
             <providers>
              <paymentProvidersNode>8d7c912e-3744-46a0-801f-3e7d3c8a991e</paymentProvidersNode>

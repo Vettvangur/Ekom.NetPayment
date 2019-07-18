@@ -4,7 +4,7 @@ namespace Umbraco.NetPayment
 {
     class DatabaseFactory : IDatabaseFactory
     {
-        Settings _settings;
+        readonly Settings _settings;
         public DatabaseFactory(Settings settings)
         {
             _settings = settings;
