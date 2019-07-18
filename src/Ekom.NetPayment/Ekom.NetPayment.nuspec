@@ -1,18 +1,18 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Umbraco.NetPayment</id>
-    <version>7.6.2</version>
-    <title>Umbraco.NetPayment</title>
+    <id>Umbraco.NetPayment.v8</id>
+    <version>0.0.1</version>
+    <title>Umbraco.NetPayment.v8</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
-    <licenseUrl>http://www.vettvangur.is</licenseUrl>
+    <license type="expression">Proprietary</license>
     <projectUrl>https://github.com/Vettvangur/Umbraco.NetPayment</projectUrl>
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
-    <releaseNotes>Complete api for supporting base payment provider overload with multiple umbraco nodes.</releaseNotes>
-    <copyright>Copyright 2018</copyright>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2019</copyright>
     <tags></tags>
     <dependencies>
       <dependency id="Microsoft.VisualStudio.SlowCheetah" version="3.0.0" />

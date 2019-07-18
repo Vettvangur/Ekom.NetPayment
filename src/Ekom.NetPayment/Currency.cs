@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Umbraco.NetPayment
+﻿namespace Umbraco.NetPayment
 {
     /// <summary>
     /// Numeric values are for Borgun Api, string value is used in other providers.

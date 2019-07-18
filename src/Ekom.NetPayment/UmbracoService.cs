@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Umbraco.Core.Models;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.NetPayment.Exceptions;
-using Umbraco.NetPayment.GMO.Umbraco;
 using Umbraco.Web;
 
 namespace Umbraco.NetPayment
@@ -49,14 +48,14 @@ namespace Umbraco.NetPayment
         /// <param name="ppNodeName">Payment Provider Node Name</param>
         public virtual IPublishedContent GetPPNode(string ppNodeName)
         {
-            var ppContainer = _umbracoHelper.TypedContent(_settings.PPUmbracoNode);
+            var ppContainer = _umbracoHelper.Content(_settings.PPUmbracoNode);
 
             if (ppContainer == null) throw new NetPaymentException("Payment Provider container node not found.");
 
             return ppContainer.Children.Where(x => x.IsVisible()).FirstOrDefault(x =>
                        x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase))
                    ?? ppContainer.Children.First(x =>
-                       x.HasProperty("basePaymentProvider") && x.GetPropertyValue<string>("basePaymentProvider")
+                       x.HasProperty("basePaymentProvider") && x.GetProperty("basePaymentProvider").Value<string>()
                           .Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
         }
 
@@ -66,7 +65,7 @@ namespace Umbraco.NetPayment
         /// <param name="ppNodeKey">Payment Provider Node Guid</param>
         public virtual IPublishedContent GetPPNode(Guid ppNodeKey)
         {
-            return _umbracoHelper.TypedContent(ppNodeKey);
+            return _umbracoHelper.Content(ppNodeKey);
         }
 
         /// <summary>
@@ -86,7 +85,7 @@ namespace Umbraco.NetPayment
 
                 if (prop != null)
                 {
-                    var value = _umbracoHelper.GetValueFromProperty(prop, pp, culture, forceUrl: true);
+                    var value = prop.GetValue(culture);
                     properties[key] = value?.ToString();
                 }
             }

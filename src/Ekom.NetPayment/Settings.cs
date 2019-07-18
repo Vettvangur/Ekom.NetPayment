@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using System;
+﻿using System;
 using System.Configuration;
 using Umbraco.NetPayment.Helpers;
 
@@ -11,12 +10,6 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class Settings
     {
-        /// <summary>
-        /// Current dependency resolver instance
-        /// </summary>
-        internal static IServiceLocator container;
-
-
         /// <summary>
         /// 
         /// </summary>
@@ -83,10 +76,5 @@ namespace Umbraco.NetPayment
                 _sendEmailAlerts = value;
             }
         }
-
-        /// <summary>
-        /// Enables more detailed logging, serialise request bodies to log f.x.
-        /// </summary>
-        public virtual bool DetailedLogging => ConfigurationManager.AppSettings["NetPayment.DetailedLogging"].ConvertToBool();
     }
 }

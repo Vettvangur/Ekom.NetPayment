@@ -1,10 +1,12 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Web;
+using Umbraco.Core;
+using Umbraco.Core.Logging;
 using Umbraco.NetPayment.Exceptions;
 using Umbraco.NetPayment.Interfaces;
 using Umbraco.Web;
+using UmbracoCurrent = Umbraco.Core.Composing.Current;
 
 namespace Umbraco.NetPayment.API
 {
@@ -21,17 +23,20 @@ namespace Umbraco.NetPayment.API
         {
             get
             {
-                return _current ?? (_current = Settings.container.GetInstance<NetPayment>());
+                return _current ?? (_current = UmbracoCurrent.Factory.CreateInstance<NetPayment>());
             }
         }
 
-        private readonly ILog _log;
+        private readonly ILogger _logger;
         private readonly Settings _settings;
         private readonly UmbracoService _uService;
 
-        public NetPayment(ILogFactory logFac, Settings settings, UmbracoService uService)
+        /// <summary>
+        /// 
+        /// </summary>
+        public NetPayment(ILogger logger, Settings settings, UmbracoService uService)
         {
-            _log = logFac.GetLogger<NetPayment>();
+            _logger = logger;
             _settings = settings;
             _uService = uService;
         }
@@ -48,7 +53,7 @@ namespace Umbraco.NetPayment.API
 
             foreach (var orType in orderRetrievers)
             {
-                var or = Settings.container.GetInstance(orType) as IOrderRetriever;
+                var or = UmbracoCurrent.Factory.CreateInstance(orType) as IOrderRetriever;
                 var order = or.Get(request);
 
                 if (order != null) return order;
@@ -60,14 +65,17 @@ namespace Umbraco.NetPayment.API
         /// <summary>
         /// Retrieve a payment provider by name
         /// </summary>
-        /// <param name="ppName">Payment provider alias or name. Must have a matching umbraco pp node or basePaymentProvider property</param>
+        /// <param name="ppName">Payment provider alias or name. 
+        /// Must have a matching umbraco pp node or basePaymentProvider property</param>
         /// <returns></returns>
         public IPaymentProvider GetPaymentProvider(string ppName)
         {
             var ppNode = _uService.GetPPNode(ppName);
-            var ppProp = ppNode.HasProperty("basePaymentProvider") ? ppNode.GetProperty("basePaymentProvider") : null;
+            var ppProp = ppNode.HasProperty("basePaymentProvider")
+                ? ppNode.GetProperty("basePaymentProvider")
+                : null;
 
-            var basePpName = ppProp != null && ppProp.HasValue ? ppProp.GetValue<string>() : ppName;
+            var basePpName = ppProp?.HasValue() == true ? ppProp?.Value<string>() : ppName;
 
             basePpName = basePpName.ToLower();
 
@@ -76,7 +84,7 @@ namespace Umbraco.NetPayment.API
                 var ppType = paymentProviders[basePpName];
 
                 var pp = Activator.CreateInstance(ppType) as IPaymentProvider;
-                pp.PaymentProviderKey = ppNode.GetKey();
+                pp.PaymentProviderKey = ppNode.Key;
 
                 return pp;
             }
@@ -96,8 +104,8 @@ namespace Umbraco.NetPayment.API
             var ppNode = _uService.GetPPNode(ppKey);
             var ppProp = ppNode.HasProperty("basePaymentProvider") ? ppNode.GetProperty("basePaymentProvider") : null;
 
-            var basePpName = ppProp?.HasValue == true
-                ? ppProp.GetValue<string>()
+            var basePpName = ppProp?.HasValue() == true
+                ? ppProp.Value<string>()
                 : throw new NetPaymentException("Missing basePaymentProvider property on chosen umbraco payment provider. Please verify configuration.");
 
             basePpName = basePpName.ToLower();

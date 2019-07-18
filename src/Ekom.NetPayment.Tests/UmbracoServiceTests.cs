@@ -6,22 +6,22 @@ namespace Umbraco.NetPayment.Tests
 	[TestClass]
 	public class UmbracoServiceTests
 	{
-		class UmbracoServiceMocks
-		{
-			public UmbracoService umbracoSvc;
-			//public Mock<UmbracoService> umbracoSvcMocked;
-			UmbracoHelper _umbracoHelper;
-			public Settings settings;
+		//class UmbracoServiceMocks
+		//{
+		//	public UmbracoService umbracoSvc;
+		//	//public Mock<UmbracoService> umbracoSvcMocked;
+		//	UmbracoHelper _umbracoHelper;
+		//	public Settings settings;
 
-			public UmbracoServiceMocks(bool unMocked)
-			{
-				settings = new Settings();
-				var uHelperMocks = new UHelperMocks();
+		//	public UmbracoServiceMocks(bool unMocked)
+		//	{
+		//		settings = new Settings();
+		//		var uHelperMocks = new UHelperMocks();
 
-				_umbracoHelper = uHelperMocks.uHelper;
-				umbracoSvc = new UmbracoService(_umbracoHelper, settings);
-			}
-		}
+		//		_umbracoHelper = uHelperMocks.uHelper;
+		//		umbracoSvc = new UmbracoService(_umbracoHelper, settings);
+		//	}
+		//}
 
 		// Needs mock for all methods called here:
 		// https://github.com/umco/umbraco-vorto/blob/master/src/Our.Umbraco.Vorto/Extensions/IPublishedContentExtensions.cs

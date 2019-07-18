@@ -1,4 +1,4 @@
-﻿using Umbraco.Core.Persistence;
+﻿using NPoco;
 
 namespace Umbraco.NetPayment
 {

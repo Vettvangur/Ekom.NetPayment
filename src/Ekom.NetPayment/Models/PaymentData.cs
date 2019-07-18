@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NPoco;
+using System;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
 namespace Umbraco.NetPayment
@@ -6,8 +7,8 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Saves payment information for transactions
     /// </summary>
-    [Umbraco.Core.Persistence.TableName("customNetPayments")]
-    [Umbraco.Core.Persistence.PrimaryKey("Id", autoIncrement = false)]
+    [TableName("customNetPayments")]
+    [PrimaryKey("Id", AutoIncrement = false)]
     public class PaymentData
     {
         /// <summary>

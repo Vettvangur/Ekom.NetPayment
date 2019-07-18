@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Umbraco.Core;
-using Umbraco.Core.Models;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Web;
 
 /*
  * GMO.Umbraco.PropertyHelper v1.1.2
+ * + v8 Updates
  */
 namespace Umbraco.NetPayment.GMO.Umbraco
 {
@@ -43,14 +44,14 @@ namespace Umbraco.NetPayment.GMO.Umbraco
             // So instead of checking first with hasVortoValue, then returning prop.value of 
             // a vorto object with dtdGuid and value null we first check IsVortoProperty.
             // Then we can return null instead of a useless object.
-            if (IsVortoProperty(content, prop.PropertyTypeAlias))
+            if (IsVortoProperty(content, prop.PropertyType.Alias))
             {
-                if (content.HasVortoValue(prop.PropertyTypeAlias, culture))
+                if (content.HasVortoValue(prop.PropertyType.Alias, culture))
                 {
-                    var vortoValue = content.GetVortoValue(prop.PropertyTypeAlias, culture);
+                    var vortoValue = content.GetVortoValue(prop.PropertyType.Alias, culture);
                     if (vortoValue is GuidUdi guidValue)
                     {
-                        var nodeValue = umbracoHelper.TypedContent(guidValue);
+                        var nodeValue = umbracoHelper.Content(guidValue).First();
 
                         return GetNodeValue(nodeValue, forceUrl, forceKey);
                     }
@@ -64,21 +65,21 @@ namespace Umbraco.NetPayment.GMO.Umbraco
                     return null;
                 }
             }
-            else if (prop.Value is IPublishedContent contentValue)
+            else if (prop.Value() is IPublishedContent contentValue)
             {
                 return GetNodeValue(contentValue, forceUrl, forceKey);
             }
-            else if (prop.Value is IEnumerable<IPublishedContent> contentValueCollection)
+            else if (prop.Value() is IEnumerable<IPublishedContent> contentValueCollection)
             {
                 return contentValueCollection.Select(x => GetNodeValue(x, forceUrl, forceKey));
             }
-            else if (prop.Value is IHtmlString htmlString)
+            else if (prop.Value() is IHtmlString htmlString)
             {
                 return htmlString.ToHtmlString();
             }
             else
             {
-                return prop.Value;
+                return prop.Value();
             }
         }
 
@@ -104,7 +105,7 @@ namespace Umbraco.NetPayment.GMO.Umbraco
 
         private static object GetKeyOrId(IPublishedContent node)
         {
-            var key = node.GetKey();
+            var key = node.Key;
 
             if (key != Guid.Empty)
             {
@@ -121,7 +122,7 @@ namespace Umbraco.NetPayment.GMO.Umbraco
             if (content.HasValue(propertyAlias))
             {
                 var prop = content.GetProperty(propertyAlias);
-                if (prop.Value is VortoValue) return true;
+                if (prop.Value() is VortoValue) return true;
             }
 
             return false;

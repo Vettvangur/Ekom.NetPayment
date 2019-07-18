@@ -1,5 +1,4 @@
-﻿using Examine.SearchCriteria;
-using log4net;
+﻿using Examine;
 using System;
 using System.Collections.Generic;
 using System.IO.Abstractions;
@@ -9,6 +8,11 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using Umbraco.Core;
+using Umbraco.Core.Cache;
+using Umbraco.Core.Composing;
+using Umbraco.Core.Logging;
+using Umbraco.Examine;
+using Umbraco.NetPayment.Exceptions;
 
 namespace Umbraco.NetPayment
 {
@@ -20,44 +24,44 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// </summary>
         public static IXMLConfigurationService Instance =>
-            Settings.container.GetInstance<IXMLConfigurationService>();
+            Current.Factory.GetInstance<IXMLConfigurationService>();
 
-        ILog _log;
-        HttpServerUtilityBase _server;
-        ApplicationContext _appContext;
-        Settings _settings;
-        IFileSystem _fs;
-        ExamineManagerBase _examineManager;
+        readonly ILogger _logger;
+        readonly HttpContextBase _httpContext;
+        readonly AppCaches _appCaches;
+        readonly Settings _settings;
+        readonly IFileSystem _fs;
+        readonly IExamineManager _examineManager;
         /// <summary>
         /// ctor
         /// </summary>
         internal XMLConfigurationService(
-            HttpServerUtilityBase server,
-            ApplicationContext appContext,
+            HttpContextBase httpContext,
+            AppCaches appCaches,
             Settings settings,
             IFileSystem fileSystem,
-            ILogFactory logFac,
-            ExamineManagerBase examineManagerBase
+            ILogger logger,
+            IExamineManager examineManager
         )
         {
-            _server = server;
-            _appContext = appContext;
+            _httpContext = httpContext;
+            _appCaches = appCaches;
             _settings = settings;
             _fs = fileSystem;
-            _examineManager = examineManagerBase;
+            _examineManager = examineManager;
 
-            _log = logFac.GetLogger(typeof(XMLConfigurationService));
+            _logger = logger;
         }
 
         /// <inheritdoc />
-        public virtual XDocument Configuration => _appContext.ApplicationCache.RuntimeCache.GetCacheItem("PPConfig", LoadConfiguration) as XDocument;
+        public virtual XDocument Configuration => _appCaches.RuntimeCache.GetCacheItem("PPConfig", LoadConfiguration) as XDocument;
 
         /// <summary>
         /// Load XML configuration from file
         /// </summary>
         private XDocument LoadConfiguration()
         {
-            var path = _server.MapPath(_settings.PPConfigPath);
+            var path = _httpContext.Server.MapPath(_settings.PPConfigPath);
             var configFileExists = _fs.File.Exists(path);
 
             if (configFileExists)
@@ -139,7 +143,7 @@ namespace Umbraco.NetPayment
                             Value = FindPPContainerNodeKey().ToString()
                         };
                         ppConfigRoot.Add(ppNode);
-                        ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
+                        ppConfig.Save(_httpContext.Server.MapPath(_settings.PPConfigPath));
                     }
 
                     bool bPPNode = Guid.TryParse(ppNode.Value, out Guid ppNodeKey);
@@ -149,7 +153,7 @@ namespace Umbraco.NetPayment
                     {
                         ppNodeKey = FindPPContainerNodeKey();
                         ppNode.Value = ppNodeKey.ToString();
-                        ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
+                        ppConfig.Save(_httpContext.Server.MapPath(_settings.PPConfigPath));
                     }
 
                     _settings.PPUmbracoNode = ppNodeKey;
@@ -163,26 +167,37 @@ namespace Umbraco.NetPayment
 
         private Guid FindPPContainerNodeKey()
         {
-            var searcher = _examineManager.SearchProviderCollection["ExternalSearcher"];
-
-            ISearchCriteria searchCriteria = searcher.CreateSearchCriteria();
-            var query = searchCriteria.NodeTypeAlias(_settings.PPDocumentTypeAlias);
-            var results = searcher.Search(query.Compile());
-
-            try
+            if (_examineManager.TryGetIndex("ExternalIndex", out IIndex extIdx))
             {
-                return Guid.Parse(results.First().Fields["key"]);
+                try
+                {
+                    var results = extIdx.GetSearcher()
+                        .CreateQuery("content")
+                        .NodeTypeAlias(_settings.PPDocumentTypeAlias)
+                        .Execute();
+
+                    return Guid.Parse(results.First().Values["key"]);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    _logger.Error<XMLConfigurationService>(
+                        ex,
+                        $"Unable to find payment provider node with docTypeAlias {_settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence."
+                    );
+                    throw;
+                }
             }
-            catch (InvalidOperationException ex)
+            else
             {
-                _log.Error($"Unable to find payment provider node with docTypeAlias {_settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence.", ex);
-                throw;
+                throw new ExternalIndexNotFound(
+                    "Unable to open ExternalIndex"
+                );
             }
         }
 
         private async Task CreateConfigurationXML()
         {
-            var path = _server.MapPath(_settings.PPConfigPath);
+            var path = _httpContext.Server.MapPath(_settings.PPConfigPath);
             var nodeKey = FindPPContainerNodeKey();
 
             if (nodeKey != Guid.Empty)

@@ -5,12 +5,12 @@ namespace Umbraco.NetPayment.Exceptions
     /// <summary>
     /// 
     /// </summary>
-    public class NetPaymentException : Exception
+    public class ExternalIndexNotFound : Exception
     {
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="message"></param>
-        public NetPaymentException(string message) : base(message) { }
+        public ExternalIndexNotFound(string message) : base(message) { }
     }
 }

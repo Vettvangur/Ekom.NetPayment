@@ -1,10 +1,11 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Reflection;
 using Umbraco.Core;
-using Umbraco.Core.Persistence;
+using Umbraco.Core.Composing;
+using Umbraco.Core.Logging;
+using Umbraco.NetPayment.App_Start;
 using Umbraco.NetPayment.Helpers;
 using Umbraco.NetPayment.Interfaces;
 
@@ -13,21 +14,39 @@ namespace Umbraco.NetPayment
     /// <summary>
     /// Hooks into the umbraco application startup lifecycle 
     /// </summary>
-    class UmbEvents : ApplicationEventHandler
+    class Composer : IUserComposer
     {
         /// <summary>
         /// Umbraco lifecycle method
         /// </summary>
-        /// <param name="umbracoApplication"></param>
-        /// <param name="applicationContext"></param>
-        protected override void ApplicationStarted(UmbracoApplicationBase umbracoApplication, ApplicationContext applicationContext)
+        public void Compose(Composition composition)
+        {
+            composition.Components()
+                .Append<EnsureTableExists>()
+                .Append<NetPaymentStartup>()
+                ;
+        }
+    }
+
+    class NetPaymentStartup : IComponent
+    {
+        readonly IFactory _factory;
+        readonly ILogger _logger;
+
+        public NetPaymentStartup(IFactory factory, ILogger logger)
+        {
+            _factory = factory;
+            _logger = logger;
+        }
+
+        public void Initialize()
         {
             try
             {
-                var container = Settings.container;
+                _logger.Info<NetPaymentStartup>("Startup");
 
-                var settings = container.GetInstance<Settings>();
-                var xmlConfigService = container.GetInstance<IXMLConfigurationService>()
+                var settings = _factory.GetInstance<Settings>();
+                var xmlConfigService = _factory.GetInstance<IXMLConfigurationService>()
                     // Access internal method
                     as XMLConfigurationService;
 
@@ -35,43 +54,35 @@ namespace Umbraco.NetPayment
                 var doc = xmlConfigService.Configuration;
                 xmlConfigService.SetConfiguration(doc);
 
-                var dbCtx = applicationContext.DatabaseContext;
-
-                var dbHelper = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
-
-                //Check if the DB table does NOT exist
-                if (!dbHelper.TableExist("customNetPaymentOrder"))
-                {
-                    //Create DB table - and set overwrite to false
-                    dbHelper.CreateTable<OrderStatus>(false);
-                }
-                //Check if the DB table does NOT exist
-                if (!dbHelper.TableExist("customNetPayments"))
-                {
-                    //Create DB table - and set overwrite to false
-                    dbHelper.CreateTable<PaymentData>(false);
-                }
-
                 RegisterPaymentProviders();
                 RegisterOrderRetrievers();
 
                 // Disable SSL and older TLS versions
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                _logger.Debug<NetPaymentStartup>("Done");
             }
             catch (Exception ex)
             {
-                Log.Error("Fatal NetPayment error, aborting", ex);
+                _logger.Error<NetPaymentStartup>(ex, "Fatal NetPayment error, aborting");
             }
+
         }
+
+        public void Terminate() { }
 
         /// <summary>
         /// Find and register all <see cref="IPaymentProvider"/> with reflection.
         /// </summary>
         private void RegisterPaymentProviders()
         {
+            _logger.Debug<NetPaymentStartup>("Registering NetPayment Providers");
+
             var ppType = typeof(IPaymentProvider);
             var paymentProviders = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+
+            _logger.Debug<NetPaymentStartup>($"Found {paymentProviders.Count()} payment providers");
 
             foreach (var pp in paymentProviders)
             {
@@ -84,6 +95,8 @@ namespace Umbraco.NetPayment
                     API.NetPayment.paymentProviders[dta.ToLower()] = pp;
                 }
             }
+
+            _logger.Debug<NetPaymentStartup>($"Registering NetPayment Providers - Done");
         }
 
         /// <summary>
@@ -91,19 +104,20 @@ namespace Umbraco.NetPayment
         /// </summary>
         private void RegisterOrderRetrievers()
         {
+            _logger.Debug<NetPaymentStartup>($"Registering NetPayment Order Retrievers");
+
             var ppType = typeof(IOrderRetriever);
             var orderRetrievers = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+
+            _logger.Debug<NetPaymentStartup>($"Found {orderRetrievers.Count()} Order Retrievers");
 
             foreach (var or in orderRetrievers)
             {
                 API.NetPayment.orderRetrievers.Add(or);
             }
-        }
 
-        private static readonly ILog Log =
-            LogManager.GetLogger(
-                MethodBase.GetCurrentMethod().DeclaringType
-            );
+            _logger.Debug<NetPaymentStartup>($"Registering NetPayment Order Retrievers - Done");
+        }
     }
 }

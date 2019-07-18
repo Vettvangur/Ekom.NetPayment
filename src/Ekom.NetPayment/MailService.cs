@@ -3,7 +3,8 @@ using System.Net;
 using System.Net.Configuration;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using Umbraco.Core.Configuration;
+using Umbraco.Core.Configuration.UmbracoSettings;
+using Umbraco.NetPayment.Interfaces;
 
 namespace Umbraco.NetPayment
 {
@@ -12,7 +13,7 @@ namespace Umbraco.NetPayment
     /// Default assumes a notification email intended for the administrator.
     /// All defaults are overridable.
     /// </summary>
-    public class MailService
+    class MailService : IMailService
     {
         private const int Timeout = 180000;
         private readonly string _host;
@@ -20,8 +21,6 @@ namespace Umbraco.NetPayment
         private readonly string _user;
         private readonly string _pass;
         private readonly bool _ssl;
-
-        private UmbracoConfig _uConfig;
 
         /// <summary>
         /// Defaults to "no-reply@umbraco.netpayment"
@@ -43,14 +42,12 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="uConfig">/config/umbracoSettings.config</param>
-        public MailService(UmbracoConfig uConfig)
+        /// <param name="contentSectionConfig">/config/umbracoSettings.config</param>
+        public MailService(IContentSection contentSectionConfig)
         {
-            _uConfig = uConfig;
-
             var smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
             string username = smtpSection.Network.UserName;
-            Recipient = _uConfig.UmbracoSettings().Content.NotificationEmailAddress;
+            Recipient = contentSectionConfig.NotificationEmailAddress;
 
             //MailServer - Represents the SMTP Server
             _host = smtpSection.Network.Host;

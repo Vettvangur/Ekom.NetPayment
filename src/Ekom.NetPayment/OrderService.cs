@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using Umbraco.Core;
 using Umbraco.NetPayment.Helpers;
 
 namespace Umbraco.NetPayment
@@ -14,23 +13,17 @@ namespace Umbraco.NetPayment
     /// </summary>
     class OrderService : IOrderService
     {
-        ApplicationContext _appCtx;
-        Settings _settings;
-        IDatabaseFactory _dbFac;
+        readonly Settings _settings;
+        readonly IDatabaseFactory _dbFac;
 
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="appCtx"></param>
-        /// <param name="settings"></param>
-        /// <param name="dbFac"></param>
         public OrderService(
-            ApplicationContext appCtx,
             Settings settings,
             IDatabaseFactory dbFac
         )
         {
-            _appCtx = appCtx;
             _settings = settings;
             _dbFac = dbFac;
         }
@@ -43,7 +36,7 @@ namespace Umbraco.NetPayment
         {
             using (var db = _dbFac.GetDb())
             {
-                return Task.FromResult(db.Single<OrderStatus>(id));
+                return db.SingleByIdAsync<OrderStatus>(id);
             }
         }
 
@@ -65,7 +58,7 @@ namespace Umbraco.NetPayment
         /// Persist in database and retrieve unique order id
         /// </summary>
         /// <returns>Order Id</returns>
-        public Task<Guid> InsertAsync(
+        public async Task<Guid> InsertAsync(
             int member,
             decimal total,
             string paymentProvider,
@@ -90,7 +83,7 @@ namespace Umbraco.NetPayment
             using (var db = _dbFac.GetDb())
             {
                 // Return order id
-                db.Insert(new OrderStatus
+                await db.InsertAsync(new OrderStatus
                 {
                     Id = orderid,
                     Name = orderName,
@@ -104,7 +97,7 @@ namespace Umbraco.NetPayment
                 });
             }
 
-            return Task.FromResult(orderid);
+            return orderid;
         }
     }
 }

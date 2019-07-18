@@ -1,4 +1,4 @@
-﻿using log4net;
+﻿using Examine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -8,6 +8,8 @@ using System.IO.Abstractions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
+using Umbraco.Core.Cache;
+using Umbraco.Core.Logging;
 
 namespace Umbraco.NetPayment.Tests
 {
@@ -18,7 +20,7 @@ namespace Umbraco.NetPayment.Tests
         {
             public XMLConfigurationService xmlConfigSvc;
             public Mock<XMLConfigurationService> xmlConfigSvcMocked;
-            public Mock<HttpServerUtilityBase> server;
+            public Mock<HttpContextBase> httpContext;
             public Mock<IFileSystem> fs;
             public Settings settings;
 
@@ -26,33 +28,44 @@ namespace Umbraco.NetPayment.Tests
             {
                 fs = new Mock<IFileSystem>();
                 settings = new Settings();
-                server = new Mock<HttpServerUtilityBase>();
-                var logFac = new Mock<ILogFactory>();
-                logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
+                httpContext = new Mock<HttpContextBase>();
 
-                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object, Mock.Of<ExamineManagerBase>());
+                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(
+                    httpContext.Object,
+                    AppCaches.Disabled,
+                    settings,
+                    fs.Object,
+                    Mock.Of<ILogger>(),
+                    Mock.Of<IExamineManager>());
             }
 
             public XMLCfgSvcMocks(IFileSystem _fs)
             {
                 settings = new Settings();
-                server = new Mock<HttpServerUtilityBase>();
-                var logFac = new Mock<ILogFactory>();
-                logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
+                httpContext = new Mock<HttpContextBase>();
 
-                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(server.Object, Helpers.GetSetAppCtx(), settings, _fs, logFac.Object, Mock.Of<ExamineManagerBase>());
+                xmlConfigSvcMocked = new Mock<XMLConfigurationService>(
+                    httpContext.Object,
+                    AppCaches.Disabled,
+                    settings,
+                    _fs,
+                    Mock.Of<ILogger>(),
+                    Mock.Of<IExamineManager>());
             }
 
             public XMLCfgSvcMocks(bool unMocked)
             {
                 fs = new Mock<IFileSystem>();
                 settings = new Settings();
-                server = new Mock<HttpServerUtilityBase>();
+                httpContext = new Mock<HttpContextBase>();
 
-                var logFac = new Mock<ILogFactory>();
-                logFac.Setup(x => x.GetLogger(It.IsAny<Type>())).Returns(Mock.Of<ILog>());
-
-                xmlConfigSvc = new XMLConfigurationService(server.Object, Helpers.GetSetAppCtx(), settings, fs.Object, logFac.Object, Mock.Of<ExamineManagerBase>());
+                xmlConfigSvc = new XMLConfigurationService(
+                    httpContext.Object,
+                    AppCaches.Disabled,
+                    settings,
+                    fs.Object,
+                    Mock.Of<ILogger>(),
+                    Mock.Of<IExamineManager>());
             }
         }
 
@@ -106,7 +119,7 @@ namespace Umbraco.NetPayment.Tests
 
             task.Wait();
 
-            xmlConfigSvcMocks.server.Setup(x => x.MapPath(It.IsAny<string>())).Returns(path);
+            xmlConfigSvcMocks.httpContext.Setup(x => x.Server.MapPath(It.IsAny<string>())).Returns(path);
 
             var xdoc = new PrivateObject(
                 xmlConfigSvc,
