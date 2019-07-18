@@ -1,8 +1,6 @@
 ﻿using Examine;
 using Moq;
-using System;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Umbraco.Core;
@@ -19,16 +17,16 @@ using Umbraco.Web.Security;
 
 namespace Umbraco.NetPayment.Tests
 {
-	public static class Helpers
-	{
-		public static HttpContext GetHttpContext()
-		{
-			var tw = new Mock<TextWriter>();
-			var req = new HttpRequest("", "", "");
-			var resp = new HttpResponse(tw.Object);
+    public static class Helpers
+    {
+        public static HttpContext GetHttpContext()
+        {
+            var tw = new Mock<TextWriter>();
+            var req = new HttpRequest("", "", "");
+            var resp = new HttpResponse(tw.Object);
 
-			return new HttpContext(req, resp);
-		}
+            return new HttpContext(req, resp);
+        }
 
         public static void RegisterMockedHttpContext(IRegister register)
         {
@@ -45,15 +43,15 @@ namespace Umbraco.NetPayment.Tests
             register.Register(Mock.Of<IProfilingLogger>());
             register.Register(Mock.Of<IUmbracoContextAccessor>());
             var membershipHelper = new MembershipHelper(
-                factory.GetInstance<HttpContextBase>(), 
+                factory.GetInstance<HttpContextBase>(),
                 Mock.Of<IPublishedMemberCache>(),
                 Mock.Of<MembershipProvider>(),
                 Mock.Of<RoleProvider>(),
                 Mock.Of<IMemberService>(),
-                Mock.Of<IMemberTypeService>(), 
-                Mock.Of<IUserService>(), 
+                Mock.Of<IMemberTypeService>(),
+                Mock.Of<IUserService>(),
                 Mock.Of<IPublicAccessService>(),
-                Mock.Of<AppCaches>(), 
+                Mock.Of<AppCaches>(),
                 Mock.Of<ILogger>());
             var umbHelper = new UmbracoHelper(
                 Mock.Of<IPublishedContent>(),
