@@ -258,7 +258,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\NetPayment.cs" />
-    <Compile Include="App_Start\EnsureTableExists.cs" />
+    <Compile Include="App_Start\EnsureTablesExist.cs" />
     <Compile Include="App_Start\Registrations.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="DatabaseFactory.cs" />

@@ -22,7 +22,7 @@ namespace Umbraco.NetPayment
         public void Compose(Composition composition)
         {
             composition.Components()
-                .Append<EnsureTableExists>()
+                .Append<EnsureTablesExist>()
                 .Append<NetPaymentStartup>()
                 ;
         }

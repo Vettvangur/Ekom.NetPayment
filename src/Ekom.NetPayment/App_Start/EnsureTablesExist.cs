@@ -40,14 +40,14 @@ namespace Umbraco.NetPayment.App_Start
         }
     }
 
-    class EnsureTableExists : IComponent
+    class EnsureTablesExist : IComponent
     {
         private readonly IScopeProvider scopeProvider;
         private readonly IMigrationBuilder migrationBuilder;
         private readonly IKeyValueService keyValueService;
         private readonly ILogger logger;
 
-        public EnsureTableExists(
+        public EnsureTablesExist(
             IScopeProvider scopeProvider,
             IMigrationBuilder migrationBuilder,
             IKeyValueService keyValueService,
@@ -61,12 +61,12 @@ namespace Umbraco.NetPayment.App_Start
 
         public void Initialize()
         {
-            logger.Debug<EnsureTableExists>("Ensuring NetPayment db tables exist");
+            logger.Debug<EnsureTablesExist>("Ensuring NetPayment db tables exist");
 
             // perform any upgrades (as needed)
             var upgrader = new Upgrader(new TranslationMigrationPlan());
             upgrader.Execute(scopeProvider, migrationBuilder, keyValueService, logger);
-            logger.Debug<EnsureTableExists>("Done");
+            logger.Debug<EnsureTablesExist>("Done");
         }
 
         public void Terminate()
