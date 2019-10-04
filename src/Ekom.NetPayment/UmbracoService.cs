@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.NetPayment.Exceptions;
+using Umbraco.NetPayment.GMO.Umbraco;
 using Umbraco.Web;
 
 namespace Umbraco.NetPayment
@@ -85,7 +86,7 @@ namespace Umbraco.NetPayment
 
                 if (prop != null)
                 {
-                    var value = prop.GetValue(culture);
+                    var value = _umbracoHelper.GetValueFromProperty(prop, pp, culture, forceUrl: true);
                     properties[key] = value?.ToString();
                 }
             }
