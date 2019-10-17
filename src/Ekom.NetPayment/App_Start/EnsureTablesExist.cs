@@ -9,21 +9,27 @@ namespace Umbraco.NetPayment.App_Start
 {
     class MigrationCreateTables : MigrationBase
     {
-        public MigrationCreateTables(IMigrationContext context)
+        readonly ILogger _logger;
+
+        public MigrationCreateTables(
+            IMigrationContext context,
+            ILogger logger)
             : base(context)
-        { }
+        {
+            _logger = logger;
+        }
 
         public override void Migrate()
         {
             if (!TableExists("customNetPaymentOrder"))
             {
-                Current.Logger.Debug<MigrationCreateTables>("Creating customNetPaymentOrder table");
+                _logger.Debug<MigrationCreateTables>("Creating customNetPaymentOrder table");
 
                 Create.Table<OrderStatus>().Do();
             }
             if (!TableExists("customNetPayments"))
             {
-                Current.Logger.Debug<MigrationCreateTables>("Creating customNetPayments table");
+                _logger.Debug<MigrationCreateTables>("Creating customNetPayments table");
 
                 Create.Table<PaymentData>().Do();
             }
@@ -33,7 +39,7 @@ namespace Umbraco.NetPayment.App_Start
     class TranslationMigrationPlan : MigrationPlan
     {
         public TranslationMigrationPlan()
-            : base("MyApplicationName")
+            : base("NetPayment")
         {
             From(string.Empty)
                 .To<MigrationCreateTables>("first-migration");

@@ -6,7 +6,6 @@
     <title>Umbraco.NetPayment.v8</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
-    <license type="expression">Proprietary</license>
     <projectUrl>https://github.com/Vettvangur/Umbraco.NetPayment</projectUrl>
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
