@@ -8,10 +8,10 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using Umbraco.Core;
-using Umbraco.Examine;
 using Umbraco.Core.Cache;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
+using Umbraco.Examine;
 using Umbraco.NetPayment.Exceptions;
 
 namespace Umbraco.NetPayment

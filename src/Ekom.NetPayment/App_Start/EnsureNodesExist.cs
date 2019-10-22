@@ -1,25 +1,17 @@
 ﻿using Examine;
 using GMO.Vorto.PropertyEditor;
-using Newtonsoft.Json.Linq;
 using Our.Umbraco.Vorto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
-using Umbraco.Core.Migrations;
-using Umbraco.Core.Migrations.Upgrade;
 using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
-using Umbraco.Core.Scoping;
 using Umbraco.Core.Services;
 using Umbraco.Examine;
 using Umbraco.NetPayment.Exceptions;
 using Umbraco.Web;
-using Umbraco.Web.PropertyEditors;
 
 namespace Umbraco.NetPayment.App_Start
 {
