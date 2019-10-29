@@ -51,6 +51,7 @@ namespace Umbraco.NetPayment
         /// Attempts to retrieve an order using data from the querystring or posted values
         /// </summary>
         /// <returns>Returns the referenced order or null otherwise</returns>
+        [Obsolete("We no longer encrypt the reference")]
         public OrderStatus GetOrderFromEncryptedReference(string reference, string key)
         {
             var keyShaSum = CryptoHelpers.GetSHA256StringSum(key);
@@ -60,17 +61,7 @@ namespace Umbraco.NetPayment
 
             return GetAsync(orderId).Result;
         }
-        /// <summary>
-        /// Attempts to retrive the unencrypted reference
-        /// </summary>
-        /// <param name="reference"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public string GetUnencryptedReference(string reference, string key)
-        {
-            var keyShaSum = CryptoHelpers.GetSHA256StringSum(key);
-            return AesCryptoHelper.Decrypt(keyShaSum, reference);
-        }
+
         /// <summary>
         /// Persist in database and retrieve unique order id
         /// </summary>
@@ -84,8 +75,6 @@ namespace Umbraco.NetPayment
             HttpRequestBase Request
         )
         {
-            NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
-
             var sb = new StringBuilder();
 
             foreach (var order in orders)

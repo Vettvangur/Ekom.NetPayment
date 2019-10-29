@@ -89,6 +89,16 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// <inheritDoc/>
         /// </summary>
+        public CustomerInfo CustomerInfo { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public int LoanType { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
         public Dictionary<string, object> CustomSettings { get; set; }
     }
 }
