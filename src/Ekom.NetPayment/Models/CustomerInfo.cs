@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Umbraco.NetPayment
 {
+    /// <summary>
+    /// Customer Information.
+    /// Supply remote payment provider with customer information using <see cref="IPaymentSettings"/>
+    /// </summary>
     public class CustomerInfo
     {
         /// <summary>
