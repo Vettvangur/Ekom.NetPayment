@@ -22,12 +22,12 @@ namespace Umbraco.NetPayment
         public static IXMLConfigurationService Instance =>
             Settings.container.GetInstance<IXMLConfigurationService>();
 
-        ILog _log;
-        HttpServerUtilityBase _server;
-        ApplicationContext _appContext;
-        Settings _settings;
-        IFileSystem _fs;
-        ExamineManagerBase _examineManager;
+        readonly ILog _log;
+        readonly HttpServerUtilityBase _server;
+        readonly ApplicationContext _appContext;
+        readonly Settings _settings;
+        readonly IFileSystem _fs;
+        readonly ExamineManagerBase _examineManager;
         /// <summary>
         /// ctor
         /// </summary>
@@ -76,6 +76,7 @@ namespace Umbraco.NetPayment
         /// <param name="secondaryMatches">
         /// Optional collection of attributes and values to match on provider element.
         /// F.x. lang
+        /// Currently unused, missing a clever way to pass secondary matches on to response callbacks.
         /// </param>
         public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
         {

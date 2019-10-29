@@ -37,7 +37,10 @@ namespace Umbraco.NetPayment
 
                 var dbCtx = applicationContext.DatabaseContext;
 
-                var dbHelper = new DatabaseSchemaHelper(dbCtx.Database, applicationContext.ProfilingLogger.Logger, dbCtx.SqlSyntax);
+                var dbHelper = new DatabaseSchemaHelper(
+                    dbCtx.Database,
+                    applicationContext.ProfilingLogger.Logger,
+                    dbCtx.SqlSyntax);
 
                 //Check if the DB table does NOT exist
                 if (!dbHelper.TableExist("customNetPaymentOrder"))

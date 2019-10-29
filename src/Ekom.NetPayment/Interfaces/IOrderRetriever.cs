@@ -11,6 +11,9 @@ namespace Umbraco.NetPayment.Interfaces
         /// Attempts to retrieve an order using data from the <see cref="HttpRequestBase"/>
         /// </summary>
         /// <returns>Returns the referenced order</returns>
-        OrderStatus Get(HttpRequestBase request);
+        /// <param name="request">The http request.</param>
+        /// <param name="ppNameOverride">When storing your xml configuration under an unstandard name, specify pp name override.</param>
+        /// <returns></returns>
+        OrderStatus Get(HttpRequestBase request, string ppNameOverride);
     }
 }

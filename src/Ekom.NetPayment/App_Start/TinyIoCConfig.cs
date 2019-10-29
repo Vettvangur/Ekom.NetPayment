@@ -4,6 +4,7 @@ using System.Web;
 using TinyIoC;
 using Umbraco.Core;
 using Umbraco.Core.Configuration;
+using Umbraco.NetPayment.Interfaces;
 using Umbraco.Web;
 
 namespace Umbraco.NetPayment
@@ -45,6 +46,7 @@ namespace Umbraco.NetPayment
             );
 
             container.Register<ILogFactory, LogFactory>();
+            container.Register<IMailService, MailService>();
         }
     }
 }
