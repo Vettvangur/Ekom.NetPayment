@@ -43,7 +43,6 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Perfect for storing custom data/json in persisted order to be read on callback after payment.
-        /// 255 char max length.
         /// </summary>
         string OrderCustomString { get; set; }
 
