@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Globalization;
 using Umbraco.NetPayment.Helpers;
 
 namespace Umbraco.NetPayment
@@ -10,6 +11,12 @@ namespace Umbraco.NetPayment
     /// </summary>
     public class Settings
     {
+        /// <summary>
+        /// Default number format
+        /// Used by: Borgun
+        /// </summary>
+        public static readonly NumberFormatInfo Nfi = new CultureInfo("is-IS", false).NumberFormat;
+
         /// <summary>
         /// 
         /// </summary>

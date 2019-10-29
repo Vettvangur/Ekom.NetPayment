@@ -1,14 +1,59 @@
 ﻿namespace Umbraco.NetPayment
 {
     /// <summary>
-    /// Numeric values are for Borgun Api, string value is used in other providers.
     /// </summary>
     public enum Currency
     {
-        DKK = 208,
-        ISK = 352,
-        GBP = 826,
-        USD = 840,
-        EUR = 978,
+        /// <summary>
+        /// </summary>
+        ISK,
+        /// <summary>
+        /// </summary>
+        USD,
+        /// <summary>
+        /// </summary>
+        EUR,
+        /// <summary>
+        /// </summary>
+        DKK,
+        /// <summary>
+        /// </summary>
+        GBP,
+        /// <summary>
+        /// </summary>
+        NOK,
+        /// <summary>
+        /// </summary>
+        SEK,
+        /// <summary>
+        /// </summary>
+        CHF,
+        /// <summary>
+        /// </summary>
+        CAD,
+        /// <summary>
+        /// </summary>
+        HUF,
+        /// <summary>
+        /// </summary>
+        BHD,
+        /// <summary>
+        /// </summary>
+        AUD,
+        /// <summary>
+        /// </summary>
+        RUB,
+        /// <summary>
+        /// </summary>
+        PLN,
+        /// <summary>
+        /// </summary>
+        RON,
+        /// <summary>
+        /// </summary>
+        HRK,
+        /// <summary>
+        /// </summary>
+        CZK,
     }
 }
