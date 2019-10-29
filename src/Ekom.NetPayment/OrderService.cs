@@ -60,7 +60,17 @@ namespace Umbraco.NetPayment
 
             return GetAsync(orderId).Result;
         }
-
+        /// <summary>
+        /// Attempts to retrive the unencrypted reference
+        /// </summary>
+        /// <param name="reference"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public string GetUnencryptedReference(string reference, string key)
+        {
+            var keyShaSum = CryptoHelpers.GetSHA256StringSum(key);
+            return AesCryptoHelper.Decrypt(keyShaSum, reference);
+        }
         /// <summary>
         /// Persist in database and retrieve unique order id
         /// </summary>

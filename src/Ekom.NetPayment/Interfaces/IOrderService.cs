@@ -34,5 +34,12 @@ namespace Umbraco.NetPayment
         /// </summary>
         /// <returns>Returns the referenced order or null otherwise</returns>
         OrderStatus GetOrderFromEncryptedReference(string reference, string key);
+
+
+        /// <summary>
+        /// Attempts to get the reference decrypted from encrypted string
+        /// </summary>
+        /// <returns>Returns the referenced or null</returns>
+        string GetUnencryptedReference(string reference, string key);
     }
 }
