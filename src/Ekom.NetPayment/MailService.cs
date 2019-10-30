@@ -46,7 +46,6 @@ namespace Umbraco.NetPayment
         public MailService(IContentSection contentSectionConfig)
         {
             var smtpSection = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
-            string username = smtpSection.Network.UserName;
             Recipient = contentSectionConfig.NotificationEmailAddress;
 
             //MailServer - Represents the SMTP Server
@@ -66,20 +65,18 @@ namespace Umbraco.NetPayment
         /// </summary>
         public async virtual Task SendAsync()
         {
+            // We do not catch the error here... let it pass direct to the caller
             using (var smtp = new SmtpClient(_host, _port))
+            using (var message = new MailMessage(Sender, Recipient, Subject, Body) { IsBodyHtml = true })
             {
-                // We do not catch the error here... let it pass direct to the caller
-                using (var message = new MailMessage(Sender, Recipient, Subject, Body) { IsBodyHtml = true })
+                if (_user.Length > 0 && _pass.Length > 0)
                 {
-                    if (_user.Length > 0 && _pass.Length > 0)
-                    {
-                        smtp.UseDefaultCredentials = false;
-                        smtp.Credentials = new NetworkCredential(_user, _pass);
-                        smtp.EnableSsl = _ssl;
-                    }
-
-                    await smtp.SendMailAsync(message).ConfigureAwait(false);
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new NetworkCredential(_user, _pass);
+                    smtp.EnableSsl = _ssl;
                 }
+
+                await smtp.SendMailAsync(message).ConfigureAwait(false);
             }
         }
     }

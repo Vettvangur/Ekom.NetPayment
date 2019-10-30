@@ -5,13 +5,13 @@ namespace Umbraco.NetPayment
 {
     /// <summary>
     /// Base configuration for PaymentProviders. 
-    /// Most fields here are mandatory, although some have default values.
     /// </summary>
     public interface IPaymentSettings
     {
         /// <summary>
         /// Chooses a specific payment provider node.
         /// Useful when you have multiple umbraco nodes targetting the same base payment provider.
+        /// F.x. Borgun EN and IS with varying currencies and xml configurations.
         /// </summary>
         Guid PaymentProviderKey { get; set; }
 

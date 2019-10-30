@@ -160,6 +160,12 @@ namespace Umbraco.NetPayment.App_Start
                                         {
                                             Name = "Payment Info",
                                         },
+                                        new PropertyType(textstringDt, "basePaymentProvider")
+                                        {
+                                            Name = "Base Payment Provider",
+                                            Description = "Allows payment provider overloading. " +
+                                                "F.x. Borgun ISK and Borgun USD nodes with different names and different xml configurations targetting the same base payment provider."
+                                        },
                                     }))
                                 {
                                     Name = "Settings",
