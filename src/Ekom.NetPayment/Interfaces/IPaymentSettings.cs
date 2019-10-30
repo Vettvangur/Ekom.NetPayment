@@ -21,12 +21,14 @@ namespace Umbraco.NetPayment
         IEnumerable<OrderItem> Orders { get; set; }
 
         /// <summary>
-        /// Controls payment portal language
+        /// Controls payment portal language.
+        /// Default IS
         /// </summary>
         string Language { get; set; }
 
         /// <summary>
-        /// Vorto language for payment provider properties
+        /// Vorto language for payment provider properties.
+        /// Default IS
         /// </summary>
         string VortoLanguage { get; set; }
 
