@@ -47,12 +47,13 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// 
         /// </summary>
+        [Length(45)]
         public string IPAddress { get; set; }
 
         /// <summary>
         /// Browser User agent
         /// </summary>
-        [Length(1024)]
+        [Length(255)]
         public string UserAgent { get; set; }
 
         /// <summary>

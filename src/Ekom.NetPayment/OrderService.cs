@@ -96,7 +96,7 @@ namespace Umbraco.NetPayment
                     Member = member,
                     Amount = total,
                     Date = DateTime.Now,
-                    IPAddress = Request?.UserHostAddress,
+                    IPAddress = Request.UserHostAddress,
                     UserAgent = Request.UserAgent,
                     PaymentProvider = paymentProvider,
                     Custom = custom

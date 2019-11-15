@@ -99,6 +99,21 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// <inheritDoc/>
         /// </summary>
+        public string CardNumber { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public string Expiry { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public string CVV { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
         public Dictionary<string, object> CustomSettings { get; set; }
     }
 }

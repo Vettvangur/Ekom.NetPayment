@@ -13,11 +13,11 @@ namespace Umbraco.NetPayment.Helpers
     {
         /// <summary>
         /// Encrypt chosen input with the provided base64 encoded secret key.
-        /// Returns a string of format {IV}-{cipherText}
+        /// Returns a string of format {IV} {cipherText}
         /// </summary>
         /// <param name="secret">Base64 encoded 64/128/256bit encryption key</param>
         /// <param name="input"></param>
-        /// <returns>string of format {IV}-{cipherText}</returns>
+        /// <returns>string of format {IV} {cipherText}</returns>
         public static string Encrypt(string secret, string input)
         {
             byte[] encryptionKey = ValidateAndParseKey(secret, input);
@@ -35,10 +35,10 @@ namespace Umbraco.NetPayment.Helpers
 
         /// <summary>
         /// Decrypt chosen input with the provided base64 encoded secret key.
-        /// Takes a string of format {IV}-{cipherText}
+        /// Takes a string of format {IV} {cipherText}
         /// </summary>
         /// <param name="secret">Base64 encoded 64/128/256bit encryption key</param>
-        /// <param name="input">string of format {IV}-{cipherText}</param>
+        /// <param name="input">string of format {IV} {cipherText}</param>
         /// <returns>Plaintext</returns>
         public static string Decrypt(string secret, string input)
         {
@@ -47,7 +47,7 @@ namespace Umbraco.NetPayment.Helpers
             var inputArray = input.Split(' ');
 
             if (inputArray.Length != 2)
-                throw new ArgumentException("Input must be of format {IV}-{cipherText}", "input");
+                throw new ArgumentException("Input must be of format {IV} {cipherText}", "input");
 
             using (Aes aes = Aes.Create())
             {
