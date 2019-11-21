@@ -23,9 +23,14 @@ namespace Umbraco.NetPayment.Helpers
 
     static class TypeHelper
     {
-        public static IEnumerable<Type> GetTypesWithInterface(Assembly asm, Type myInterface)
+        public static IEnumerable<Type> GetConcreteTypesWithInterface(Assembly asm, Type myInterface)
         {
-            return asm.GetLoadableTypes().Where(myInterface.IsAssignableFrom).ToList();
+            return asm.GetLoadableTypes()
+                .Where(
+                    x => myInterface.IsAssignableFrom(x)
+                    && !x.IsInterface
+                    && !x.IsAbstract)
+                .ToList();
         }
     }
 }

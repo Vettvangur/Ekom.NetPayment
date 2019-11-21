@@ -74,7 +74,7 @@ namespace Umbraco.NetPayment
         {
             var ppType = typeof(IPaymentProvider);
             var paymentProviders = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+                .SelectMany(x => TypeHelper.GetConcreteTypesWithInterface(x, ppType));
 
             foreach (var pp in paymentProviders)
             {
@@ -96,7 +96,7 @@ namespace Umbraco.NetPayment
         {
             var ppType = typeof(IOrderRetriever);
             var orderRetrievers = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+                .SelectMany(x => TypeHelper.GetConcreteTypesWithInterface(x, ppType));
 
             foreach (var or in orderRetrievers)
             {
