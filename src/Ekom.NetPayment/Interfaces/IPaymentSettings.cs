@@ -21,12 +21,14 @@ namespace Umbraco.NetPayment
         IEnumerable<OrderItem> Orders { get; set; }
 
         /// <summary>
-        /// Controls payment portal language
+        /// Controls payment portal language.
+        /// Default IS
         /// </summary>
         string Language { get; set; }
 
         /// <summary>
-        /// Vorto language for payment provider properties
+        /// Vorto language for payment provider properties.
+        /// Default IS
         /// </summary>
         string VortoLanguage { get; set; }
 
@@ -43,7 +45,6 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Perfect for storing custom data/json in persisted order to be read on callback after payment.
-        /// 255 char max length.
         /// </summary>
         string OrderCustomString { get; set; }
 
@@ -54,17 +55,19 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Receives notifications on successful payment.
+        /// Supported by: Borgun, Valitor, PayPal
         /// </summary>
         string ReportUrl { get; set; }
 
         /// <summary>
         /// Override umbraco configured cancel url.
-        /// Supported by: Borgun, Valitor
+        /// Supported by: Borgun, Valitor, BorgunLoans
         /// </summary>
         string CancelUrl { get; set; }
 
         /// <summary>
         /// Override umbraco configured error url.
+        /// Supported by: Borgun
         /// </summary>
         string ErrorUrl { get; set; }
 
@@ -77,7 +80,8 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Supported by: PayPal
-        /// Others must configure using xml configuration
+        /// Others must configure using xml configuration since they will not have access to the settings object in the response callback.
+        /// This causes verification issues.
         /// </summary>
         Currency? Currency { get; set; }
 
@@ -93,6 +97,39 @@ namespace Umbraco.NetPayment
         /// Merchantemail parameter must be set since cardholder information is returned through email to merchant.
         /// </summary>
         bool RequireCustomerInformation { get; set; }
+
+        /// <summary>
+        /// Provide customer information to payment provider.
+        /// Supported by: BorgunLoans
+        /// </summary>
+        CustomerInfo CustomerInfo { get; set; }
+
+        /// <summary>
+        /// BorgunLoans loan type specifier
+        /// </summary>
+        int LoanType { get; set; }
+
+        #region Borgun Gateway
+
+        /// <summary>
+        /// 16 digit payment card number
+        /// Supported by: BorgunGateway
+        /// </summary>
+        string CardNumber { get; set; }
+
+        /// <summary>
+        /// Card expiration date
+        /// Supported by: BorgunGateway
+        /// </summary>
+        string Expiry { get; set; }
+
+        /// <summary>
+        /// Card Verification Value. Triple digit number on the back of the card.
+        /// Supported by: BorgunGateway
+        /// </summary>
+        string CVV { get; set; }
+
+        #endregion
 
         /// <summary>
         /// Provider specific configuration.

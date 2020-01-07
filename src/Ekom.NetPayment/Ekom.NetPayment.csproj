@@ -266,11 +266,13 @@
     <Compile Include="Exceptions\EnsureNodesException.cs" />
     <Compile Include="Exceptions\ExamineSearcherNotFoundException.cs" />
     <Compile Include="Exceptions\PaymentProviderNotFoundException.cs" />
+    <Compile Include="Exceptions\XmlConfigurationNotFoundException.cs" />
     <Compile Include="Exceptions\NetPaymentException.cs" />
     <Compile Include="GMO.Umbraco.PropertyHelper\PropertyHelper.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />
     <Compile Include="Helpers\GetTypesWithInterface.cs" />
+    <Compile Include="Helpers\PublishedPaymentProviderHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\URLHelper.cs" />
     <Compile Include="Interfaces\IMailService.cs" />
@@ -281,6 +283,7 @@
     <Compile Include="IPaymentSettings.cs" />
     <Compile Include="LocalCallbacks.cs" />
     <Compile Include="MailService.cs" />
+    <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\OrderStatus.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Models\OrderItem.cs" />

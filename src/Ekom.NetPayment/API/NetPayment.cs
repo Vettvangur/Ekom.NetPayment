@@ -4,6 +4,7 @@ using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.NetPayment.Exceptions;
+using Umbraco.NetPayment.Helpers;
 using Umbraco.NetPayment.Interfaces;
 using Umbraco.Web;
 using UmbracoCurrent = Umbraco.Core.Composing.Current;
@@ -45,16 +46,17 @@ namespace Umbraco.NetPayment.API
         /// Attempt to retrieve order using reference from http request.
         /// Loops over all registered <see cref="IOrderRetriever"/> to attempt to find the order reference.
         /// </summary>
-        /// <param name="request"></param>
+        /// <param name="request">Http request</param>
+        /// <param name="ppNameOverride">When storing your xml configuration under an unstandard name, specify pp name override.</param>
         /// <returns></returns>
-        public OrderStatus GetOrder(HttpRequestBase request = null)
+        public OrderStatus GetOrder(HttpRequestBase request = null, string ppNameOverride = null)
         {
             request = request ?? new HttpRequestWrapper(HttpContext.Current.Request);
 
             foreach (var orType in orderRetrievers)
             {
                 var or = UmbracoCurrent.Factory.CreateInstance(orType) as IOrderRetriever;
-                var order = or.Get(request);
+                var order = or.Get(request, ppNameOverride);
 
                 if (order != null) return order;
             }
@@ -71,20 +73,14 @@ namespace Umbraco.NetPayment.API
         public IPaymentProvider GetPaymentProvider(string ppName)
         {
             var ppNode = _uService.GetPPNode(ppName);
-            var ppProp = ppNode.HasProperty("basePaymentProvider")
-                ? ppNode.GetProperty("basePaymentProvider")
-                : null;
 
-            var basePpName = ppProp?.HasValue() == true ? ppProp?.Value<string>() : ppName;
-
-            basePpName = basePpName.ToLower();
+            var basePpName = PublishedPaymentProviderHelper.GetName(ppNode);
 
             if (paymentProviders.ContainsKey(basePpName))
             {
                 var ppType = paymentProviders[basePpName];
 
                 var pp = Activator.CreateInstance(ppType) as IPaymentProvider;
-                pp.PaymentProviderKey = ppNode.Key;
 
                 return pp;
             }
@@ -97,25 +93,18 @@ namespace Umbraco.NetPayment.API
         /// <summary>
         /// Retrieve a payment provider by key
         /// </summary>
-        /// <param name="ppKey">Payment provider unique id. Must have a basePaymentProvider property</param>
+        /// <param name="ppKey">Payment provider unique id.</param>
         /// <returns></returns>
         public IPaymentProvider GetPaymentProvider(Guid ppKey)
         {
             var ppNode = _uService.GetPPNode(ppKey);
-            var ppProp = ppNode.HasProperty("basePaymentProvider") ? ppNode.GetProperty("basePaymentProvider") : null;
-
-            var basePpName = ppProp?.HasValue() == true
-                ? ppProp.Value<string>()
-                : throw new NetPaymentException("Missing basePaymentProvider property on chosen umbraco payment provider. Please verify configuration.");
-
-            basePpName = basePpName.ToLower();
+            var basePpName = PublishedPaymentProviderHelper.GetName(ppNode);
 
             if (paymentProviders.ContainsKey(basePpName))
             {
                 var ppType = paymentProviders[basePpName];
 
                 var pp = Activator.CreateInstance(ppType) as IPaymentProvider;
-                pp.PaymentProviderKey = ppKey;
 
                 return pp;
             }

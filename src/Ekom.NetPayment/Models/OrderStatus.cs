@@ -48,12 +48,13 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// 
         /// </summary>
+        [Length(45)]
         public string IPAddress { get; set; }
 
         /// <summary>
         /// Browser User agent
         /// </summary>
-        [Length(1024)]
+        [Length(255)]
         public string UserAgent { get; set; }
 
         /// <summary>
@@ -63,6 +64,7 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// String name of payment provider <see cref="IPublishedContent"/> node
+        /// Helps to resolve overloaded payment providers, f.x. Borgun USD and Borgun ISK
         /// </summary>
         [Length(50)]
         public string PaymentProvider { get; set; }

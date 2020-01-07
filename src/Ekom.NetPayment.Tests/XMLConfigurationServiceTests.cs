@@ -53,7 +53,7 @@ namespace Umbraco.NetPayment.Tests
                     Mock.Of<IExamineManager>());
             }
 
-            public XMLCfgSvcMocks(bool unMocked)
+            public XMLCfgSvcMocks(bool _)
             {
                 fs = new Mock<IFileSystem>();
                 settings = new Settings();
@@ -140,7 +140,7 @@ namespace Umbraco.NetPayment.Tests
         [TestMethod]
         public void SetsConfigurationCorrectly()
         {
-            var xmlConfigSvcMocks = new XMLCfgSvcMocks(unMocked: true);
+            var xmlConfigSvcMocks = new XMLCfgSvcMocks(true);
             var xdoc = XDocument.Parse(paymentProviders_config);
 
             xmlConfigSvcMocks.xmlConfigSvc.SetConfiguration(xdoc);

@@ -44,6 +44,7 @@ namespace Umbraco.NetPayment
         /// Attempts to retrieve an order using data from the querystring or posted values
         /// </summary>
         /// <returns>Returns the referenced order or null otherwise</returns>
+        [Obsolete("We no longer encrypt the reference")]
         public OrderStatus GetOrderFromEncryptedReference(string reference, string key)
         {
             var keyShaSum = CryptoHelpers.GetSHA256StringSum(key);
@@ -67,8 +68,6 @@ namespace Umbraco.NetPayment
             HttpRequestBase Request
         )
         {
-            NumberFormatInfo nfi = new CultureInfo("is-IS", false).NumberFormat;
-
             var sb = new StringBuilder();
 
             foreach (var order in orders)
@@ -90,7 +89,7 @@ namespace Umbraco.NetPayment
                     Member = member,
                     Amount = total,
                     Date = DateTime.Now,
-                    IPAddress = Request?.UserHostAddress,
+                    IPAddress = Request.UserHostAddress,
                     UserAgent = Request.UserAgent,
                     PaymentProvider = paymentProvider,
                     Custom = custom

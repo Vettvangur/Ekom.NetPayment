@@ -80,11 +80,12 @@ namespace Umbraco.NetPayment
         /// <param name="secondaryMatches">
         /// Optional collection of attributes and values to match on provider element.
         /// F.x. lang
+        /// Currently unused, missing a clever way to pass secondary matches on to response callbacks.
         /// </param>
         public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
         {
             var providers = Configuration.Root.Elements("provider")
-                            .Where(x => x.Attribute("title")?.Value == pp)
+                            .Where(x => x.Attribute("title")?.Value.ToLower() == pp.ToLower())
                             .ToList();
 
             if (providers.Any())

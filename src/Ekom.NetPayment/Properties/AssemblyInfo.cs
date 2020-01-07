@@ -23,6 +23,8 @@ using System.Runtime.InteropServices;
 [assembly: Guid("4d7b353e-dd49-47c7-82fd-0eb325e67fa8")]
 
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Borgun")]
+[assembly: InternalsVisibleTo("Umbraco.NetPayment.BorgunGateway")]
+[assembly: InternalsVisibleTo("Umbraco.NetPayment.BorgunLoans")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.PayPal")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Valitor")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Tests")]

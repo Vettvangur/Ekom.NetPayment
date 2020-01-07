@@ -42,6 +42,18 @@ namespace Umbraco.NetPayment.Tests
             register.Register(ServiceContext.CreatePartial());
             register.Register(Mock.Of<IProfilingLogger>());
             register.Register(Mock.Of<IUmbracoContextAccessor>());
+
+            Current.Factory = factory;
+        }
+
+        /// <summary>
+        /// For some inexplicable reason the following registrations block further registrations from
+        /// overriding previous ones. Even for different types, f.x. a .Register<IExamineService>
+        /// </summary>
+        /// <param name="register"></param>
+        /// <param name="factory"></param>
+        public static void RegisterUmbracoHelper(IRegister register, IFactory factory)
+        {
             var membershipHelper = new MembershipHelper(
                 factory.GetInstance<HttpContextBase>(),
                 Mock.Of<IPublishedMemberCache>(),
@@ -61,8 +73,6 @@ namespace Umbraco.NetPayment.Tests
                 Mock.Of<IPublishedContentQuery>(),
                 membershipHelper);
             register.Register(umbHelper);
-
-            Current.Factory = factory;
         }
     }
 }

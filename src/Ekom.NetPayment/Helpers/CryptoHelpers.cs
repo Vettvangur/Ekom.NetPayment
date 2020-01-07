@@ -49,13 +49,14 @@ namespace Umbraco.NetPayment.Helpers
         {
             byte[] secretBytes = Encoding.UTF8.GetBytes(secretcode);
 
-            var hasher = new HMACSHA256(secretBytes);
+            using (var hasher = new HMACSHA256(secretBytes))
+            {
+                byte[] result = hasher.ComputeHash(Encoding.UTF8.GetBytes(message));
 
-            byte[] result = hasher.ComputeHash(Encoding.UTF8.GetBytes(message));
+                string checkhash = BitConverter.ToString(result).Replace("-", "");
 
-            string checkhash = BitConverter.ToString(result).Replace("-", "");
-
-            return checkhash;
+                return checkhash;
+            }
         }
     }
 }

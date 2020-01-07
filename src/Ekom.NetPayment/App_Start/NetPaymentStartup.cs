@@ -81,7 +81,7 @@ namespace Umbraco.NetPayment
 
             var ppType = typeof(IPaymentProvider);
             var paymentProviders = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+                .SelectMany(x => TypeHelper.GetConcreteTypesWithInterface(x, ppType));
 
             _logger.Debug<NetPaymentStartup>($"Found {paymentProviders.Count()} payment providers");
 
@@ -109,7 +109,7 @@ namespace Umbraco.NetPayment
 
             var ppType = typeof(IOrderRetriever);
             var orderRetrievers = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(x => TypeHelper.GetTypesWithInterface(x, ppType));
+                .SelectMany(x => TypeHelper.GetConcreteTypesWithInterface(x, ppType));
 
             _logger.Debug<NetPaymentStartup>($"Found {orderRetrievers.Count()} Order Retrievers");
 
