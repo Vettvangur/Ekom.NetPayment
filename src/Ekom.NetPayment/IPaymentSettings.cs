@@ -95,6 +95,39 @@ namespace Umbraco.NetPayment
         bool RequireCustomerInformation { get; set; }
 
         /// <summary>
+        /// Provide customer information to payment provider.
+        /// Supported by: BorgunLoans
+        /// </summary>
+        CustomerInfo CustomerInfo { get; set; }
+
+        /// <summary>
+        /// BorgunLoans loan type specifier
+        /// </summary>
+        int LoanType { get; set; }
+
+        #region Borgun Gateway
+
+        /// <summary>
+        /// 16 digit payment card number
+        /// Supported by: BorgunGateway
+        /// </summary>
+        string CardNumber { get; set; }
+
+        /// <summary>
+        /// Card expiration date
+        /// Supported by: BorgunGateway
+        /// </summary>
+        string Expiry { get; set; }
+
+        /// <summary>
+        /// Card Verification Value. Triple digit number on the back of the card.
+        /// Supported by: BorgunGateway
+        /// </summary>
+        string CVV { get; set; }
+
+        #endregion
+
+        /// <summary>
         /// Provider specific configuration.
         /// Currently unused, prefer typed properties with support description.
         /// </summary>

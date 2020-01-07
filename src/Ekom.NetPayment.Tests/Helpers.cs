@@ -28,6 +28,17 @@ namespace Umbraco.NetPayment.Tests
             return new HttpContext(req, resp);
         }
 
+        public static (IFactory, IRegister) RegisterAll()
+        {
+            var register = RegisterFactory.Create();
+            var factory = register.CreateFactory();
+            new Registrations().DoCompose(register);
+
+            RegisterMockedHttpContext(register);
+            RegisterMockedUmbracoTypes(register, factory);
+            return (factory, register);
+        }
+
         public static void RegisterMockedHttpContext(IRegister register)
         {
             register.Register(Mock.Of<HttpContextBase>());

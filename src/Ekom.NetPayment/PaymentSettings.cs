@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Umbraco.NetPayment
 {
@@ -85,6 +82,31 @@ namespace Umbraco.NetPayment
         /// <inheritDoc/>
         /// </summary>
         public string MerchantEmail { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public CustomerInfo CustomerInfo { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public int LoanType { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public string CardNumber { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public string Expiry { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
+        public string CVV { get; set; }
 
         /// <summary>
         /// <inheritDoc/>
