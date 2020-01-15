@@ -81,7 +81,7 @@ namespace Umbraco.NetPayment
         public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
         {
             var providers = Configuration.Root.Elements("provider")
-                            .Where(x => x.Attribute("title")?.Value.ToLower() == pp)
+                            .Where(x => x.Attribute("title")?.Value.ToLower() == pp.ToLower())
                             .ToList();
 
             if (providers.Any())
