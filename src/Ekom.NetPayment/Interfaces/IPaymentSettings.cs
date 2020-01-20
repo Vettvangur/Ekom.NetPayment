@@ -86,6 +86,11 @@ namespace Umbraco.NetPayment
         Currency? Currency { get; set; }
 
         /// <summary>
+        /// Required by Valitor loans
+        /// </summary>
+        string MerchantName { get; set; }
+
+        /// <summary>
         /// Email address to send receipts for purchases to
         /// Supported by: Borgun
         /// </summary>
@@ -105,7 +110,8 @@ namespace Umbraco.NetPayment
         CustomerInfo CustomerInfo { get; set; }
 
         /// <summary>
-        /// BorgunLoans loan type specifier
+        /// LoanType specifier, use provider specific LoanType enum for values.
+        /// Supported by: BorgunLoans, Valitor
         /// </summary>
         int LoanType { get; set; }
 
