@@ -73,7 +73,22 @@ namespace Umbraco.NetPayment.API
         public IPaymentProvider GetPaymentProvider(string ppName)
         {
             var ppNode = _uService.GetPPNode(ppName);
+            return GetPaymentProvider(ppNode);
+        }
 
+        /// <summary>
+        /// Retrieve a payment provider by key
+        /// </summary>
+        /// <param name="ppKey">Payment provider unique id.</param>
+        /// <returns></returns>
+        public IPaymentProvider GetPaymentProvider(Guid ppKey)
+        {
+            var ppNode = _uService.GetPPNode(ppKey);
+            return GetPaymentProvider(ppNode);
+        }
+
+        private IPaymentProvider GetPaymentProvider(IPublishedContent ppNode)
+        {
             var basePpName = PublishedPaymentProviderHelper.GetName(ppNode);
 
             if (paymentProviders.ContainsKey(basePpName))
@@ -91,27 +106,31 @@ namespace Umbraco.NetPayment.API
         }
 
         /// <summary>
-        /// Retrieve a payment provider by key
+        /// Fill dictionary with values for each dictionary key.
+        /// </summary>
+        /// <param name="ppName">Payment provider alias or name. Must have a matching umbraco pp node or basePaymentProvider property</param>
+        /// <param name="culture">IS/EN f.x.</param>
+        /// <param name="properties">Optional dictionary of keys to get, default uses base properties dictionary</param>
+        public Dictionary<string, string> GetPPProperties(string ppName, string culture, Dictionary<string, string> properties = null)
+        {
+            var ppNode = _uService.GetPPNode(ppName);
+            return GetPPProperties(ppNode, culture, properties);
+        }
+        /// <summary>
+        /// Fill dictionary with values for each dictionary key.
         /// </summary>
         /// <param name="ppKey">Payment provider unique id.</param>
-        /// <returns></returns>
-        public IPaymentProvider GetPaymentProvider(Guid ppKey)
+        /// <param name="culture">IS/EN f.x.</param>
+        /// <param name="properties">Optional dictionary of keys to get, default uses base properties dictionary</param>
+        public Dictionary<string, string> GetPPProperties(Guid ppKey, string culture, Dictionary<string, string> properties = null)
         {
             var ppNode = _uService.GetPPNode(ppKey);
-            var basePpName = PublishedPaymentProviderHelper.GetName(ppNode);
+            return GetPPProperties(ppNode, culture, properties);
+        }
 
-            if (paymentProviders.ContainsKey(basePpName))
-            {
-                var ppType = paymentProviders[basePpName];
-
-                var pp = Activator.CreateInstance(ppType) as IPaymentProvider;
-
-                return pp;
-            }
-            else
-            {
-                throw new PaymentProviderNotFoundException("Base Payment Provider not found. DLL possibly missing. Name: " + basePpName);
-            }
+        private Dictionary<string, string> GetPPProperties(IPublishedContent pp, string culture, Dictionary<string, string> properties)
+        {
+            return _uService.GetPPProperties(pp, culture, properties);
         }
 
         internal static List<Type> orderRetrievers = new List<Type>();

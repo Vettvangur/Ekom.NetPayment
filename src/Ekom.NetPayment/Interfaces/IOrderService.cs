@@ -25,6 +25,7 @@ namespace Umbraco.NetPayment
             decimal total,
             string paymentProvider,
             string custom,
+            string netPaymentData,
             IEnumerable<OrderItem> orders,
             HttpRequestBase Request
         );

@@ -30,6 +30,27 @@ namespace Umbraco.NetPayment.Helpers
         }
 
         /// <summary>
+        /// Computes SHA256 sum from string, returns as hexadecimal string
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>SHA256 sum as hex string</returns>
+        public static string GetSHA256HexStringSum(string input)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] data = sha.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                StringBuilder sBuilder = new StringBuilder();
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+                return sBuilder.ToString();
+            }
+        }
+
+        /// <summary>
         /// Computes SHA256 sum from string, returns as Base64 encoded string
         /// </summary>
         /// <param name="input"></param>

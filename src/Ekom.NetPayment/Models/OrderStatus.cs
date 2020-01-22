@@ -74,5 +74,12 @@ namespace Umbraco.NetPayment
         /// </summary>
         [NullSetting(NullSetting = NullSettings.Null)]
         public string Custom { get; set; }
+
+        /// <summary>
+        /// Store custom order data here
+        /// </summary>
+        [NullSetting(NullSetting = NullSettings.Null)]
+        [Length(200)]
+        public string NetPaymentData { get; set; }
     }
 }

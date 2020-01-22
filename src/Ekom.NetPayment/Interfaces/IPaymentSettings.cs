@@ -49,13 +49,15 @@ namespace Umbraco.NetPayment
         string OrderCustomString { get; set; }
 
         /// <summary>
-        /// Override umbraco configured success url.
+        /// Override umbraco configured success url. Used as-is by NetPayment to forward user to f.x. receipt page.
+        /// Commonly overrided in consumers checkout 
+        /// to provide an url that also contains a queryString with the orderId to use on receipt page.
         /// </summary>
         string SuccessUrl { get; set; }
 
         /// <summary>
         /// Receives notifications on successful payment.
-        /// Supported by: Borgun, Valitor, PayPal
+        /// Supported by: Borgun, BorgunGateway, Valitor, PayPal
         /// </summary>
         string ReportUrl { get; set; }
 
@@ -67,7 +69,7 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Override umbraco configured error url.
-        /// Supported by: Borgun
+        /// Supported by: Borgun, BorgunGateway
         /// </summary>
         string ErrorUrl { get; set; }
 
@@ -84,6 +86,11 @@ namespace Umbraco.NetPayment
         /// This causes verification issues.
         /// </summary>
         Currency? Currency { get; set; }
+
+        /// <summary>
+        /// Required by Valitor loans
+        /// </summary>
+        string MerchantName { get; set; }
 
         /// <summary>
         /// Email address to send receipts for purchases to
@@ -105,7 +112,8 @@ namespace Umbraco.NetPayment
         CustomerInfo CustomerInfo { get; set; }
 
         /// <summary>
-        /// BorgunLoans loan type specifier
+        /// LoanType specifier, use provider specific LoanType enum for values.
+        /// Supported by: BorgunLoans, Valitor
         /// </summary>
         int LoanType { get; set; }
 

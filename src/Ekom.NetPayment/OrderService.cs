@@ -64,6 +64,7 @@ namespace Umbraco.NetPayment
             decimal total,
             string paymentProvider,
             string custom,
+            string netPaymentData,
             IEnumerable<OrderItem> orders,
             HttpRequestBase Request
         )
@@ -92,7 +93,8 @@ namespace Umbraco.NetPayment
                     IPAddress = Request.UserHostAddress,
                     UserAgent = Request.UserAgent,
                     PaymentProvider = paymentProvider,
-                    Custom = custom
+                    Custom = custom,
+                    NetPaymentData = netPaymentData,
                 });
             }
 

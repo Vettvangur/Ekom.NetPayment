@@ -84,6 +84,11 @@ namespace Umbraco.NetPayment
         /// <summary>
         /// <inheritDoc/>
         /// </summary>
+        public string MerchantName { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
         public string MerchantEmail { get; set; }
 
         /// <summary>

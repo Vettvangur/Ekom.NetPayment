@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Umbraco.NetPayment.v8</id>
-    <version>0.0.3</version>
+    <version>9.1.0</version>
     <title>Umbraco.NetPayment.v8</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
@@ -10,7 +10,7 @@
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
-    <releaseNotes>Creates content types and data types on startup.</releaseNotes>
+    <releaseNotes>GetPPProperties in public api.</releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags></tags>
     <dependencies>
