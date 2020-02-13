@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Borgun")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.PayPal")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Valitor")]
+[assembly: InternalsVisibleTo("Umbraco.NetPayment.SiminnPei")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
