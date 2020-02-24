@@ -107,7 +107,7 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Provide customer information to payment provider.
-        /// Supported by: BorgunLoans
+        /// Supported by: BorgunLoans, SiminnPay (PhoneNumber)
         /// </summary>
         CustomerInfo CustomerInfo { get; set; }
 
