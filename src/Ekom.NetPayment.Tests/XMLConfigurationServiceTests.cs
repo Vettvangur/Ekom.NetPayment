@@ -62,7 +62,7 @@ namespace Umbraco.NetPayment.Tests
             var xdoc = XDocument.Parse(paymentProviders_config);
             var xmlConfigSvcMocks = new XMLCfgSvcMocks();
             xmlConfigSvcMocks.xmlConfigSvcMocked.Setup(x => x.Configuration).Returns(xdoc);
-            var properties = xmlConfigSvcMocks.xmlConfigSvcMocked.Object.GetConfigForPP("testBorgun");
+            var properties = xmlConfigSvcMocks.xmlConfigSvcMocked.Object.GetConfigForPP("testBorgun", "testBorgun");
 
             Assert.AreEqual(6, properties.Count);
             Assert.AreEqual("16", properties["paymentgatewayid"]);
@@ -81,7 +81,7 @@ namespace Umbraco.NetPayment.Tests
                 { "language", "en" },
             };
 
-            var properties = xmlConfigSvcMocks.xmlConfigSvcMocked.Object.GetConfigForPP("Valitor", multiAttributes);
+            var properties = xmlConfigSvcMocks.xmlConfigSvcMocked.Object.GetConfigForPP("Valitor", "valitor", multiAttributes);
 
             Assert.AreEqual(6, properties.Count);
             Assert.AreEqual("12345", properties["verificationcode"]);

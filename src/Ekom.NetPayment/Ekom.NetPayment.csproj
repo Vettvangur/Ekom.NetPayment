@@ -244,6 +244,7 @@
     <Compile Include="GMO.Umbraco.PropertyHelper\PropertyHelper.cs" />
     <Compile Include="Helpers\AesCryptoHelper.cs" />
     <Compile Include="Helpers\CryptoHelpers.cs" />
+    <Compile Include="Helpers\GetOverridingValue.cs" />
     <Compile Include="Helpers\GetTypesWithInterface.cs" />
     <Compile Include="Helpers\PublishedPaymentProviderHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />

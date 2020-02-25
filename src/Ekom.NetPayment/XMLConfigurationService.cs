@@ -68,21 +68,22 @@ namespace Umbraco.NetPayment
             return null;
         }
 
-        /// <summary>
-        /// Parses the configuration for a given payment provider and returns all nodes as
-        /// key values pairs.
-        /// </summary>
-        /// <param name="pp">Payment Provider title attribute</param>
-        /// <param name="secondaryMatches">
-        /// Optional collection of attributes and values to match on provider element.
-        /// F.x. lang
-        /// Currently unused, missing a clever way to pass secondary matches on to response callbacks.
-        /// </param>
-        public Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null)
+        /// <inheritdoc />
+        public Dictionary<string, string> GetConfigForPP(
+            string pp, 
+            string basePPName,
+            Dictionary<string, string> secondaryMatches = null)
         {
             var providers = Configuration.Root.Elements("provider")
                             .Where(x => x.Attribute("title")?.Value.ToLower() == pp.ToLower())
                             .ToList();
+
+            if (!providers.Any())
+            {
+                providers = Configuration.Root.Elements("provider")
+                            .Where(x => x.Attribute("title")?.Value.ToLower() == basePPName.ToLower())
+                            .ToList();
+            }
 
             if (providers.Any())
             {

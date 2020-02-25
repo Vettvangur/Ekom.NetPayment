@@ -25,6 +25,7 @@ namespace Umbraco.NetPayment
                     { "successUrl", "" },
                     { "cancelUrl", "" },
                     { "errorUrl", "" },
+                    { "currency", "" },
                 };
             }
         }
@@ -53,9 +54,11 @@ namespace Umbraco.NetPayment
 
             if (ppContainer == null) throw new NetPaymentException("Payment Provider container node not found.");
 
-            return ppContainer.Children.Where(x => x.IsVisible()).FirstOrDefault(x =>
+            var visibleChildren = ppContainer.Children.Where(x => x.IsVisible());
+
+            return visibleChildren.FirstOrDefault(x =>
                        x.Name.Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase))
-                   ?? ppContainer.Children.First(x =>
+                   ?? visibleChildren.First(x =>
                        x.HasProperty("basePaymentProvider") && x.GetPropertyValue<string>("basePaymentProvider")
                           .Equals(ppNodeName, StringComparison.InvariantCultureIgnoreCase));
         }
