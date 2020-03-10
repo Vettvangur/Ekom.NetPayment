@@ -22,6 +22,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("4d7b353e-dd49-47c7-82fd-0eb325e67fa8")]
 
+[assembly: InternalsVisibleTo("Ekom")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.Borgun")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.BorgunGateway")]
 [assembly: InternalsVisibleTo("Umbraco.NetPayment.BorgunLoans")]

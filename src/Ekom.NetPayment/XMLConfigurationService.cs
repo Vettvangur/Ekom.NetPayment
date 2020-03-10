@@ -138,7 +138,7 @@ namespace Umbraco.NetPayment
                     {
                         ppNode = new XElement(_settings.PPUNodeConfElName)
                         {
-                            Value = FindPPContainerNodeKey().ToString()
+                            Value = FindPPContainerNodeKey(_settings, _log, _examineManager).ToString(),
                         };
                         ppConfigRoot.Add(ppNode);
                         ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
@@ -149,7 +149,7 @@ namespace Umbraco.NetPayment
                     // Malformed value
                     if (!bPPNode)
                     {
-                        ppNodeKey = FindPPContainerNodeKey();
+                        ppNodeKey = FindPPContainerNodeKey(_settings, _log, _examineManager);
                         ppNode.Value = ppNodeKey.ToString();
                         ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
                     }
@@ -163,12 +163,19 @@ namespace Umbraco.NetPayment
             CreateConfigurationXML().Wait();
         }
 
-        private Guid FindPPContainerNodeKey()
+        /// <summary>
+        /// This method has unconventional accessibility to allow re-use by Ekom
+        /// </summary>
+        static internal Guid FindPPContainerNodeKey(
+            Settings settings,
+            ILog log,
+            ExamineManagerBase examineManager
+)
         {
-            var searcher = _examineManager.SearchProviderCollection["ExternalSearcher"];
+            var searcher = examineManager.SearchProviderCollection["ExternalSearcher"];
 
             ISearchCriteria searchCriteria = searcher.CreateSearchCriteria();
-            var query = searchCriteria.NodeTypeAlias(_settings.PPDocumentTypeAlias);
+            var query = searchCriteria.NodeTypeAlias(settings.PPDocumentTypeAlias);
             var results = searcher.Search(query.Compile());
 
             try
@@ -177,7 +184,7 @@ namespace Umbraco.NetPayment
             }
             catch (InvalidOperationException ex)
             {
-                _log.Error($"Unable to find payment provider node with docTypeAlias {_settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence.", ex);
+                log.Error($"Unable to find payment provider node with docTypeAlias {settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence.", ex);
                 throw;
             }
         }
@@ -185,11 +192,11 @@ namespace Umbraco.NetPayment
         private async Task CreateConfigurationXML()
         {
             var path = _server.MapPath(_settings.PPConfigPath);
-            var nodeKey = FindPPContainerNodeKey();
+            var nodeKey = FindPPContainerNodeKey(_settings, _log, _examineManager);
 
             if (nodeKey != Guid.Empty)
             {
-                await WriteXMLAsync(path, nodeKey.ToString());
+                await WriteXMLAsync(path, nodeKey.ToString()).ConfigureAwait(false);
             }
         }
 
@@ -202,7 +209,6 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// This was made async for shits and giggles.
-        /// Needs configureAwait if to be used outside of startup method.
         /// </summary>
         private async Task WriteXMLAsync(string path, string nodeKey)
         {
@@ -211,10 +217,10 @@ namespace Umbraco.NetPayment
 
             using (var xmlWriter = XmlWriter.Create(path, xmlWrSettings))
             {
-                await xmlWriter.WriteStartDocumentAsync();
-                await xmlWriter.WriteStartElementAsync("", "providers", "");
-                await xmlWriter.WriteStartElementAsync("", _settings.PPUNodeConfElName, "");
-                await xmlWriter.WriteStringAsync(nodeKey);
+                await xmlWriter.WriteStartDocumentAsync().ConfigureAwait(false);
+                await xmlWriter.WriteStartElementAsync("", "providers", "").ConfigureAwait(false);
+                await xmlWriter.WriteStartElementAsync("", _settings.PPUNodeConfElName, "").ConfigureAwait(false);
+                await xmlWriter.WriteStringAsync(nodeKey).ConfigureAwait(false);
             }
         }
     }
