@@ -138,7 +138,7 @@ namespace Umbraco.NetPayment
                     {
                         ppNode = new XElement(_settings.PPUNodeConfElName)
                         {
-                            Value = FindPPContainerNodeKey(_settings, _log, _examineManager).ToString(),
+                            Value = FindPPContainerNodeKey().ToString()
                         };
                         ppConfigRoot.Add(ppNode);
                         ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
@@ -149,7 +149,7 @@ namespace Umbraco.NetPayment
                     // Malformed value
                     if (!bPPNode)
                     {
-                        ppNodeKey = FindPPContainerNodeKey(_settings, _log, _examineManager);
+                        ppNodeKey = FindPPContainerNodeKey();
                         ppNode.Value = ppNodeKey.ToString();
                         ppConfig.Save(_server.MapPath(_settings.PPConfigPath));
                     }
@@ -163,19 +163,12 @@ namespace Umbraco.NetPayment
             CreateConfigurationXML().Wait();
         }
 
-        /// <summary>
-        /// This method has unconventional accessibility to allow re-use by Ekom
-        /// </summary>
-        static internal Guid FindPPContainerNodeKey(
-            Settings settings,
-            ILog log,
-            ExamineManagerBase examineManager
-)
+        private Guid FindPPContainerNodeKey()
         {
-            var searcher = examineManager.SearchProviderCollection["ExternalSearcher"];
+            var searcher = _examineManager.SearchProviderCollection["ExternalSearcher"];
 
             ISearchCriteria searchCriteria = searcher.CreateSearchCriteria();
-            var query = searchCriteria.NodeTypeAlias(settings.PPDocumentTypeAlias);
+            var query = searchCriteria.NodeTypeAlias(_settings.PPDocumentTypeAlias);
             var results = searcher.Search(query.Compile());
 
             try
@@ -184,7 +177,7 @@ namespace Umbraco.NetPayment
             }
             catch (InvalidOperationException ex)
             {
-                log.Error($"Unable to find payment provider node with docTypeAlias {settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence.", ex);
+                _log.Error($"Unable to find payment provider node with docTypeAlias {_settings.PPDocumentTypeAlias}, please verify document type alias and umbraco node presence.", ex);
                 throw;
             }
         }
@@ -192,7 +185,7 @@ namespace Umbraco.NetPayment
         private async Task CreateConfigurationXML()
         {
             var path = _server.MapPath(_settings.PPConfigPath);
-            var nodeKey = FindPPContainerNodeKey(_settings, _log, _examineManager);
+            var nodeKey = FindPPContainerNodeKey();
 
             if (nodeKey != Guid.Empty)
             {
