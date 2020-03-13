@@ -139,6 +139,16 @@ namespace Umbraco.NetPayment
 
         #endregion
 
+
+        /// <summary>
+        /// Displayed in SiminnPay payment overview
+        /// We cannot support this in f.x. Valitor since the reference is used by netPayment
+        /// to find it's order and related data in callback.
+        /// 
+        /// Supported by: SiminnPay
+        /// </summary>
+        string ReferenceId { get; set; }
+
         /// <summary>
         /// Provider specific configuration.
         /// Currently unused, prefer typed properties with support description.

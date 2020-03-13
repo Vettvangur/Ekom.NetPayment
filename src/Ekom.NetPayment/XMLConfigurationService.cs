@@ -81,7 +81,7 @@ namespace Umbraco.NetPayment
             if (!providers.Any())
             {
                 providers = Configuration.Root.Elements("provider")
-                            .Where(x => x.Attribute("title")?.Value.ToLower() == basePPName.ToLower())
+                            .Where(x => x.Attribute("title")?.Value.ToLower() == basePPName?.ToLower())
                             .ToList();
             }
 
