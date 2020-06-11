@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Umbraco.NetPayment
 {
     /// <summary>
-    /// <inheritDoc/>
+    /// <inheritDoc cref="IPaymentSettings"/>
     /// </summary>
     public class PaymentSettings : IPaymentSettings
     {

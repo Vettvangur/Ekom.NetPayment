@@ -21,14 +21,12 @@ namespace Umbraco.NetPayment
         IEnumerable<OrderItem> Orders { get; set; }
 
         /// <summary>
-        /// Controls payment portal language.
-        /// Default IS
+        /// Controls payment portal language
         /// </summary>
         string Language { get; set; }
 
         /// <summary>
-        /// Vorto language for payment provider properties.
-        /// Default IS
+        /// Vorto language for payment provider properties
         /// </summary>
         string VortoLanguage { get; set; }
 
@@ -45,31 +43,28 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Perfect for storing custom data/json in persisted order to be read on callback after payment.
+        /// 255 char max length.
         /// </summary>
         string OrderCustomString { get; set; }
 
         /// <summary>
-        /// Override umbraco configured success url. Used as-is by NetPayment to forward user to f.x. receipt page.
-        /// Commonly overrided in consumers checkout 
-        /// to provide an url that also contains a queryString with the orderId to use on receipt page.
+        /// Override umbraco configured success url.
         /// </summary>
         string SuccessUrl { get; set; }
 
         /// <summary>
         /// Receives notifications on successful payment.
-        /// Supported by: Borgun, BorgunGateway, Valitor, PayPal
         /// </summary>
         string ReportUrl { get; set; }
 
         /// <summary>
         /// Override umbraco configured cancel url.
-        /// Supported by: Borgun, Valitor, BorgunLoans
+        /// Supported by: Borgun, Valitor
         /// </summary>
         string CancelUrl { get; set; }
 
         /// <summary>
         /// Override umbraco configured error url.
-        /// Supported by: Borgun, BorgunGateway
         /// </summary>
         string ErrorUrl { get; set; }
 
@@ -82,8 +77,7 @@ namespace Umbraco.NetPayment
 
         /// <summary>
         /// Supported by: PayPal
-        /// Others must configure using xml configuration since they will not have access to the settings object in the response callback.
-        /// This causes verification issues.
+        /// Others must configure using xml configuration
         /// </summary>
         Currency? Currency { get; set; }
 
@@ -112,8 +106,7 @@ namespace Umbraco.NetPayment
         CustomerInfo CustomerInfo { get; set; }
 
         /// <summary>
-        /// LoanType specifier, use provider specific LoanType enum for values.
-        /// Supported by: BorgunLoans, Valitor
+        /// BorgunLoans loan type specifier
         /// </summary>
         int LoanType { get; set; }
 

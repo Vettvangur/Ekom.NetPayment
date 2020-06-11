@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.NetPayment.Exceptions;
 using Umbraco.NetPayment.Helpers;
 using Umbraco.NetPayment.Interfaces;
