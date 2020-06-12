@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Umbraco.Core.Models;
-using Umbraco.NetPayment.Exceptions;
-using Umbraco.NetPayment.GMO.Umbraco;
+using Ekom.NetPayment.Exceptions;
+using Ekom.NetPayment.GMO.Umbraco;
 using Umbraco.Web;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Retrieves Umbraco data

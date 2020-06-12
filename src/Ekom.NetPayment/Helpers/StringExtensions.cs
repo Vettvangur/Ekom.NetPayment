@@ -1,4 +1,4 @@
-namespace Umbraco.NetPayment.Helpers
+namespace Ekom.NetPayment.Helpers
 {
     /// <summary>
     /// String extension methods

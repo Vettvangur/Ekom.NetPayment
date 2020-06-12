@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Handles the Payment Providers XML configuration

@@ -4,9 +4,9 @@ using System.Net.Configuration;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Umbraco.Core.Configuration;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.Interfaces;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     class MailService : IMailService
     {

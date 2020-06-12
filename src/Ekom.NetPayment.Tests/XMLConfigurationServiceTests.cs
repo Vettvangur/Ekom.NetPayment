@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
 
-namespace Umbraco.NetPayment.Tests
+namespace Ekom.NetPayment.Tests
 {
     [TestClass]
     public class XMLConfigurationServiceTests

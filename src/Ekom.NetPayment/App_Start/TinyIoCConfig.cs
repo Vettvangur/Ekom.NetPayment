@@ -4,10 +4,10 @@ using System.Web;
 using TinyIoC;
 using Umbraco.Core;
 using Umbraco.Core.Configuration;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.Interfaces;
 using Umbraco.Web;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Specifies the TinyIoC configuration for the main container.

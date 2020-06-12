@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Umbraco.NetPayment.Helpers
+namespace Ekom.NetPayment.Helpers
 {
     /// <summary>
     /// We often have multiple ways to configure a payment provider setting.

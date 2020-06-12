@@ -4,7 +4,7 @@ using Examine.SearchCriteria;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     abstract class ExamineManagerBase
     {

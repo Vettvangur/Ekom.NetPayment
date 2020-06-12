@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Umbraco.NetPayment.Exceptions
+namespace Ekom.NetPayment.Exceptions
 {
     /// <summary>
     /// 

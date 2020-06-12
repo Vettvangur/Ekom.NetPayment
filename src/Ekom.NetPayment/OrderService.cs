@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Umbraco.Core;
-using Umbraco.NetPayment.Helpers;
+using Ekom.NetPayment.Helpers;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Utility functions for handling <see cref="OrderStatus"/> objects

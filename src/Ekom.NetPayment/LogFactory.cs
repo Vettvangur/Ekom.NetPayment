@@ -1,7 +1,7 @@
 ﻿using log4net;
 using System;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Creates an <see cref="ILog"/> instance for the provided <see cref="Type"/>

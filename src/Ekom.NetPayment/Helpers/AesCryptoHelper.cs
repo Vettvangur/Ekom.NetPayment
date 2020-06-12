@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Umbraco.NetPayment.Helpers
+namespace Ekom.NetPayment.Helpers
 {
     /// <summary>
     /// Helps with AES crypto calculations

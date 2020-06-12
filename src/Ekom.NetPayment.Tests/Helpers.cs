@@ -21,7 +21,7 @@ using Umbraco.Web;
 using Umbraco.Web.Routing;
 using Umbraco.Web.Security;
 
-namespace Umbraco.NetPayment.Tests
+namespace Ekom.NetPayment.Tests
 {
 	public static class Helpers
 	{

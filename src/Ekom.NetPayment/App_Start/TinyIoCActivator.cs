@@ -1,10 +1,10 @@
 ﻿using CommonServiceLocator.TinyIoCAdapter;
 using TinyIoC;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Umbraco.NetPayment.App_Start.TinyIoCActivator), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Umbraco.NetPayment.App_Start.TinyIoCActivator), "Shutdown")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Ekom.NetPayment.App_Start.TinyIoCActivator), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(Ekom.NetPayment.App_Start.TinyIoCActivator), "Shutdown")]
 
-namespace Umbraco.NetPayment.App_Start
+namespace Ekom.NetPayment.App_Start
 {
     /// <summary>Provides the bootstrapping for integrating TinyIoC when it is hosted in ASP.NET</summary> 
     static class TinyIoCActivator

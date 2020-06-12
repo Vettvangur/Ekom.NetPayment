@@ -5,10 +5,10 @@ using System.Net;
 using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Persistence;
-using Umbraco.NetPayment.Helpers;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.Helpers;
+using Ekom.NetPayment.Interfaces;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Hooks into the umbraco application startup lifecycle 

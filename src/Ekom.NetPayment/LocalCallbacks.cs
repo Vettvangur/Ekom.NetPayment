@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Callbacks to run for all payment providers on success/error.

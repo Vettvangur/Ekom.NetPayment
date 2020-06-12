@@ -1,7 +1,7 @@
 ﻿using Umbraco.Core.Models;
 using Umbraco.Web;
 
-namespace Umbraco.NetPayment.Helpers
+namespace Ekom.NetPayment.Helpers
 {
     static class PublishedPaymentProviderHelper
     {

@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Umbraco.NetPayment</id>
-    <version>9.2.10</version>
-    <title>Umbraco.NetPayment</title>
+    <id>Ekom.NetPayment</id>
+    <version>0.0.1</version>
+    <title>Ekom.NetPayment</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
-    <projectUrl>https://github.com/Vettvangur/Umbraco.NetPayment</projectUrl>
+    <projectUrl>https://github.com/Vettvangur/Ekom.NetPayment</projectUrl>
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Allows configuration of payment providers within umbraco, does not depend on uWebshop.</description>
-    <releaseNotes>Support SiminnPay ReferenceId.</releaseNotes>
+    <description>Allows configuration of payment providers within umbraco, can be used stand-alone as well.</description>
+    <releaseNotes>Rebranding release.</releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags></tags>
     <dependencies>

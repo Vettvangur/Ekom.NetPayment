@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Umbraco.NetPayment.Interfaces
+namespace Ekom.NetPayment.Interfaces
 {
     /// <summary>
     /// Handles creation and sending of emails, uses defaults from configuration when possible.
