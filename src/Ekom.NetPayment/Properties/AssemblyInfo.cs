@@ -27,6 +27,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Ekom.NetPayment.BorgunLoans")]
 [assembly: InternalsVisibleTo("Ekom.NetPayment.PayPal")]
 [assembly: InternalsVisibleTo("Ekom.NetPayment.Valitor")]
+[assembly: InternalsVisibleTo("Ekom.NetPayment.SiminnPay")]
 [assembly: InternalsVisibleTo("Ekom.NetPayment.Tests")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 

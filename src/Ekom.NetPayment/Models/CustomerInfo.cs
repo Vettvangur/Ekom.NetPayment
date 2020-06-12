@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The address.
         /// </value>
+        [Required]
+        [RegularExpression(".{2,}")]
         public string Address { get; set; }
 
         /// <summary>
@@ -26,6 +29,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The city.
         /// </value>
+        [Required]
+        [RegularExpression(".{2,}")]
         public string City { get; set; }
 
         /// <summary>
@@ -34,6 +39,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The email.
         /// </value>
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         /// <summary>
@@ -42,6 +49,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The name.
         /// </value>
+        [Required]
+        [RegularExpression(".{2,}")]
         public string Name { get; set; }
 
         /// <summary>
@@ -50,6 +59,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The national registry identifier.
         /// </value>
+        [Required]
+        [RegularExpression("[0-9]{6}(-)?[0-9]{4}")]
         public string NationalRegistryId { get; set; }
 
         /// <summary>
@@ -58,6 +69,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The phone number.
         /// </value>
+        [Required]
+        [RegularExpression("[678][0-9]{6}")]
         public string PhoneNumber { get; set; }
 
         /// <summary>
@@ -66,6 +79,8 @@ namespace Ekom.NetPayment
         /// <value>
         /// The postal code.
         /// </value>
+        [Required]
+        [RegularExpression("[0-9]{3,}")]
         public string PostalCode { get; set; }
     }
 }

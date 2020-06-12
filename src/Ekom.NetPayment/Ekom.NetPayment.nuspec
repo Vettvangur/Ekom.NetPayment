@@ -1,20 +1,24 @@
 ﻿<?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>Ekom.NetPayment.v8</id>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <title>Ekom.NetPayment.v8</title>
     <authors>Gunnar Már Óttarsson/Vettvangur</authors>
     <owners>Vettvangur</owners>
     <projectUrl>https://github.com/Vettvangur/Ekom.NetPayment</projectUrl>
+    <icon>images\VV_Logo.png</icon>
     <iconUrl>https://www.vettvangur.is/content/favicon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Allows configuration of payment providers within umbraco, can be used without Ekom.</description>
     <releaseNotes>Rebranding.</releaseNotes>
-    <copyright>Copyright 2019</copyright>
+    <copyright>Copyright 2020</copyright>
     <tags></tags>
     <dependencies>
       <dependency id="Microsoft.VisualStudio.SlowCheetah" version="3.0.0" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="..\..\VV_Logo.png" target="images\" />
+  </files>
 </package>

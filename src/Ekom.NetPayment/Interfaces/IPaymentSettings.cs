@@ -132,6 +132,21 @@ namespace Ekom.NetPayment
 
         #endregion
 
+
+        /// <summary>
+        /// Displayed in SiminnPay payment overview
+        /// This value facilitates correlating a orderid from the merchants system (f.x. Ekom orderid) 
+        /// with an order displayed in the payment authorizers system.
+        /// 
+        /// We cannot support this in f.x. Valitor since the reference is used by netPayment
+        /// to find it's order and related data in callback.
+        /// That is, the value sent to Valitor as the reference must always match 
+        /// the netpayment orderid, therefore we cannot allow a custom reference to be provided.
+        /// 
+        /// Supported by: SiminnPay
+        /// </summary>
+        string ReferenceId { get; set; }
+
         /// <summary>
         /// Provider specific configuration.
         /// Currently unused, prefer typed properties with support description.

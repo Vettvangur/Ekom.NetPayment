@@ -119,6 +119,11 @@ namespace Ekom.NetPayment
         /// <summary>
         /// <inheritDoc/>
         /// </summary>
+        public string ReferenceId { get; set; }
+
+        /// <summary>
+        /// <inheritDoc/>
+        /// </summary>
         public Dictionary<string, object> CustomSettings { get; set; }
     }
 }

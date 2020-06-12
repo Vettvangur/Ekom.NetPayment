@@ -96,7 +96,7 @@ namespace Ekom.NetPayment.API
             {
                 var ppType = paymentProviders[basePpName];
 
-                var pp = Activator.CreateInstance(ppType) as IPaymentProvider;
+                var pp = Activator.CreateInstance(ppType, ppNode.Key) as IPaymentProvider;
 
                 return pp;
             }

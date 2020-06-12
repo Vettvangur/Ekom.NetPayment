@@ -18,10 +18,17 @@ namespace Ekom.NetPayment
         /// key values pairs.
         /// </summary>
         /// <param name="pp">Payment Provider title attribute</param>
+        /// <param name="basePPName">
+        /// Base Payment Provider name, this allows overloaded payment providers to override umbraco properties
+        /// but share a common xml configuration
+        /// </param>
         /// <param name="secondaryMatches">
         /// Optional collection of attributes and values to match on provider element.
         /// F.x. lang
         /// </param>
-        Dictionary<string, string> GetConfigForPP(string pp, Dictionary<string, string> secondaryMatches = null);
+        Dictionary<string, string> GetConfigForPP(
+            string pp,
+            string basePPName,
+            Dictionary<string, string> secondaryMatches = null);
     }
 }
