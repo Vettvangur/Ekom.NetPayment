@@ -1,6 +1,6 @@
 ﻿using System.Web;
 
-namespace Umbraco.NetPayment.Interfaces
+namespace Ekom.NetPayment.Interfaces
 {
     /// <summary>
     /// Handles retrival of order using values posted or returned in querystring by payment provider

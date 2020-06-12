@@ -15,7 +15,7 @@ using Umbraco.Web;
 using Umbraco.Web.PublishedCache;
 using Umbraco.Web.Security;
 
-namespace Umbraco.NetPayment.Tests
+namespace Ekom.NetPayment.Tests
 {
     public static class Helpers
     {

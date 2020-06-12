@@ -12,9 +12,9 @@ using Umbraco.Core.Cache;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
 using Umbraco.Examine;
-using Umbraco.NetPayment.Exceptions;
+using Ekom.NetPayment.Exceptions;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Handles the Payment Providers XML configuration

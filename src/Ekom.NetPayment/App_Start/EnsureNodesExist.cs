@@ -10,10 +10,10 @@ using Umbraco.Core.Models;
 using Umbraco.Core.PropertyEditors;
 using Umbraco.Core.Services;
 using Umbraco.Examine;
-using Umbraco.NetPayment.Exceptions;
+using Ekom.NetPayment.Exceptions;
 using Umbraco.Web;
 
-namespace Umbraco.NetPayment.App_Start
+namespace Ekom.NetPayment.App_Start
 {
     class EnsureNodesExist : IComponent
     {

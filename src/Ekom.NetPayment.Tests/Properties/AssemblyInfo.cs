@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Umbraco.NetPayment.Tests")]
+[assembly: AssemblyTitle("Ekom.NetPayment.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Umbraco.NetPayment.Tests")]
+[assembly: AssemblyProduct("Ekom.NetPayment.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Umbraco.NetPayment.Interfaces
+namespace Ekom.NetPayment.Interfaces
 {
     /// <summary>
     /// Handles creation and sending of emails, uses defaults from configuration when possible.
@@ -18,7 +18,7 @@ namespace Umbraco.NetPayment.Interfaces
         /// </summary>
         string Recipient { get; set; }
         /// <summary>
-        /// Defaults to "no-reply@umbraco.netpayment"
+        /// Defaults to "no-reply@Ekom.NetPayment"
         /// </summary>
         string Sender { get; set; }
         /// <summary>

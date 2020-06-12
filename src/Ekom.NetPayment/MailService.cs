@@ -4,9 +4,9 @@ using System.Net.Configuration;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Umbraco.Core.Configuration.UmbracoSettings;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.Interfaces;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Handles creation and sending of emails, uses defaults from configuration when possible.
@@ -23,9 +23,9 @@ namespace Umbraco.NetPayment
         private readonly bool _ssl;
 
         /// <summary>
-        /// Defaults to "no-reply@umbraco.netpayment"
+        /// Defaults to "no-reply@Ekom.NetPayment"
         /// </summary>
-        public string Sender { get; set; } = "no-reply@umbraco.netpayment";
+        public string Sender { get; set; } = "no-reply@Ekom.NetPayment";
         /// <summary>
         /// 
         /// </summary>

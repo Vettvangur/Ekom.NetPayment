@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Umbraco.NetPayment.Helpers;
+using Ekom.NetPayment.Helpers;
 
-namespace Umbraco.NetPayment.Tests
+namespace Ekom.NetPayment.Tests
 {
     [TestClass]
     public class NetPaymentTests

@@ -4,13 +4,13 @@ using System.Web;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Models.PublishedContent;
-using Umbraco.NetPayment.Exceptions;
-using Umbraco.NetPayment.Helpers;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.Exceptions;
+using Ekom.NetPayment.Helpers;
+using Ekom.NetPayment.Interfaces;
 using Umbraco.Web;
 using UmbracoCurrent = Umbraco.Core.Composing.Current;
 
-namespace Umbraco.NetPayment.API
+namespace Ekom.NetPayment.API
 {
     /// <summary>
     /// The NetPayment API, access payment providers and get orders from request data.

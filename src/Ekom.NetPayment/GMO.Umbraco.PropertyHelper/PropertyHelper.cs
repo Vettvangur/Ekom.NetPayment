@@ -12,7 +12,7 @@ using Umbraco.Web;
  * GMO.Umbraco.PropertyHelper v1.1.2
  * + v8 Updates
  */
-namespace Umbraco.NetPayment.GMO.Umbraco
+namespace Ekom.NetPayment.GMO.Umbraco
 {
     /// <summary>
     /// Extension class for <see cref="IPublishedProperty"/>'s

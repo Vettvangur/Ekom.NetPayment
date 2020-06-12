@@ -1,6 +1,6 @@
 ﻿using NPoco;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     class DatabaseFactory : IDatabaseFactory
     {

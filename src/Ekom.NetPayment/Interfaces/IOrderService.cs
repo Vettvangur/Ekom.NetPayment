@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Utility functions for handling <see cref="OrderStatus"/> objects

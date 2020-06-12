@@ -8,8 +8,8 @@
     <ProjectGuid>{B3C16117-FBF6-425E-A883-7FCB281051EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Umbraco.NetPayment.Tests</RootNamespace>
-    <AssemblyName>Umbraco.NetPayment.Tests</AssemblyName>
+    <RootNamespace>Ekom.NetPayment.Tests</RootNamespace>
+    <AssemblyName>Ekom.NetPayment.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -277,7 +277,6 @@
     <Compile Include="MockClasses\UmbracoHelperCreator.cs" />
     <Compile Include="NetPaymentTests.cs" />
     <Compile Include="UmbracoServiceTests.cs" />
-    <Compile Include="ValitorTests.cs" />
     <Compile Include="XMLConfigurationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -286,13 +285,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Umbraco.NetPayment.Valitor\Umbraco.NetPayment.Valitor.csproj">
-      <Project>{F23EC071-8C8C-404B-B82D-DB05806581C7}</Project>
-      <Name>Umbraco.NetPayment.Valitor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Umbraco.NetPayment\Umbraco.NetPayment.csproj">
+    <ProjectReference Include="..\Ekom.NetPayment\Ekom.NetPayment.csproj">
       <Project>{4d7b353e-dd49-47c7-82fd-0eb325e67fa8}</Project>
-      <Name>Umbraco.NetPayment</Name>
+      <Name>Ekom.NetPayment</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

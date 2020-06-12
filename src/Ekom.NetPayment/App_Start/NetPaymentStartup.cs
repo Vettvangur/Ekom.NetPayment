@@ -5,11 +5,11 @@ using System.Reflection;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
-using Umbraco.NetPayment.App_Start;
-using Umbraco.NetPayment.Helpers;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.App_Start;
+using Ekom.NetPayment.Helpers;
+using Ekom.NetPayment.Interfaces;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Hooks into the umbraco application startup lifecycle 

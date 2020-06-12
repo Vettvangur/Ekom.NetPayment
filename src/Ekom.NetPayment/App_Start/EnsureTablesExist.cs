@@ -5,7 +5,7 @@ using Umbraco.Core.Migrations.Upgrade;
 using Umbraco.Core.Scoping;
 using Umbraco.Core.Services;
 
-namespace Umbraco.NetPayment.App_Start
+namespace Ekom.NetPayment.App_Start
 {
     class MigrationCreateTables : MigrationBase
     {

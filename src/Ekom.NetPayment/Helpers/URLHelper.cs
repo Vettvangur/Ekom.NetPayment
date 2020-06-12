@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace Umbraco.NetPayment.Helpers
+namespace Ekom.NetPayment.Helpers
 {
     /// <summary>
     /// URI Helper methods

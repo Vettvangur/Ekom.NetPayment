@@ -5,9 +5,9 @@ using Umbraco.Core;
 using Umbraco.Core.Cache;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
-using Umbraco.NetPayment.Interfaces;
+using Ekom.NetPayment.Interfaces;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Specifies the DI configuration.

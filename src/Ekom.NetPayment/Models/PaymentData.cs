@@ -2,7 +2,7 @@
 using System;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Saves payment information for transactions

@@ -1,4 +1,4 @@
-﻿namespace Umbraco.NetPayment
+﻿namespace Ekom.NetPayment
 {
     /// <summary>
     /// </summary>

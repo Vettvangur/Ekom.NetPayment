@@ -12,7 +12,7 @@ using Umbraco.Web;
 using Umbraco.Web.PublishedCache;
 using Umbraco.Web.Security;
 
-namespace Umbraco.NetPayment.Tests.MockClasses
+namespace Ekom.NetPayment.Tests.MockClasses
 {
     class UmbracoHelperCreator
     {

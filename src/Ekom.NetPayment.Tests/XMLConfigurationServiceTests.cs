@@ -11,7 +11,7 @@ using System.Xml.Linq;
 using Umbraco.Core.Cache;
 using Umbraco.Core.Logging;
 
-namespace Umbraco.NetPayment.Tests
+namespace Ekom.NetPayment.Tests
 {
     [TestClass]
     public class XMLConfigurationServiceTests

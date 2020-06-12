@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Umbraco.NetPayment.Interfaces
+namespace Ekom.NetPayment.Interfaces
 {
     /// <summary>
     /// F.x. Valitor/Borgun, handles submission of payment request 

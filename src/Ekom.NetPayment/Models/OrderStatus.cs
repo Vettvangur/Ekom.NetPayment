@@ -3,7 +3,7 @@ using System;
 using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// Generalized object storing basic information on orders and their status

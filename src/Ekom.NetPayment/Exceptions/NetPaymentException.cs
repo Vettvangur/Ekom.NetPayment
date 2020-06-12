@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Umbraco.NetPayment.Exceptions
+namespace Ekom.NetPayment.Exceptions
 {
     /// <summary>
     /// 

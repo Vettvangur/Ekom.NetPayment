@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Globalization;
-using Umbraco.NetPayment.Helpers;
+using Ekom.NetPayment.Helpers;
 
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
-    /// Various settings for the Umbraco.NetPayment package.
+    /// Various settings for the Ekom.NetPayment package.
     /// Most settings can be overriden in AppSettings.
     /// </summary>
     public class Settings

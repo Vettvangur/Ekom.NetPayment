@@ -8,8 +8,8 @@
     <ProjectGuid>{4D7B353E-DD49-47C7-82FD-0EB325E67FA8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Umbraco.NetPayment</RootNamespace>
-    <AssemblyName>Umbraco.NetPayment</AssemblyName>
+    <RootNamespace>Ekom.NetPayment</RootNamespace>
+    <AssemblyName>Ekom.NetPayment</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Umbraco.NetPayment.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Ekom.NetPayment.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE;TINYIOC_INTERNAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Umbraco.NetPayment.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Ekom.NetPayment.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClientDependency.Core, Version=1.9.8.0, Culture=neutral, processorArchitecture=MSIL">
@@ -297,8 +297,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Ekom.NetPayment.nuspec" />
     <None Include="packages.config" />
-    <None Include="Umbraco.NetPayment.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

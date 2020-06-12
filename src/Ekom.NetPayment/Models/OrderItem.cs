@@ -1,4 +1,4 @@
-namespace Umbraco.NetPayment
+namespace Ekom.NetPayment
 {
     /// <summary>
     /// A single item in an <see cref="OrderStatus"/>
