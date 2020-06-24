@@ -76,3 +76,4 @@ UmbracoTraceLog.txt
 *_p.c
 .builds
 *.snupkg
+*.dll
